@@ -1,53 +1,78 @@
-<div class="equipment-container">
+<div class="equipment-container" data-drop-target="true">
     {{!-- Inventory Header --}}
     <div class="inventory-header">
         <div class="inventory-controls">
             <input type="text" class="inventory-filter" placeholder="Search Equipment"/>
             <div class="encumbrance">
                 <label>Weight:</label>
-                <span>{{system.encumbrance.value}} / {{system.encumbrance.max}}</span>
+                <span>{{totalWeight}} / {{system.attributes.str.weight}}</span>
             </div>
         </div>
     </div>
 
-    {{!-- Inventory List --}}
-    <ol class="inventory-list">
-        {{#each items as |item id|}}
-        <li class="item flexrow" data-item-id="{{item._id}}">
-            <div class="item-name flexrow">
-                <div class="item-image">
-                    <img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/>
-                </div>
-                <h4>{{item.name}}</h4>
-            </div>
-            {{#if (eq item.type "weapon")}}
-            <div class="item-equipped">
-                <input type="checkbox" name="system.equipped" {{checked item.system.equipped}}/>
-            </div>
-            {{/if}}
-            {{#if (eq item.type "armor")}}
-            <div class="item-equipped">
-                <input type="checkbox" name="system.equipped" {{checked item.system.equipped}}/>
-            </div>
-            {{/if}}
-            <div class="item-quantity">
-                <input type="number" value="{{item.system.quantity}}" data-dtype="Number"/>
-            </div>
-            <div class="item-weight">
-                {{item.system.weight}}
-            </div>
-            <div class="item-controls">
-                <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-            </div>
-        </li>
-        {{/each}}
-    </ol>
+    {{!-- Weapons Section --}}
+    <div class="equipment-section">
+        <h3>Weapons</h3>
+        <ol class="inventory-list">
+            {{#each weapons as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+                {{> "item-row" item=item}}
+            </li>
+            {{/each}}
+        </ol>
+    </div>
+
+    {{!-- Armor Section --}}
+    <div class="equipment-section">
+        <h3>Armor</h3>
+        <ol class="inventory-list">
+            {{#each armor as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+                {{> "item-row" item=item}}
+            </li>
+            {{/each}}
+        </ol>
+    </div>
+
+    {{!-- Consumables Section --}}
+    <div class="equipment-section">
+        <h3>Consumables & Ammunition</h3>
+        <ol class="inventory-list">
+            {{#each consumables as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+                {{> "item-row" item=item}}
+            </li>
+            {{/each}}
+        </ol>
+    </div>
+
+    {{!-- Other Equipment Section --}}
+    <div class="equipment-section">
+        <h3>Other Equipment</h3>
+        <ol class="inventory-list">
+            {{#each equipment as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}">
+                {{> "item-row" item=item}}
+            </li>
+            {{/each}}
+        </ol>
+    </div>
 
     {{!-- Add Item Button --}}
     <div class="inventory-footer">
-        <button type="button" class="item-create" data-type="item">
-            <i class="fas fa-plus"></i> Add Item
-        </button>
+        <div class="item-controls">
+            <button type="button" class="item-create" data-type="weapon">
+                <i class="fas fa-plus"></i> Add Weapon
+            </button>
+            <button type="button" class="item-create" data-type="armor">
+                <i class="fas fa-plus"></i> Add Armor
+            </button>
+            <button type="button" class="item-create" data-type="consumable">
+                <i class="fas fa-plus"></i> Add Consumable
+            </button>
+            <button type="button" class="item-create" data-type="equipment">
+                <i class="fas fa-plus"></i> Add Equipment
+            </button>
+        </div>
     </div>
 </div> 

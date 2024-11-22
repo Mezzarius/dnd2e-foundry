@@ -1,0 +1,48 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+            </h1>
+        </div>
+    </header>
+
+    <div class="sheet-content">
+        <div class="item-properties">
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="system.description">{{system.description}}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number"/>
+            </div>
+
+            <div class="form-group">
+                <label>Weight (per unit)</label>
+                <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+            </div>
+
+            <div class="form-group">
+                <label>Quality</label>
+                <select name="system.quality">
+                    <option value="Common" {{selected system.quality "Common"}}>Common</option>
+                    <option value="Fine" {{selected system.quality "Fine"}}>Fine</option>
+                    <option value="Poor" {{selected system.quality "Poor"}}>Poor</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Charges</label>
+                <input type="number" name="system.charges" value="{{system.charges}}" data-dtype="Number"/>
+            </div>
+
+            <div class="form-group">
+                <label>Used Charges</label>
+                <input type="number" name="system.used" value="{{system.used}}" data-dtype="Number"/>
+            </div>
+        </div>
+    </div>
+</form> 

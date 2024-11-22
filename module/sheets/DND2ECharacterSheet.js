@@ -1,4 +1,5 @@
 import { AttributeTables } from "../tables/attributeTables.js";
+import { SavingThrowTables } from "../tables/savingThrowTables.js";
 
 export default class DND2ECharacterSheet extends ActorSheet {
     static get defaultOptions() {
@@ -15,7 +16,8 @@ export default class DND2ECharacterSheet extends ActorSheet {
                 navSelector: ".notes-tabs",
                 contentSelector: ".notes-container",
                 initial: "background"
-            }]
+            }],
+            dragDrop: [{dragSelector: ".item", dropSelector: ".equipment-container"}]
         });
     }
 
@@ -31,6 +33,8 @@ export default class DND2ECharacterSheet extends ActorSheet {
             if (!attr.value) return;
             this._calculateAttributeModifiers(key, attr.value, attr.exceptional);
         });
+
+        this._calculateSavingThrows(context);
 
         // Add proficiencies data
         context.proficiencies = this.actor.items
@@ -48,6 +52,17 @@ export default class DND2ECharacterSheet extends ActorSheet {
         context.enrichedBackgroundStory = TextEditor.enrichHTML(this.actor.system.background?.story || "", {async: false});
         context.enrichedAdventureNotes = TextEditor.enrichHTML(this.actor.system.notes?.adventure || "", {async: false});
         
+        // Organize items by category
+        context.weapons = context.items.filter(i => i.type === "weapon");
+        context.armor = context.items.filter(i => i.type === "armor");
+        context.consumables = context.items.filter(i => i.type === "consumable");
+        context.equipment = context.items.filter(i => i.type === "equipment");
+
+        // Calculate total weight
+        context.totalWeight = context.items.reduce((acc, item) => {
+            return acc + (item.system.weight * item.system.quantity);
+        }, 0);
+
         return context;
     }
 
@@ -78,7 +93,15 @@ export default class DND2ECharacterSheet extends ActorSheet {
             console.log("Strength field changed:", event.target.value);
         });
 
+        // saving throw listeners
+        html.find('input[name^="system.saves"][name$=".mod"]').change(this._onSavingThrowModChange.bind(this));
+
         // Equipment Tab Listeners
+            // Add these lines near the top of the existing method
+        if (this.actor.isOwner) {
+            html.find('.equipment-container').on('dragover', this._onDragOver.bind(this));
+            html.find('.equipment-container').on('drop', this._onDrop.bind(this));
+        }
         html.find('.item-create').click(this._onItemCreate.bind(this));
         html.find('.item-edit').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
@@ -139,6 +162,15 @@ export default class DND2ECharacterSheet extends ActorSheet {
             const attributePath = input.name;
             
             await this._onAttributeChange(attributePath, value);
+        });
+
+        // Add this listener for exceptional strength
+        html.find('input[name="system.attributes.str.exceptional"]').change(async (event) => {
+            const strValue = this.actor.system.attributes.str.value;
+            if (strValue === 18) {
+                const exceptionalValue = event.target.value;
+                await this._onAttributeChange('system.attributes.str.value', strValue, exceptionalValue);
+            }
         });
     }
 
@@ -337,14 +369,55 @@ export default class DND2ECharacterSheet extends ActorSheet {
             }
         }
 
-        // Remove min/max from modifiers before updating
+        // Remove min/max from modifiers
         delete modifiers.min;
         delete modifiers.max;
 
-        // Prepare update data
+        // Map table properties to system properties
+        const mappings = {
+            // Strength
+            hit: 'hitMod',
+            dmg: 'dmgMod',
+            weight: 'weight',
+            press: 'press',
+            doors: 'doors',
+            bblg: 'bblg',
+            
+            // Dexterity
+            reaction: 'reaction',
+            missile: 'missile',
+            defense: 'defense',
+            
+            // Constitution
+            hp: 'hpAdj',
+            shock: 'shock',
+            resurrection: 'resurrect',
+            poison: 'poison',
+            regen: 'regen',
+            
+            // Intelligence
+            languages: 'languages',
+            maxSpellLevel: 'maxSpellLevel',
+            learn: 'learnSpell',
+            maxSpells: 'maxSpellsPerLevel',
+            
+            // Wisdom
+            magical: 'magicDefense',
+            bonus: 'bonusSpells',
+            failure: 'spellFail',
+            immunity: 'immunity',
+            
+            // Charisma
+            hench: 'henchmen',
+            loyalty: 'loyalty',
+            react: 'reaction'
+        };
+
+        // Prepare update data with mapped properties
         const updateData = {};
-        for (const [key, value] of Object.entries(modifiers)) {
-            updateData[`system.attributes.${attrKey}.${key}`] = value;
+        for (const [tableKey, value] of Object.entries(modifiers)) {
+            const systemKey = mappings[tableKey] || tableKey;
+            updateData[`system.attributes.${attrKey}.${systemKey}`] = value;
         }
 
         // Update the actor
@@ -412,5 +485,117 @@ export default class DND2ECharacterSheet extends ActorSheet {
 
         // Update the actor
         await this.actor.update(updateData);
+    }
+
+    _onDragOver(event) {
+        event.preventDefault();
+        return false;
+    }
+
+    _onDrop(event) {
+        // ... keep any existing _onDrop code if it exists ...
+        
+        event.preventDefault();
+        
+        let data;
+        try {
+            data = JSON.parse(event.dataTransfer.getData('text/plain'));
+        } catch (err) {
+            return false;
+        }
+
+        if (data.type === "Item") {
+            return this._onDropItem(event, data);
+        }
+    }
+
+    async _onDropItem(event, data) {
+        if (!this.actor.isOwner) return false;
+        
+        const item = await Item.fromDropData(data);
+        // Check if item type is valid for equipment
+        const validTypes = ["weapon", "armor", "consumable", "equipment"];
+        if (!validTypes.includes(item.type)) {
+            ui.notifications.warn(`Cannot add items of type ${item.type} to equipment.`);
+            return false;
+        }
+
+        const itemData = item.toObject();
+
+        // Set default quantity to 1 if not present
+        if (!itemData.system.quantity) {
+            itemData.system.quantity = 1;
+        }
+
+        return this.actor.createEmbeddedDocuments("Item", [itemData]);
+    }
+
+    async _onSavingThrowModChange(event) {
+        const input = event.currentTarget;
+        const value = Number(input.value);
+        const savePath = input.name.replace('.mod', '');
+        const baseValue = getProperty(this.actor, savePath + '.base') || 0;
+        
+        await this.actor.update({
+            [`${savePath}.mod`]: value,
+            [`${savePath}.final`]: baseValue + value
+        });
+    }
+
+    _calculateSavingThrows(context) {
+        const characterClass = context.system.class.toLowerCase();
+        const level = context.system.level;
+
+        // Get base saves for class and level
+        const classTable = SavingThrowTables[characterClass];
+        if (!classTable) return;
+
+        const row = classTable.modifiers.find(r => r.min <= level && r.max >= level);
+        if (!row) return;
+
+        // Get existing attribute modifiers
+        const poisonMod = context.system.attributes.con?.poison || 0;
+        const magicDefMod = context.system.attributes.wis?.magicDefense || 0;
+
+        // Ensure saves object exists
+        if (!context.system.saves) {
+            context.system.saves = {};
+        }
+
+        // Calculate each save
+        const saves = ['paralyzation', 'rod', 'petrification', 'breath', 'spell'];
+        saves.forEach(save => {
+            // Get base value from class table
+            const base = row[save];
+            
+            // Ensure save object exists
+            if (!context.system.saves[save]) {
+                context.system.saves[save] = {
+                    base: base,
+                    mod: 0,
+                    attrMod: 0,
+                    final: base
+                };
+            }
+
+            // Get manual modifier
+            const mod = context.system.saves[save]?.mod || 0;
+
+            // Apply attribute modifiers based on save type
+            let attrMod = 0;
+            if (save === 'paralyzation') {  // Poison/Death save
+                attrMod = -poisonMod;
+            } else if (save === 'rod' || save === 'spell') {  // Magical saves
+                attrMod = -magicDefMod;
+            }
+            
+            // Update save values
+            context.system.saves[save] = {
+                base: base,
+                mod: mod,
+                attrMod: attrMod,
+                final: base + mod + attrMod
+            };
+        });
     }
 } 

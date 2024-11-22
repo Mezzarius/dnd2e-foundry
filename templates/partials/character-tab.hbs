@@ -108,7 +108,7 @@
                     <div class="attribute-modifiers">
                         <div class="modifier-field">
                             <label>Profs</label>
-                            <input type="text" name="system.attributes.int.profs" value="{{system.attributes.int.profs}}" disabled/>
+                            <input type="text" name="system.attributes.int.languages" value="{{system.attributes.int.languages}}" disabled/>
                         </div>
                         <div class="modifier-field">
                             <label>Max Lvl</label>
@@ -189,7 +189,7 @@
     </div>
 
     {{!-- Lower Section Grid --}}
-    <div class="lower-section grid grid-3col">
+    <div class="lower-section grid grid-5col">
         {{!-- Character Info --}}
         <div class="basic-info">
             <h2>Character Info</h2>
@@ -215,8 +215,8 @@
             </div>
         </div>
 
-        {{!-- Physical Traits --}}
-        <div class="traits">
+        {{!-- Physical Traits (spans 2 columns) --}}
+        <div class="traits span-2">
             <h2>Traits</h2>
             <div class="traits-grid">
                 {{!-- Left Column --}}
@@ -261,28 +261,57 @@
             </div>
         </div>
 
-        {{!-- Saving Throws --}}
-        <div class="saving-throws">
+        {{!-- Saving Throws (spans 2 columns) --}}
+        <div class="saving-throws span-2">
             <h2>Saving Throws</h2>
-            <div class="form-group">
-                <label>Poison/Death</label>
-                <input type="number" name="system.saves.paralyzation" value="{{system.saves.paralyzation}}"/>
-            </div>
-            <div class="form-group">
-                <label>Device</label>
-                <input type="number" name="system.saves.rod" value="{{system.saves.rod}}"/>
-            </div>
-            <div class="form-group">
-                <label>Pet/Poly</label>
-                <input type="number" name="system.saves.petrification" value="{{system.saves.petrification}}"/>
-            </div>
-            <div class="form-group">
-                <label>Breath</label>
-                <input type="number" name="system.saves.breath" value="{{system.saves.breath}}"/>
-            </div>
-            <div class="form-group">
-                <label>Spell</label>
-                <input type="number" name="system.saves.spell" value="{{system.saves.spell}}"/>
+            <div class="saves-grid">
+                <div class="save-headers">
+                    <div class="save-type">Save Type</div>
+                    <div class="save-base">Base</div>
+                    <div class="save-mod">Mod</div>
+                    <div class="save-attr">Attrib</div>
+                    <div class="save-final">Final</div>
+                </div>
+                
+                <div class="save-row">
+                    <label>Poison/Death</label>
+                    <input type="number" name="system.saves.paralyzation.base" value="{{system.saves.paralyzation.base}}" disabled/>
+                    <input type="number" name="system.saves.paralyzation.mod" value="{{system.saves.paralyzation.mod}}"/>
+                    <span class="attr-mod">({{system.saves.paralyzation.attrMod}})</span>
+                    <input type="number" name="system.saves.paralyzation.final" value="{{system.saves.paralyzation.final}}" disabled/>
+                </div>
+                
+                <div class="save-row">
+                    <label>Rod/Staff/Wand</label>
+                    <input type="number" name="system.saves.rod.base" value="{{system.saves.rod.base}}" disabled/>
+                    <input type="number" name="system.saves.rod.mod" value="{{system.saves.rod.mod}}"/>
+                    <span class="attr-mod">({{system.saves.rod.attrMod}})</span>
+                    <input type="number" name="system.saves.rod.final" value="{{system.saves.rod.final}}" disabled/>
+                </div>
+                
+                <div class="save-row">
+                    <label>Petrify/Polymorph</label>
+                    <input type="number" name="system.saves.petrification.base" value="{{system.saves.petrification.base}}" disabled/>
+                    <input type="number" name="system.saves.petrification.mod" value="{{system.saves.petrification.mod}}"/>
+                    <span class="attr-mod">({{system.saves.petrification.attrMod}})</span>
+                    <input type="number" name="system.saves.petrification.final" value="{{system.saves.petrification.final}}" disabled/>
+                </div>
+                
+                <div class="save-row">
+                    <label>Breath Weapon</label>
+                    <input type="number" name="system.saves.breath.base" value="{{system.saves.breath.base}}" disabled/>
+                    <input type="number" name="system.saves.breath.mod" value="{{system.saves.breath.mod}}"/>
+                    <span class="attr-mod">({{system.saves.breath.attrMod}})</span>
+                    <input type="number" name="system.saves.breath.final" value="{{system.saves.breath.final}}" disabled/>
+                </div>
+                
+                <div class="save-row">
+                    <label>Spell</label>
+                    <input type="number" name="system.saves.spell.base" value="{{system.saves.spell.base}}" disabled/>
+                    <input type="number" name="system.saves.spell.mod" value="{{system.saves.spell.mod}}"/>
+                    <span class="attr-mod">({{system.saves.spell.attrMod}})</span>
+                    <input type="number" name="system.saves.spell.final" value="{{system.saves.spell.final}}" disabled/>
+                </div>
             </div>
         </div>
     </div>

@@ -10,9 +10,9 @@
   },
   "authors": [
     {
-      "name": "Your Name",
-      "email": "your.email@example.com",
-      "url": "your-website.com"
+      "name": "morduun",
+      "email": "finch@thelensrpg.io ",
+      "url": "https://thelensrpg.io"
     }
   ],
   "scripts": [],
@@ -25,9 +25,22 @@
       "path": "lang/en.json"
     }
   ],
+  "media": [
+    {
+        "type": "cover",
+        "loop": false,
+        "flags": {}
+    },
+    {
+        "type": "setup",
+        "url": "systems/dnd2e/assets/ui/dnd2e-repo.webp",
+        "thumbnail": "systems/dnd2e/assets/ui/dnd2e-repo-thumb.jpg"
+    }
+  ],
+  "background": "systems/dnd2e/assets/ui/dnd2e-background.webp",
   "packs": [],
   "socket": false,
-  "manifest": "",
-  "download": "",
+  "manifest": "https://github.com/thelensrpg/dnd2e-foundry/releases/latest/download/system.json",
+  "download": "https://github.com/thelensrpg/dnd2e-foundry/archive/refs/heads/main.zip",
   "license": "LICENSE.txt"
 } 

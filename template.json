@@ -88,11 +88,36 @@
         "alignment": ""
       },
       "saves": {
-        "paralyzation": 20,
-        "rod": 20,
-        "petrification": 20,
-        "breath": 20,
-        "spell": 20
+        "paralyzation": {
+            "base": 16,
+            "mod": 0,
+            "attrMod": 0,
+            "final": 16
+        },
+        "rod": {
+            "base": 18,
+            "mod": 0,
+            "attrMod": 0,
+            "final": 18
+        },
+        "petrification": {
+            "base": 17,
+            "mod": 0,
+            "attrMod": 0,
+            "final": 17
+        },
+        "breath": {
+            "base": 20,
+            "mod": 0,
+            "attrMod": 0,
+            "final": 20
+        },
+        "spell": {
+            "base": 19,
+            "mod": 0,
+            "attrMod": 0,
+            "final": 19
+        }
       },
       "encumbrance": {
         "value": 0,
@@ -163,12 +188,14 @@
     }
   },
   "Item": {
-    "types": ["weapon", "armor", "equipment", "spell", "nonWeaponProf"],
+    "types": ["weapon", "armor", "equipment", "consumable","spell", "nonWeaponProf"],
     "templates": {
       "base": {
         "description": "",
         "quantity": 1,
-        "weight": 0
+        "weight": 0,
+        "value": 0,
+        "quality": "Common"
       }
     },
     "weapon": {
@@ -181,6 +208,7 @@
         "medium": 0,
         "long": 0
       },
+      "rate": "1/rd",
       "equipped": false
     },
     "armor": {
@@ -191,6 +219,11 @@
     },
     "equipment": {
       "templates": ["base"]
+    },
+    "consumable": {
+      "templates": ["base"],
+      "charges": 0,
+      "used": 0
     },
     "nonWeaponProf": {
       "attribute": "int",
