@@ -1,0 +1,103 @@
+<div class="followers-container">
+    {{!-- Henchmen Section --}}
+    <div class="henchmen-section follower-section">
+        <h2>
+            <i class="fas fa-users"></i>
+            Henchmen
+            <span class="follower-count">{{system.followers.henchmen.list.length}}/{{system.followers.henchmen.max}}</span>
+        </h2>
+        <div class="henchmen-list">
+            {{#each system.followers.henchmen.list as |henchman id|}}
+            <div class="henchman-entry" data-henchman-id="{{henchman._id}}">
+                <img src="{{henchman.img}}" width="36" height="36"/>
+                <h3>{{henchman.name}}</h3>
+                <div class="henchman-details">
+                    Level {{henchman.system.level}} {{henchman.system.class}}
+                </div>
+                <div class="henchman-controls">
+                    <a class="view-sheet"><i class="fas fa-eye"></i></a>
+                    <a class="remove-henchman"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+            {{/each}}
+            <div class="henchman-drop-zone" data-action="drop-henchman">
+                <i class="fas fa-plus"></i>
+                <span>Drag Character Here</span>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Followers Section --}}
+    <div class="followers-section follower-section">
+        <h2>
+            <i class="fas fa-people-arrows"></i>
+            Followers
+            <span class="follower-count">{{totalFollowers}}/{{system.followers.followers.max}}</span>
+        </h2>
+        <div class="followers-list">
+            {{#each system.followers.followers.groups as |group id|}}
+            <div class="follower-group" data-group-id="{{id}}">
+                <img src="{{group.img}}" width="36" height="36"/>
+                <div class="follower-details">
+                    <h3>{{group.name}}</h3>
+                    <input type="number" name="system.followers.followers.groups.{{id}}.quantity" 
+                           value="{{group.quantity}}" min="1"/>
+                </div>
+                <div class="follower-controls">
+                    <a class="view-sheet"><i class="fas fa-eye"></i></a>
+                    <a class="remove-follower"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+            {{/each}}
+            <div class="follower-drop-zone" data-action="drop-follower">
+                <i class="fas fa-plus"></i>
+                <span>Drag Monster Here</span>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Familiar Section --}}
+    <div class="familiar-section follower-section">
+        <h2>
+            <i class="fas fa-paw"></i>
+            Familiar
+        </h2>
+        {{#if system.followers.familiar.creature}}
+        <div class="familiar-entry">
+            <img src="{{system.followers.familiar.creature.img}}" width="48" height="48"/>
+            <h3>{{system.followers.familiar.creature.name}}</h3>
+            <div class="familiar-controls">
+                <a class="view-sheet"><i class="fas fa-eye"></i></a>
+                <a class="remove-familiar"><i class="fas fa-times"></i></a>
+            </div>
+        </div>
+        {{else}}
+        <div class="familiar-drop-zone" data-action="drop-familiar">
+            <i class="fas fa-plus"></i>
+            <span>Drag Monster Here</span>
+        </div>
+        {{/if}}
+        
+        <div class="familiar-details">
+            <div class="form-group">
+                <label>Benefits to Caster</label>
+                <textarea name="system.followers.familiar.benefits">{{system.followers.familiar.benefits}}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Ability 1</label>
+                <input type="text" name="system.followers.familiar.abilities.ability1" 
+                       value="{{system.followers.familiar.abilities.ability1}}"/>
+            </div>
+            <div class="form-group">
+                <label>Ability 2</label>
+                <input type="text" name="system.followers.familiar.abilities.ability2"
+                       value="{{system.followers.familiar.abilities.ability2}}"/>
+            </div>
+            <div class="form-group">
+                <label>Ability 3</label>
+                <input type="text" name="system.followers.familiar.abilities.ability3"
+                       value="{{system.followers.familiar.abilities.ability3}}"/>
+            </div>
+        </div>
+    </div>
+</div> 

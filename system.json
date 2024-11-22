@@ -1,0 +1,33 @@
+{
+  "id": "dnd2e",
+  "title": "AD&D 2nd Edition",
+  "description": "A system for playing AD&D 2E in Foundry VTT",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12",
+    "maximum": "12"
+  },
+  "authors": [
+    {
+      "name": "Your Name",
+      "email": "your.email@example.com",
+      "url": "your-website.com"
+    }
+  ],
+  "scripts": [],
+  "esmodules": ["module/dnd2e.js"],
+  "styles": ["styles/dnd2e.css"],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "packs": [],
+  "socket": false,
+  "manifest": "",
+  "download": "",
+  "license": "LICENSE.txt"
+} 

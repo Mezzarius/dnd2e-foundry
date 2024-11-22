@@ -1,0 +1,929 @@
+.dnd2e {
+    /* Base styles */
+    --color-border: #999;
+    --color-bg-sheet: #f0f0f0;
+    --color-tab-active: #fff;
+    --color-tab-inactive: #ddd;
+}
+
+.dnd2e .window-content {
+    background: var(--color-bg-sheet);
+    padding: 5px;
+    font-size: 14px;
+}
+
+/* Header Styles */
+.dnd2e .sheet-header {
+    flex: 0 0 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.dnd2e .profile-img {
+    flex: 0 0 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.dnd2e .header-fields {
+    flex: 1;
+}
+
+.dnd2e .charname {
+    height: 50px;
+    padding: 0;
+    margin: 0;
+}
+
+.dnd2e .charname input {
+    width: 100%;
+    height: 100%;
+    font-size: 1.5em;
+}
+
+/* Navigation Tabs */
+.dnd2e .sheet-tabs {
+    flex: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.dnd2e .sheet-tabs .item {
+    padding: 5px;
+    margin: 0 5px;
+    border-radius: 4px 4px 0 0;
+    background: var(--color-tab-inactive);
+    border: 1px solid var(--color-border);
+    border-bottom: none;
+}
+
+.dnd2e .sheet-tabs .item.active {
+    background: var(--color-tab-active);
+    text-shadow: none;
+}
+
+/* Sheet Body */
+.dnd2e .sheet-body {
+    overflow: hidden;
+}
+
+.dnd2e .sheet-body .tab {
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Grid Layouts */
+.grid {
+    display: grid;
+    gap: 10px;
+    margin: 10px 0;
+    padding: 0;
+}
+
+.grid-2col {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3col {
+    grid-template-columns: 200px 1fr 200px;
+    gap: 10px;
+}
+
+/* Character Tab */
+.attributes, .basic-info, .physical-traits {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.form-group {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.form-group label {
+    flex: 0 0 100px;
+    padding-right: 10px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.form-group input {
+    flex: 1;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.attribute-values {
+    display: flex;
+    gap: 5px;
+}
+
+.attribute-values input {
+    width: 50px;
+}
+
+h2 {
+    color: #444;
+    border-bottom: 2px solid var(--color-border);
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Combat Tab */
+.combat-stats input {
+    width: 60px;
+    text-align: center;
+}
+
+.combat-basic {
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+/* Notes Tab */
+.notes-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.background-section,
+.adventure-notes {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.background-fields {
+    margin-bottom: 10px;
+}
+
+.background-fields .form-group {
+    margin-bottom: 5px;
+}
+
+.background-story,
+.adventure-notes {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.background-story label,
+.adventure-notes label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.editor {
+    min-height: 200px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.adventure-notes .editor {
+    min-height: 300px;
+}
+
+/* Common Elements */
+input {
+    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 3px;
+    padding: 2px 4px;
+}
+
+h2 {
+    border-bottom: 2px solid var(--color-border);
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Saving Throws Styling */
+.saving-throws {
+    margin-top: 0px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.saves-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 5px;
+}
+
+.saves-grid .form-group {
+    margin-bottom: 5px;
+}
+
+.saves-grid .form-group label {
+    flex: 0 0 180px;
+    font-size: 0.9em;
+}
+
+.saves-grid .form-group input {
+    flex: 0 0 60px;
+    text-align: center;
+}
+
+/* Equipment Tab Styling */
+.equipment-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inventory-header {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 5px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.inventory-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.inventory-filter {
+    flex: 1;
+    height: 24px;
+    border-radius: 3px;
+}
+
+.encumbrance {
+    flex: 0 0 150px;
+    text-align: right;
+}
+
+.inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.inventory-list .item {
+    padding: 5px;
+    border-bottom: 1px solid var(--color-border);
+    align-items: center;
+}
+
+.inventory-list .item:nth-child(even) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.item-name {
+    flex: 1;
+    gap: 5px;
+}
+
+.item-image {
+    flex: 0 0 24px;
+}
+
+.item-equipped {
+    flex: 0 0 40px;
+    text-align: center;
+}
+
+.item-quantity {
+    flex: 0 0 60px;
+    text-align: center;
+}
+
+.item-quantity input {
+    width: 40px;
+    text-align: center;
+}
+
+.item-weight {
+    flex: 0 0 60px;
+    text-align: center;
+}
+
+.item-controls {
+    flex: 0 0 60px;
+    text-align: right;
+}
+
+.item-controls a {
+    margin: 0 3px;
+}
+
+.inventory-footer {
+    margin-top: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.flexrow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Combat Tab Styling */
+.combat-sheet {
+    height: 100%;
+    padding: 5px;
+}
+
+.combat-stats {
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.grid-4col {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-6col {
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.ac-block, .hp-block, .thac0-block, .initiative-block {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.total-ac, .total-thac0, .total-init {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+}
+
+.total-ac input, .total-thac0 input, .total-init input {
+    background: #e0e0e0;
+}
+
+/* Weapon Proficiencies */
+.weapon-proficiencies {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.prof-headers {
+    font-weight: bold;
+    padding: 5px 0;
+    margin-bottom: 5px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.prof-entry {
+    padding: 3px 0;
+    align-items: center;
+}
+
+.prof-entry input, .prof-entry select {
+    height: 24px;
+    margin: 0 2px;
+}
+
+.prof-controls {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+}
+
+.add-proficiency {
+    background: #4b4a44;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+}
+
+.add-proficiency:hover {
+    background: #6b6a64;
+}
+
+/* Skills Tab Styling */
+.skills-container {
+    height: 100%;
+    padding: 5px;
+}
+
+.nwp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nwp-slots {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nwp-slots input {
+    width: 40px;
+    text-align: center;
+}
+
+.nwp-list {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+}
+
+.nwp-header-row, .nwp-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 80px;
+    gap: 5px;
+    padding: 5px;
+    align-items: center;
+}
+
+.nwp-header-row {
+    background: rgba(0, 0, 0, 0.05);
+    font-weight: bold;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nwp-item {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nwp-item:last-child {
+    border-bottom: none;
+}
+
+.nwp-controls {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+}
+
+.item-control {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    line-height: 24px;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.item-control:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.nwp-item input, .nwp-item select {
+    width: 100%;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.nwp-item input[type="number"] {
+    text-align: center;
+}
+
+/* Magic Tab Styling */
+.magic-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spell-slots-container {
+    display: flex;
+    gap: 20px;
+}
+
+.spell-type {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.spell-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.spell-level {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slot-values {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.slot-values input {
+    width: 40px;
+    text-align: center;
+}
+
+.memorized-spells {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.spells-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.spell-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.memorize-spell {
+    background: #4b4a44;
+    color: white;
+    border: 1px solid #2a2a2a;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.memorize-spell:hover {
+    background: #5e5d57;
+}
+
+.spell-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.spell-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.spell-name {
+    flex: 1;
+}
+
+.spell-name h3 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.spell-info {
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.spell-control {
+    cursor: pointer;
+    padding: 3px;
+}
+
+.spell-control:hover {
+    color: #000;
+}
+
+/* Followers Tab Styling */
+.followers-container {
+    height: 100%;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.follower-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.follower-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.follower-count {
+    font-size: 0.8em;
+    color: #666;
+    margin-left: auto;
+}
+
+.henchman-entry, .follower-group, .familiar-entry {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.henchman-entry img, .follower-group img, .familiar-entry img {
+    border: none;
+    margin-right: 10px;
+}
+
+.henchman-details, .follower-details {
+    flex: 1;
+}
+
+.follower-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.follower-controls a {
+    padding: 5px;
+    color: #666;
+}
+
+.follower-controls a:hover {
+    color: #000;
+}
+
+.henchman-drop-zone, .follower-drop-zone, .familiar-drop-zone {
+    height: 60px;
+    border: 2px dashed var(--color-border);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    margin: 10px 0;
+}
+
+.henchman-drop-zone.dragover, .follower-drop-zone.dragover, .familiar-drop-zone.dragover {
+    background: rgba(0, 255, 0, 0.1);
+    border-color: #0a0;
+}
+
+.familiar-details {
+    margin-top: 10px;
+}
+
+.familiar-details .form-group {
+    margin-bottom: 10px;
+}
+
+.familiar-details textarea {
+    height: 60px;
+    resize: vertical;
+}
+
+/* Rich Text Editor Styling */
+.editor-content {
+    min-height: 200px;
+    height: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.adventure-notes .editor-content {
+    min-height: 500px;
+}
+
+.editor-content:focus {
+    outline: 1px solid #111;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.editor-content p {
+    margin: 0 0 0.5em 0;
+}
+
+.editor-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Add these new styles */
+.character-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+.attributes-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.attributes-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.attribute-block {
+    padding: 4px 5px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.attribute-block:last-child {
+    border-bottom: none;
+}
+
+.attribute-fields {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.attribute-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 180px;
+}
+
+.attribute-main label {
+    font-weight: bold;
+    font-size: 1.1em;
+    min-width: 100px;
+    color: #444;
+}
+
+.attribute-main input {
+    width: 60px;
+    height: 28px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.attribute-exceptional {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.attribute-exceptional label {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.attribute-exceptional input {
+    width: 50px;
+    text-align: center;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.attribute-modifiers {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.modifier-field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.modifier-field label {
+    font-size: 0.8em;
+    color: #666;
+    min-width: 42px;
+    text-align: right;
+}
+
+.modifier-field input {
+    width: 45px;
+    height: 24px;
+    text-align: center;
+    background: #e0e0e0;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+/* Add these CSS variables if they don't exist in your system */
+:root {
+    --color-border-light: rgba(0, 0, 0, 0.1);
+}
+
+/* Add or update the sheet dimensions */
+.dnd2e.sheet.actor {
+    min-width: 1000px;
+    min-height: 775px;
+    max-width: 1000px;
+    max-height: 800px;
+    height: 775px;
+    width: 1000px;
+}
+
+/* Ensure the sheet content fills the available space */
+.dnd2e.sheet.actor .window-content {
+    height: 100%;
+    padding: 5px;
+    overflow-y: hidden; /* Prevent double scrollbars */
+}
+
+.dnd2e.sheet.actor form {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Ensure the sheet body takes up remaining space */
+.sheet-body {
+    height: calc(100% - 60px); /* Adjust based on your header height */
+    overflow-y: auto;
+}
+
+/* Update/add these styles */
+.traits {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.traits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.traits-column {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.traits-column .form-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.traits-column .form-group label {
+    min-width: 70px;
+    text-align: right;
+    color: #444;
+}
+
+.traits-column .form-group input {
+    flex: 1;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0 5px;
+} 

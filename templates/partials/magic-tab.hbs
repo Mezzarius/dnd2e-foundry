@@ -1,0 +1,69 @@
+<div class="magic-container">
+    {{!-- Spell Slots Section --}}
+    <div class="spell-slots-container">
+        <div class="spell-type wizard">
+            <h2>Wizard Spells</h2>
+            <div class="spell-slots-grid">
+                {{#each system.spells.wizard.slots as |slots level|}}
+                <div class="spell-level">
+                    <label>Level {{level}}</label>
+                    <div class="slot-values">
+                        <input type="number" name="system.spells.wizard.slots.{{level}}.available" value="{{slots.available}}"/>
+                        <span>/</span>
+                        <input type="number" name="system.spells.wizard.slots.{{level}}.max" value="{{slots.max}}"/>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        
+        <div class="spell-type priest">
+            <h2>Priest Spells</h2>
+            <div class="spell-slots-grid">
+                {{#each system.spells.priest.slots as |slots level|}}
+                <div class="spell-level">
+                    <label>Level {{level}}</label>
+                    <div class="slot-values">
+                        <input type="number" name="system.spells.priest.slots.{{level}}.available" value="{{slots.available}}"/>
+                        <span>/</span>
+                        <input type="number" name="system.spells.priest.slots.{{level}}.max" value="{{slots.max}}"/>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+    {{!-- Memorized Spells Section --}}
+    <div class="memorized-spells">
+        <div class="spells-header">
+            <h2>Memorized Spells</h2>
+            <div class="spell-controls">
+                <button type="button" class="memorize-spell">
+                    <i class="fas fa-plus"></i> Add Spell
+                </button>
+            </div>
+        </div>
+        
+        <div class="spell-list">
+            {{#each actor.items as |item id|}}
+                {{#if (eq item.type "spell")}}
+                <div class="spell-item" data-item-id="{{item._id}}">
+                    <div class="spell-name">
+                        <h3>{{item.name}}</h3>
+                    </div>
+                    <div class="spell-info">
+                        <span class="spell-school">{{item.system.school}}</span>
+                        <span class="spell-level">Level {{item.system.level}}</span>
+                        <span class="spell-type">{{item.system.spellType}}</span>
+                    </div>
+                    <div class="spell-controls">
+                        <a class="spell-control" data-action="edit"><i class="fas fa-edit"></i></a>
+                        <a class="spell-control" data-action="delete"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</div> 

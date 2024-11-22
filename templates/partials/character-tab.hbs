@@ -1,0 +1,289 @@
+<div class="character-details">
+    <div class="attributes-section">
+        <h2>Attributes</h2>
+        <div class="attributes-grid">
+            {{!-- Strength --}}
+            <div class="attribute-block">
+                <div class="attribute-fields">
+                    <div class="attribute-main">
+                        <label>Strength</label>
+                        <input type="number" name="system.attributes.str.value" value="{{system.attributes.str.value}}"/>
+                    </div>
+                    <div class="attribute-exceptional">
+                        <label>Exceptional</label>
+                        <input type="number" name="system.attributes.str.exceptional" value="{{system.attributes.str.exceptional}}" placeholder="00"/>
+                    </div>
+                    <div class="attribute-modifiers">
+                        <div class="modifier-field">
+                            <label>Hit</label>
+                            <input type="text" name="system.attributes.str.hitMod" value="{{system.attributes.str.hitMod}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Dmg</label>
+                            <input type="text" name="system.attributes.str.dmgMod" value="{{system.attributes.str.dmgMod}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Wgt</label>
+                            <input type="text" name="system.attributes.str.weight" value="{{system.attributes.str.weight}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Press</label>
+                            <input type="text" name="system.attributes.str.press" value="{{system.attributes.str.press}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Doors</label>
+                            <input type="text" name="system.attributes.str.doors" value="{{system.attributes.str.doors}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>BBLG</label>
+                            <input type="text" name="system.attributes.str.bblg" value="{{system.attributes.str.bblg}}" disabled/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Dexterity --}}
+            <div class="attribute-block">
+                <div class="attribute-fields">
+                    <div class="attribute-main">
+                        <label>Dexterity</label>
+                        <input type="number" name="system.attributes.dex.value" value="{{system.attributes.dex.value}}"/>
+                    </div>
+                    <div class="attribute-modifiers">
+                        <div class="modifier-field">
+                            <label>React</label>
+                            <input type="text" name="system.attributes.dex.reaction" value="{{system.attributes.dex.reaction}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Missile</label>
+                            <input type="text" name="system.attributes.dex.missile" value="{{system.attributes.dex.missile}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Defense</label>
+                            <input type="text" name="system.attributes.dex.defense" value="{{system.attributes.dex.defense}}" disabled/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Constitution --}}
+            <div class="attribute-block">
+                <div class="attribute-fields">
+                    <div class="attribute-main">
+                        <label>Constitution</label>
+                        <input type="number" name="system.attributes.con.value" value="{{system.attributes.con.value}}"/>
+                    </div>
+                    <div class="attribute-modifiers">
+                        <div class="modifier-field">
+                            <label>HP Adj</label>
+                            <input type="text" name="system.attributes.con.hpAdj" value="{{system.attributes.con.hpAdj}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Shock</label>
+                            <input type="text" name="system.attributes.con.shock" value="{{system.attributes.con.shock}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Res</label>
+                            <input type="text" name="system.attributes.con.resurrect" value="{{system.attributes.con.resurrect}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Poison</label>
+                            <input type="text" name="system.attributes.con.poison" value="{{system.attributes.con.poison}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Regen</label>
+                            <input type="text" name="system.attributes.con.regen" value="{{system.attributes.con.regen}}" disabled/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Intelligence --}}
+            <div class="attribute-block">
+                <div class="attribute-fields">
+                    <div class="attribute-main">
+                        <label>Intelligence</label>
+                        <input type="number" name="system.attributes.int.value" value="{{system.attributes.int.value}}"/>
+                    </div>
+                    <div class="attribute-modifiers">
+                        <div class="modifier-field">
+                            <label>Profs</label>
+                            <input type="text" name="system.attributes.int.profs" value="{{system.attributes.int.profs}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Max Lvl</label>
+                            <input type="text" name="system.attributes.int.maxSpellLevel" value="{{system.attributes.int.maxSpellLevel}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Learn%</label>
+                            <input type="text" name="system.attributes.int.learnSpell" value="{{system.attributes.int.learnSpell}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Max/Lvl</label>
+                            <input type="text" name="system.attributes.int.maxSpellsPerLevel" value="{{system.attributes.int.maxSpellsPerLevel}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Bonus</label>
+                            <input type="text" name="system.attributes.int.bonus" value="{{system.attributes.int.bonus}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Immune</label>
+                            <input type="text" name="system.attributes.int.immunity" value="{{system.attributes.int.immunity}}" disabled/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Wisdom --}}
+            <div class="attribute-block">
+                <div class="attribute-fields">
+                    <div class="attribute-main">
+                        <label>Wisdom</label>
+                        <input type="number" name="system.attributes.wis.value" value="{{system.attributes.wis.value}}"/>
+                    </div>
+                    <div class="attribute-modifiers">
+                        <div class="modifier-field">
+                            <label>Mag Def</label>
+                            <input type="text" name="system.attributes.wis.magicDefense" value="{{system.attributes.wis.magicDefense}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Bonus</label>
+                            <input type="text" name="system.attributes.wis.bonusSpells" value="{{system.attributes.wis.bonusSpells}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Fail%</label>
+                            <input type="text" name="system.attributes.wis.spellFail" value="{{system.attributes.wis.spellFail}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Immune</label>
+                            <input type="text" name="system.attributes.wis.immunity" value="{{system.attributes.wis.immunity}}" disabled/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Charisma --}}
+            <div class="attribute-block">
+                <div class="attribute-fields">
+                    <div class="attribute-main">
+                        <label>Charisma</label>
+                        <input type="number" name="system.attributes.cha.value" value="{{system.attributes.cha.value}}"/>
+                    </div>
+                    <div class="attribute-modifiers">
+                        <div class="modifier-field">
+                            <label>Hench</label>
+                            <input type="text" name="system.attributes.cha.henchmen" value="{{system.attributes.cha.henchmen}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>Loyalty</label>
+                            <input type="text" name="system.attributes.cha.loyalty" value="{{system.attributes.cha.loyalty}}" disabled/>
+                        </div>
+                        <div class="modifier-field">
+                            <label>React</label>
+                            <input type="text" name="system.attributes.cha.reaction" value="{{system.attributes.cha.reaction}}" disabled/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Lower Section Grid --}}
+    <div class="lower-section grid grid-3col">
+        {{!-- Character Info --}}
+        <div class="basic-info">
+            <h2>Character Info</h2>
+            <div class="form-group">
+                <label>Class</label>
+                <input type="text" name="system.class" value="{{system.class}}"/>
+            </div>
+            <div class="form-group">
+                <label>Race</label>
+                <input type="text" name="system.race" value="{{system.race}}"/>
+            </div>
+            <div class="form-group">
+                <label>Level</label>
+                <input type="number" name="system.level" value="{{system.level}}"/>
+            </div>
+            <div class="form-group">
+                <label>Experience</label>
+                <input type="number" name="system.xp.value" value="{{system.xp.value}}"/>
+            </div>
+            <div class="form-group">
+                <label>Next Level</label>
+                <input type="number" name="system.xp.next" value="{{system.xp.next}}"/>
+            </div>
+        </div>
+
+        {{!-- Physical Traits --}}
+        <div class="traits">
+            <h2>Traits</h2>
+            <div class="traits-grid">
+                {{!-- Left Column --}}
+                <div class="traits-column">
+                    <div class="form-group">
+                        <label>Origin</label>
+                        <input type="text" name="system.traits.origin" value="{{system.traits.origin}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Faith</label>
+                        <input type="text" name="system.traits.faith" value="{{system.traits.faith}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Alignment</label>
+                        <input type="text" name="system.traits.alignment" value="{{system.traits.alignment}}"/>
+                    </div>
+                </div>
+                
+                {{!-- Right Column --}}
+                <div class="traits-column">
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" name="system.traits.age" value="{{system.traits.age}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Height</label>
+                        <input type="text" name="system.traits.height" value="{{system.traits.height}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Weight</label>
+                        <input type="text" name="system.traits.weight" value="{{system.traits.weight}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Hair</label>
+                        <input type="text" name="system.traits.hair" value="{{system.traits.hair}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Eyes</label>
+                        <input type="text" name="system.traits.eyes" value="{{system.traits.eyes}}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Saving Throws --}}
+        <div class="saving-throws">
+            <h2>Saving Throws</h2>
+            <div class="form-group">
+                <label>Poison/Death</label>
+                <input type="number" name="system.saves.paralyzation" value="{{system.saves.paralyzation}}"/>
+            </div>
+            <div class="form-group">
+                <label>Device</label>
+                <input type="number" name="system.saves.rod" value="{{system.saves.rod}}"/>
+            </div>
+            <div class="form-group">
+                <label>Pet/Poly</label>
+                <input type="number" name="system.saves.petrification" value="{{system.saves.petrification}}"/>
+            </div>
+            <div class="form-group">
+                <label>Breath</label>
+                <input type="number" name="system.saves.breath" value="{{system.saves.breath}}"/>
+            </div>
+            <div class="form-group">
+                <label>Spell</label>
+                <input type="number" name="system.saves.spell" value="{{system.saves.spell}}"/>
+            </div>
+        </div>
+    </div>
+</div> 

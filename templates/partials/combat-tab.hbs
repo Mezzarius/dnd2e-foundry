@@ -1,0 +1,117 @@
+<div class="combat-sheet">
+    {{!-- Combat Stats Row --}}
+    <div class="combat-stats grid grid-4col">
+        {{!-- Armor Class --}}
+        <div class="ac-block">
+            <h2>Armor Class</h2>
+            <div class="form-group">
+                <label>Base AC</label>
+                <input type="number" name="system.ac.base" value="{{system.ac.base}}"/>
+            </div>
+            <div class="form-group">
+                <label>Armor Type</label>
+                <input type="text" name="system.ac.armor" value="{{system.ac.armor}}"/>
+            </div>
+            <div class="form-group">
+                <label>Shield Type</label>
+                <input type="text" name="system.ac.shield" value="{{system.ac.shield}}"/>
+            </div>
+            <div class="form-group">
+                <label>Dex Modifier</label>
+                <input type="number" name="system.ac.dexMod" value="{{system.ac.dexMod}}"/>
+            </div>
+            <div class="form-group total-ac">
+                <label>Total AC</label>
+                <input type="number" name="system.ac.value" value="{{system.ac.value}}" disabled/>
+            </div>
+        </div>
+
+        {{!-- Hit Points --}}
+        <div class="hp-block">
+            <h2>Hit Points</h2>
+            <div class="form-group">
+                <label>Current HP</label>
+                <input type="number" name="system.hp.value" value="{{system.hp.value}}"/>
+            </div>
+            <div class="form-group">
+                <label>Maximum HP</label>
+                <input type="number" name="system.hp.max" value="{{system.hp.max}}"/>
+            </div>
+            <div class="form-group">
+                <label>Wounds</label>
+                <input type="text" name="system.hp.wounds" value="{{system.hp.wounds}}"/>
+            </div>
+        </div>
+
+        {{!-- THAC0 --}}
+        <div class="thac0-block">
+            <h2>THAC0</h2>
+            <div class="form-group">
+                <label>Base THAC0</label>
+                <input type="number" name="system.thac0.base" value="{{system.thac0.base}}"/>
+            </div>
+            <div class="form-group">
+                <label>Str Modifier</label>
+                <input type="number" name="system.thac0.strMod" value="{{system.thac0.strMod}}"/>
+            </div>
+            <div class="form-group total-thac0">
+                <label>Total THAC0</label>
+                <input type="number" name="system.thac0.value" value="{{system.thac0.value}}" disabled/>
+            </div>
+        </div>
+
+        {{!-- Initiative --}}
+        <div class="initiative-block">
+            <h2>Initiative</h2>
+            <div class="form-group">
+                <label>Base</label>
+                <input type="number" name="system.initiative.base" value="{{system.initiative.base}}"/>
+            </div>
+            <div class="form-group">
+                <label>Dex Modifier</label>
+                <input type="number" name="system.initiative.dexMod" value="{{system.initiative.dexMod}}"/>
+            </div>
+            <div class="form-group total-init">
+                <label>Total</label>
+                <input type="number" name="system.initiative.value" value="{{system.initiative.value}}" disabled/>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Weapon Proficiencies --}}
+    <div class="weapon-proficiencies">
+        <h2>Weapon Proficiencies</h2>
+        <div class="proficiency-list">
+            <div class="prof-headers grid grid-6col">
+                <div class="header">Weapon</div>
+                <div class="header">Proficiency</div>
+                <div class="header">Specialization</div>
+                <div class="header">Attack Bonus</div>
+                <div class="header">Damage Bonus</div>
+                <div class="header">Rate of Fire</div>
+            </div>
+            {{#each system.weaponProfs as |prof id|}}
+            <div class="prof-entry grid grid-6col" data-prof-id="{{id}}">
+                <input type="text" name="system.weaponProfs.{{id}}.weapon" value="{{prof.weapon}}"/>
+                <select name="system.weaponProfs.{{id}}.proficiency">
+                    <option value="none" {{selected prof.proficiency "none"}}>None</option>
+                    <option value="proficient" {{selected prof.proficiency "proficient"}}>Proficient</option>
+                    <option value="specialized" {{selected prof.proficiency "specialized"}}>Specialized</option>
+                    <option value="mastered" {{selected prof.proficiency "mastered"}}>Mastered</option>
+                </select>
+                <select name="system.weaponProfs.{{id}}.specialization">
+                    <option value="none" {{selected prof.specialization "none"}}>None</option>
+                    <option value="single" {{selected prof.specialization "single"}}>Single</option>
+                    <option value="double" {{selected prof.specialization "double"}}>Double</option>
+                </select>
+                <input type="text" name="system.weaponProfs.{{id}}.attackBonus" value="{{prof.attackBonus}}"/>
+                <input type="text" name="system.weaponProfs.{{id}}.damageBonus" value="{{prof.damageBonus}}"/>
+                <input type="text" name="system.weaponProfs.{{id}}.rateOfFire" value="{{prof.rateOfFire}}"/>
+            </div>
+            {{/each}}
+            <div class="prof-controls">
+                <button type="button" class="add-proficiency"><i class="fas fa-plus"></i> Add Weapon</button>
+            </div>
+        </div>
+    </div>
+</div> 

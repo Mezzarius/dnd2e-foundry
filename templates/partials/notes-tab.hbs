@@ -1,0 +1,28 @@
+<div class="notes-container">
+    {{!-- Notes Sub-Navigation --}}
+    <nav class="notes-tabs tabs" data-group="notes-tabs">
+        <a class="item" data-tab="background"><i class="fas fa-book-open"></i> Background</a>
+        <a class="item" data-tab="adventures"><i class="fas fa-scroll"></i> Adventure Log</a>
+    </nav>
+
+    {{!-- Background Sub-Tab --}}
+    <div class="tab background" data-group="notes-tabs" data-tab="background">
+        <div class="background-section">
+            <div class="background-story">
+                <label>Background Story</label>
+                <div class="editor-content" data-edit="system.background.story">
+                    {{{enrichedBackgroundStory}}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Adventure Notes Sub-Tab --}}
+    <div class="tab adventures" data-group="notes-tabs" data-tab="adventures">
+        <div class="adventure-notes">
+            <div class="editor-content" data-edit="system.notes.adventure">
+                {{{enrichedAdventureNotes}}}
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,24 @@
+{
+  "DND2E": {
+    "Attributes": {
+      "Title": "Attributes",
+      "str": "Strength",
+      "dex": "Dexterity",
+      "con": "Constitution",
+      "int": "Intelligence",
+      "wis": "Wisdom",
+      "cha": "Charisma"
+    },
+    "Combat": {
+      "thac0": "THAC0",
+      "ac": "Armor Class",
+      "hp": "Hit Points"
+    },
+    "SavingThrows": {
+      "Title": "Saving Throws"
+    },
+    "Skills": {
+      "NonWeaponProfs": "Non-Weapon Proficiencies"
+    }
+  }
+} 

@@ -1,0 +1,65 @@
+<div class="skills-container">
+    <div class="nwp-header">
+        <h2>Non-Weapon Proficiencies</h2>
+        <div class="nwp-slots">
+            <label>Slots:</label>
+            <input type="number" name="system.nonWeaponProfs.slots.used" value="{{system.nonWeaponProfs.slots.used}}" disabled/>
+            <span>/</span>
+            <input type="number" name="system.nonWeaponProfs.slots.total" value="{{system.nonWeaponProfs.slots.total}}"/>
+        </div>
+    </div>
+
+    <div class="nwp-list">
+        <div class="nwp-header-row">
+            <div class="nwp-name">Proficiency</div>
+            <div class="nwp-attr">Attribute</div>
+            <div class="nwp-score">Score</div>
+            <div class="nwp-base">Base</div>
+            <div class="nwp-mod">Mod</div>
+            <div class="nwp-slots">Slots</div>
+            <div class="nwp-controls">
+                <a class="item-control nwp-create" title="Add Proficiency">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+
+        {{#each proficiencies as |prof id|}}
+        <div class="nwp-item" data-item-id="{{prof._id}}">
+            <div class="nwp-name">
+                <input type="text" value="{{prof.name}}" disabled/>
+            </div>
+            <div class="nwp-attr">
+                <select name="system.attribute" disabled>
+                    {{#select prof.system.attribute}}
+                    {{#each ../config.attributes as |label attr|}}
+                    <option value="{{attr}}">{{label}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="nwp-score">{{prof.totalScore}}</div>
+            <div class="nwp-base">
+                <input type="number" name="system.baseScore" value="{{prof.system.baseScore}}" disabled/>
+            </div>
+            <div class="nwp-mod">
+                <input type="number" name="system.modifier" value="{{prof.system.modifier}}" disabled/>
+            </div>
+            <div class="nwp-slots">
+                <input type="number" name="system.slots" value="{{prof.system.slots}}" disabled/>
+            </div>
+            <div class="nwp-controls">
+                <a class="item-control nwp-edit" title="Edit Proficiency">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="item-control nwp-delete" title="Delete Proficiency">
+                    <i class="fas fa-trash"></i>
+                </a>
+                <a class="item-control nwp-check" title="Check Proficiency">
+                    <i class="fas fa-dice-d20"></i>
+                </a>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div> 

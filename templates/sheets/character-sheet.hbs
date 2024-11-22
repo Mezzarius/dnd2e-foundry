@@ -1,0 +1,46 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+            </h1>
+        </div>
+    </header>
+
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="character">Character</a>
+        <a class="item" data-tab="equipment">Equipment</a>
+        <a class="item" data-tab="combat">Combat</a>
+        <a class="item" data-tab="skills">Skills</a>
+        <a class="item" data-tab="magic">Magic</a>
+        <a class="item" data-tab="followers">Followers</a>
+        <a class="item" data-tab="notes">Notes</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+        <div class="tab character" data-group="primary" data-tab="character">
+            {{> "systems/dnd2e/templates/partials/character-tab.hbs"}}
+        </div>
+        <div class="tab equipment" data-group="primary" data-tab="equipment">
+            {{> "systems/dnd2e/templates/partials/equipment-tab.hbs"}}
+        </div>
+        <div class="tab combat" data-group="primary" data-tab="combat">
+            {{> "systems/dnd2e/templates/partials/combat-tab.hbs"}}
+        </div>
+        <div class="tab skills" data-group="primary" data-tab="skills">
+            {{> "systems/dnd2e/templates/partials/skills-tab.hbs"}}
+        </div>
+        <div class="tab magic" data-group="primary" data-tab="magic">
+            {{> "systems/dnd2e/templates/partials/magic-tab.hbs"}}
+        </div>
+        <div class="tab followers" data-group="primary" data-tab="followers">
+            {{> "systems/dnd2e/templates/partials/followers-tab.hbs"}}
+        </div>
+        <div class="tab notes" data-group="primary" data-tab="notes">
+            {{> "systems/dnd2e/templates/partials/notes-tab.hbs"}}
+        </div>
+    </section>
+</form> 
