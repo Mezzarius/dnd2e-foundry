@@ -323,6 +323,7 @@ h2 {
     padding: 5px;
     border-bottom: 1px solid var(--color-border);
     align-items: center;
+    gap: 10px;
 }
 
 .inventory-list .item:nth-child(even) {
@@ -330,12 +331,43 @@ h2 {
 }
 
 .item-name {
-    flex: 1;
+    flex: 2;
     gap: 5px;
 }
 
-.item-image {
-    flex: 0 0 24px;
+.item-type {
+    flex: 1;
+    text-align: center;
+}
+
+.item-damage {
+    flex: 1;
+    text-align: center;
+}
+
+.item-damage span {
+    display: block;
+    font-size: 0.9em;
+}
+
+.item-speed {
+    flex: 0 0 50px;
+    text-align: center;
+}
+
+.item-quality {
+    flex: 1;
+    text-align: center;
+}
+
+.item-value {
+    flex: 0 0 80px;
+    text-align: right;
+}
+
+.item-ac {
+    flex: 0 0 60px;
+    text-align: center;
 }
 
 .item-equipped {
@@ -353,15 +385,12 @@ h2 {
     text-align: center;
 }
 
-.item-weight {
-    flex: 0 0 60px;
-    text-align: center;
-}
-
 .item-controls {
+    flex: 0 0 60px;
+    text-align: right;
     display: flex;
     gap: 5px;
-    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .item-create {
@@ -1056,4 +1085,60 @@ h2 {
     height: 28px;
     font-size: 20px;
     margin: 0;
+}
+
+.list-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border-bottom: 2px solid var(--color-border);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.header-name { flex: 2; }
+.header-type { flex: 1; text-align: center; }
+.header-damage { flex: 1; text-align: center; }
+.header-speed { flex: 0 0 50px; text-align: center; }
+.header-quality { flex: 1; text-align: center; }
+.header-value { flex: 0 0 80px; text-align: right; }
+.header-ac { flex: 0 0 60px; text-align: center; }
+.header-equipped { flex: 0 0 40px; text-align: center; }
+.header-quantity { flex: 0 0 60px; text-align: center; }
+.header-controls { flex: 0 0 60px; }
+
+/* Add this to your existing CSS file */
+.range-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.range-inputs input {
+    width: 60px;
+    text-align: center;
+}
+
+.item-properties .form-group {
+    margin-bottom: 8px;
+}
+
+.item-properties label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.item-properties input,
+.item-properties select,
+.item-properties textarea {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.item-properties textarea {
+    height: 100px;
+    resize: vertical;
 } 

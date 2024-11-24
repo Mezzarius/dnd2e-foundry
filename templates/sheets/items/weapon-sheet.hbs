@@ -1,0 +1,79 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+            </h1>
+        </div>
+    </header>
+
+    <div class="sheet-content">
+        <div class="item-properties">
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="system.description">{{system.description}}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Weapon Type</label>
+                <select name="system.type">
+                    <option value="slashing" {{selected system.type "slashing"}}>Slashing</option>
+                    <option value="piercing" {{selected system.type "piercing"}}>Piercing</option>
+                    <option value="bludgeoning" {{selected system.type "bludgeoning"}}>Bludgeoning</option>
+                    <option value="missile" {{selected system.type "missile"}}>Missile</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Damage vs S/M</label>
+                <input type="text" name="system.sdamage" value="{{system.sdamage}}"/>
+            </div>
+
+            <div class="form-group">
+                <label>Damage vs L</label>
+                <input type="text" name="system.ldamage" value="{{system.ldamage}}"/>
+            </div>
+
+            <div class="form-group">
+                <label>Speed Factor</label>
+                <input type="number" name="system.speed" value="{{system.speed}}" data-dtype="Number"/>
+            </div>
+
+            <div class="form-group">
+                <label>Rate of Fire</label>
+                <input type="text" name="system.rate" value="{{system.rate}}"/>
+            </div>
+
+            <div class="form-group">
+                <label>Quality</label>
+                <select name="system.quality">
+                    <option value="Common" {{selected system.quality "Common"}}>Common</option>
+                    <option value="Fine" {{selected system.quality "Fine"}}>Fine</option>
+                    <option value="Poor" {{selected system.quality "Poor"}}>Poor</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Weight</label>
+                <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+            </div>
+
+            <div class="form-group">
+                <label>Value (GP)</label>
+                <input type="number" name="system.value" value="{{system.value}}" data-dtype="Number"/>
+            </div>
+
+            {{#if (eq system.type "missile")}}
+            <div class="form-group">
+                <label>Range (S/M/L)</label>
+                <div class="range-inputs">
+                    <input type="number" name="system.range.short" value="{{system.range.short}}" placeholder="Short"/>
+                    <input type="number" name="system.range.medium" value="{{system.range.medium}}" placeholder="Medium"/>
+                    <input type="number" name="system.range.long" value="{{system.range.long}}" placeholder="Long"/>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</form> 

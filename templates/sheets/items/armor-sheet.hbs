@@ -1,0 +1,51 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+            </h1>
+        </div>
+    </header>
+
+    <div class="sheet-content">
+        <div class="item-properties">
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="system.description">{{system.description}}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Armor Type</label>
+                <select name="system.type">
+                    <option value="armor" {{selected system.type "armor"}}>Armor</option>
+                    <option value="shield" {{selected system.type "shield"}}>Shield</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Armor Class</label>
+                <input type="number" name="system.ac" value="{{system.ac}}" data-dtype="Number"/>
+            </div>
+
+            <div class="form-group">
+                <label>Quality</label>
+                <select name="system.quality">
+                    <option value="Common" {{selected system.quality "Common"}}>Common</option>
+                    <option value="Fine" {{selected system.quality "Fine"}}>Fine</option>
+                    <option value="Poor" {{selected system.quality "Poor"}}>Poor</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Weight</label>
+                <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+            </div>
+
+            <div class="form-group">
+                <label>Value (GP)</label>
+                <input type="number" name="system.value" value="{{system.value}}" data-dtype="Number"/>
+            </div>
+        </div>
+    </div>
+</form> 

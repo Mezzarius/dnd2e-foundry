@@ -200,7 +200,8 @@
     },
     "weapon": {
       "templates": ["base"],
-      "damage": "1d6",
+      "sdamage": "1d6",
+      "ldamage": "1d8",
       "type": "melee",
       "speed": 0,
       "range": {

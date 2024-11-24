@@ -13,6 +13,15 @@
     {{!-- Weapons Section --}}
     <div class="equipment-section">
         <h3>Weapons</h3>
+        <div class="list-header">
+            <div class="header-name">Name</div>
+            <div class="header-type">Type</div>
+            <div class="header-damage">Damage</div>
+            <div class="header-speed">Speed</div>
+            <div class="header-quality">Quality</div>
+            <div class="header-equipped">Equipped</div>
+            <div class="header-controls"></div>
+        </div>
         <ol class="inventory-list">
             {{#each weapons as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
@@ -25,6 +34,13 @@
     {{!-- Armor Section --}}
     <div class="equipment-section">
         <h3>Armor</h3>
+        <div class="list-header">
+            <div class="header-name">Name</div>
+            <div class="header-ac">AC</div>
+            <div class="header-quality">Quality</div>
+            <div class="header-equipped">Equipped</div>
+            <div class="header-controls"></div>
+        </div>
         <ol class="inventory-list">
             {{#each armor as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
@@ -37,6 +53,12 @@
     {{!-- Consumables Section --}}
     <div class="equipment-section">
         <h3>Consumables & Ammunition</h3>
+        <div class="list-header">
+            <div class="header-name">Name</div>
+            <div class="header-quantity">Quantity</div>
+            <div class="header-quality">Quality</div>
+            <div class="header-controls"></div>
+        </div>
         <ol class="inventory-list">
             {{#each consumables as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
@@ -49,6 +71,12 @@
     {{!-- Other Equipment Section --}}
     <div class="equipment-section">
         <h3>Other Equipment</h3>
+        <div class="list-header">
+            <div class="header-name">Name</div>
+            <div class="header-quality">Quality</div>
+            <div class="header-value">Value</div>
+            <div class="header-controls"></div>
+        </div>
         <ol class="inventory-list">
             {{#each equipment as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
