@@ -10,41 +10,60 @@
 
     <div class="sheet-content">
         <div class="item-properties">
-            <div class="form-group">
+            <div class="properties-grid three-column">
+                <div class="property-column">
+                    <div class="form-group">
+                        <label>Armor Type</label>
+                        <select name="system.type">
+                            <option value="armor" {{selected system.type "armor"}}>Armor</option>
+                            <option value="shield" {{selected system.type "shield"}}>Shield</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quality</label>
+                        <select name="system.quality">
+                            <option value="Crude" {{selected system.quality "Crude"}}>Crude</option>
+                            <option value="Common" {{selected system.quality "Common"}}>Common</option>
+                            <option value="Fine" {{selected system.quality "Fine"}}>Fine</option>
+                            <option value="Master" {{selected system.quality "Master"}}>Master</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="property-column">
+                    <div class="form-group">
+                        <label>Base AC</label>
+                        <input type="number" name="system.baseAc" value="{{system.baseAc}}" data-dtype="Number"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Magic Bonus</label>
+                        <input type="number" name="system.magicBonus" value="{{system.magicBonus}}" data-dtype="Number"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total AC</label>
+                        <input type="number" name="system.ac" value="{{system.ac}}" disabled/>
+                    </div>
+                </div>
+
+                <div class="property-column">
+                    <div class="form-group">
+                        <label>Weight</label>
+                        <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Value (GP)</label>
+                        <input type="number" name="system.value" value="{{system.value}}" data-dtype="Number"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group description">
                 <label>Description</label>
-                <textarea name="system.description">{{system.description}}</textarea>
-            </div>
-            
-            <div class="form-group">
-                <label>Armor Type</label>
-                <select name="system.type">
-                    <option value="armor" {{selected system.type "armor"}}>Armor</option>
-                    <option value="shield" {{selected system.type "shield"}}>Shield</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Armor Class</label>
-                <input type="number" name="system.ac" value="{{system.ac}}" data-dtype="Number"/>
-            </div>
-
-            <div class="form-group">
-                <label>Quality</label>
-                <select name="system.quality">
-                    <option value="Common" {{selected system.quality "Common"}}>Common</option>
-                    <option value="Fine" {{selected system.quality "Fine"}}>Fine</option>
-                    <option value="Poor" {{selected system.quality "Poor"}}>Poor</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Weight</label>
-                <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
-            </div>
-
-            <div class="form-group">
-                <label>Value (GP)</label>
-                <input type="number" name="system.value" value="{{system.value}}" data-dtype="Number"/>
+                <textarea name="system.description" rows="3">{{system.description}}</textarea>
             </div>
         </div>
     </div>

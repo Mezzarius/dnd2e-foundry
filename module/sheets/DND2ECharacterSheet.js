@@ -1,5 +1,6 @@
 import { AttributeTables } from "../tables/attributeTables.js";
 import { SavingThrowTables } from "../tables/savingThrowTables.js";
+import { ClassHitDice } from "../tables/classHitDice.js";
 
 export default class DND2ECharacterSheet extends ActorSheet {
     static get defaultOptions() {
@@ -34,6 +35,39 @@ export default class DND2ECharacterSheet extends ActorSheet {
             this._calculateAttributeModifiers(key, attr.value, attr.exceptional);
         });
 
+        // Calculate AC values
+        const dexDefense = this.actor.system.attributes.dex?.defense || 0;
+        const equippedArmor = this.actor.items.find(i => 
+            i.type === "armor" && 
+            i.system.type === "armor" && 
+            i.system.equipped
+        );
+        const equippedShield = this.actor.items.find(i => 
+            i.type === "armor" && 
+            i.system.type === "shield" && 
+            i.system.equipped
+        );
+
+        // Calculate AC for equipped items
+        const armorAC = equippedArmor ? 
+            (equippedArmor.system.baseAc - (equippedArmor.system.magicBonus || 0)) : 10;
+        const shieldAC = equippedShield ? 
+            (equippedShield.system.baseAc + (equippedShield.system.magicBonus || 0)) : 0;
+
+        // Set AC values in context
+        context.system.ac = {
+            armor: equippedArmor ? {
+                value: armorAC,
+                name: equippedArmor.name
+            } : { value: 10, name: "No Armor" },
+            shield: equippedShield ? {
+                value: shieldAC,
+                name: equippedShield.name
+            } : { value: 0, name: "No Shield" },
+            dexMod: dexDefense,
+            value: armorAC - shieldAC + dexDefense
+        };
+
         this._calculateSavingThrows(context);
 
         // Add proficiencies data
@@ -60,8 +94,14 @@ export default class DND2ECharacterSheet extends ActorSheet {
 
         // Calculate total weight
         context.totalWeight = context.items.reduce((acc, item) => {
-            return acc + (item.system.weight * item.system.quantity);
+            const itemWeight = item.system.weight || 0;
+            const itemQuantity = item.system.quantity || 1;
+            return acc + (itemWeight * itemQuantity);
         }, 0);
+
+        // Add hit die based on class
+        const characterClass = this.actor.system.class.toLowerCase();
+        context.system.hp.hitDie = ClassHitDice[characterClass] || "d6"; // d6 as fallback
 
         return context;
     }
@@ -118,10 +158,33 @@ export default class DND2ECharacterSheet extends ActorSheet {
             const item = this.actor.items.get(li.data("itemId"));
             item.update({"system.quantity": ev.target.value});
         });
-        html.find('.item-equipped input').change(ev => {
+        html.find('.item-equipped input').change(async ev => {
             const li = $(ev.currentTarget).parents(".item");
             const item = this.actor.items.get(li.data("itemId"));
-            item.update({"system.equipped": ev.target.checked});
+            
+            // Only proceed if trying to equip (not unequip)
+            if (ev.target.checked) {
+                const itemType = item.system.type; // "armor" or "shield"
+                
+                // Find other equipped items of same type
+                const equippedItems = this.actor.items.filter(i => 
+                    i.type === "armor" && 
+                    i.system.type === itemType && 
+                    i.system.equipped && 
+                    i.id !== item.id
+                );
+
+                // Unequip other items of same type
+                for (let equippedItem of equippedItems) {
+                    await equippedItem.update({"system.equipped": false});
+                }
+            }
+
+            // Update the clicked item
+            await item.update({"system.equipped": ev.target.checked});
+            
+            // Re-render sheet to update AC
+            this.render(false);
         });
         html.find('.add-proficiency').click(this._onAddProficiency.bind(this));
 
@@ -172,6 +235,9 @@ export default class DND2ECharacterSheet extends ActorSheet {
                 await this._onAttributeChange('system.attributes.str.value', strValue, exceptionalValue);
             }
         });
+
+        // Add hit die roll listener
+        html.find('.roll-hit-die').click(this._onRollHitDie.bind(this));
     }
 
     async _onItemCreate(event) {
@@ -597,5 +663,45 @@ export default class DND2ECharacterSheet extends ActorSheet {
                 final: base + mod + attrMod
             };
         });
+    }
+
+    async _onRollHitDie(event) {
+        event.preventDefault();
+        const hitDie = this.actor.system.hp.hitDie;
+        // Fix the property name from hpMod to hpAdj
+        const hpAdj = Number(this.actor.system.attributes.con.hpAdj) || 0;
+
+        
+        // Roll the die using async evaluate
+        const roll = await (new Roll(`1${hitDie}`)).evaluate();
+
+            // Show the 3D dice animation
+        if (game.dice3d) {
+            await game.dice3d.showForRoll(roll);
+        }
+
+        const baseRoll = roll.total;
+        const withAdj = Math.max(1, baseRoll + hpAdj);
+        
+        console.log("Base Roll:", baseRoll);
+        console.log("With Adjustment:", withAdj);
+        
+        // Create our custom message content
+        let content = `<div class="dnd2e chat-card">`;
+        content += `<h3>Hit Die Roll (${hitDie})</h3>`;
+        content += `<div class="roll-details">`;
+        content += `<div>Base Roll: ${baseRoll}</div>`;
+        content += `<div>Constitution Adjustment: ${hpAdj >= 0 ? '+' : ''}${hpAdj}</div>`;
+        content += `<hr>`;
+        content += `<div class="roll-total">Final Result: ${withAdj}</div>`;
+        content += `</div></div>`;
+        
+        // Create chat message
+        await ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: content,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            roll: roll        });
     }
 } 

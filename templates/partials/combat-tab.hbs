@@ -6,19 +6,15 @@
             <h2>Armor Class</h2>
             <div class="form-group">
                 <label>Base AC</label>
-                <input type="number" name="system.ac.base" value="{{system.ac.base}}"/>
+                <input type="number" value="{{system.ac.armor.value}}" disabled/>
             </div>
             <div class="form-group">
-                <label>Armor Type</label>
-                <input type="text" name="system.ac.armor" value="{{system.ac.armor}}"/>
-            </div>
-            <div class="form-group">
-                <label>Shield Type</label>
-                <input type="text" name="system.ac.shield" value="{{system.ac.shield}}"/>
+                <label>Shield</label>
+                <input type="number" value="{{system.ac.shield.value}}" disabled/>
             </div>
             <div class="form-group">
                 <label>Dex Modifier</label>
-                <input type="number" name="system.ac.dexMod" value="{{system.ac.dexMod}}"/>
+                <input type="number" name="system.ac.dexMod" value="{{system.ac.dexMod}}" disabled/>
             </div>
             <div class="form-group total-ac">
                 <label>Total AC</label>
@@ -30,16 +26,27 @@
         <div class="hp-block">
             <h2>Hit Points</h2>
             <div class="form-group">
+                <label>Hit Die</label>
+                <div class="input-container">
+                    <div class="hit-die-group">
+                        <input type="text" name="system.hp.hitDie" value="{{system.hp.hitDie}}" disabled/>
+                        <button type="button" class="roll-hit-die">
+                            <i class="fas fa-dice-d20"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label>Current HP</label>
-                <input type="number" name="system.hp.value" value="{{system.hp.value}}"/>
+                <div class="input-container">
+                    <input type="number" name="system.hp.value" value="{{system.hp.value}}"/>
+                </div>
             </div>
             <div class="form-group">
-                <label>Maximum HP</label>
-                <input type="number" name="system.hp.max" value="{{system.hp.max}}"/>
-            </div>
-            <div class="form-group">
-                <label>Wounds</label>
-                <input type="text" name="system.hp.wounds" value="{{system.hp.wounds}}"/>
+                <label>Max HP</label>
+                <div class="input-container">
+                    <input type="number" name="system.hp.max" value="{{system.hp.max}}"/>
+                </div>
             </div>
         </div>
 

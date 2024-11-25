@@ -7,7 +7,7 @@
           "value": 10,
           "min": 0,
           "max": 10,
-          "wounds": ""
+          "hitDie": "d4"
         },
         "ac": {
           "value": 10,
@@ -202,7 +202,7 @@
       "templates": ["base"],
       "sdamage": "1d6",
       "ldamage": "1d8",
-      "type": "melee",
+      "type": "slashing",
       "speed": 0,
       "range": {
         "short": 0,
@@ -214,6 +214,8 @@
     },
     "armor": {
       "templates": ["base"],
+      "baseAc": 10,
+      "magicBonus": 0,
       "ac": 10,
       "type": "armor",
       "equipped": false

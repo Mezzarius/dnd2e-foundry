@@ -3,7 +3,7 @@ export default class DND2EItemSheet extends ItemSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["dnd2e", "sheet", "item"],
             width: 520,
-            height: 480,
+            height: 580,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
@@ -23,6 +23,19 @@ export default class DND2EItemSheet extends ItemSheet {
         // Add specific data for consumables
         if (this.item.type === 'consumable') {
             data.isConsumable = true;
+        }
+
+        // Calculate total AC for armor items
+        if (this.item.type === 'armor') {
+
+            
+            // Calculate total AC
+            const magicBonus = data.system.magicBonus || 0;
+            if (data.system.type === 'shield') {
+                data.system.ac = data.system.baseAc + magicBonus;
+            } else {
+                data.system.ac = data.system.baseAc - magicBonus;
+            }
         }
         
         return data;
