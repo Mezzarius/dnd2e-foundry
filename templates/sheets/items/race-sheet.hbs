@@ -1,0 +1,124 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <div class="header-fields">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Race Name"/>
+            </h1>
+        </div>
+    </header>
+
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item active" data-tab="description">Description</a>
+        <a class="item" data-tab="attributes">Attributes</a>
+        <a class="item" data-tab="features">Features</a>
+        <a class="item" data-tab="characteristics">Characteristics</a>
+    </nav>
+
+    <section class="sheet-body">
+        {{!-- Description Tab --}}
+        <div class="tab description active" data-group="primary" data-tab="description">
+            {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+        </div>
+
+        {{!-- Attributes Tab --}}
+        <div class="tab attributes" data-group="primary" data-tab="attributes">
+            <div class="form-group">
+                <label>Attribute Modifiers</label>
+                <div class="attributes-grid">
+                    {{#each system.attributeModifiers as |mod attr|}}
+                    <div class="attribute-mod">
+                        <label>{{attr}}</label>
+                        <input type="number" name="system.attributeModifiers.{{attr}}" value="{{mod}}"/>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Languages</label>
+                <div class="languages-section">
+                    <div>
+                        <label>Automatic</label>
+                        <input type="text" name="system.languages.automatic" value="{{system.languages.automatic}}" placeholder="Common, Elvish, etc."/>
+                    </div>
+                    <div>
+                        <label>Bonus Languages</label>
+                        <input type="text" name="system.languages.bonus" value="{{system.languages.bonus}}" placeholder="Orc, Goblin, etc."/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Features Tab --}}
+        <div class="tab features" data-group="primary" data-tab="features">
+            {{!-- Features Section --}}
+            <div class="features-section">
+                <h3>Racial Features</h3>
+                <div class="list-header">
+                    <div class="header-name">Name</div>
+                    <div class="header-type">Type</div>
+                    <div class="header-activation">Activation</div>
+                    <div class="header-controls">
+                        <span class="hint">Drag Features Here</span>
+                    </div>
+                </div>
+                <ol class="inventory-list">
+                    {{#each features as |feature id|}}
+                    <li class="item flexrow" data-item-id="{{feature._id}}">
+                        <div class="item-name flexrow">
+                            <div class="item-image">
+                                <img src="{{feature.img}}" title="{{feature.name}}" width="24" height="24"/>
+                            </div>
+                            <h4>{{feature.name}}</h4>
+                        </div>
+                        <div class="item-type">{{feature.system.type}}</div>
+                        <div class="item-activation">{{feature.system.activation.type}}</div>
+                        <div class="item-controls">
+                            <a class="item-control item-edit" title="Edit Feature"><i class="fas fa-edit"></i></a>
+                            <a class="item-control item-delete" title="Delete Feature"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                    {{/each}}
+                </ol>
+            </div>
+        </div>
+
+        {{!-- Characteristics Tab --}}
+        <div class="tab characteristics" data-group="primary" data-tab="characteristics">
+            <div class="form-group">
+                <label>Height Ranges</label>
+                <div class="height-ranges">
+                    <div>
+                        <label>Male Base Height (inches)</label>
+                        <input type="number" name="system.characteristics.heightRange.male.base" 
+                               value="{{system.characteristics.heightRange.male.base}}"/>
+                        <label>Height Modifier</label>
+                        <input type="text" name="system.characteristics.heightRange.male.modifier" 
+                               value="{{system.characteristics.heightRange.male.modifier}}"/>
+                    </div>
+                    <div>
+                        <label>Female Base Height (inches)</label>
+                        <input type="number" name="system.characteristics.heightRange.female.base" 
+                               value="{{system.characteristics.heightRange.female.base}}"/>
+                        <label>Height Modifier</label>
+                        <input type="text" name="system.characteristics.heightRange.female.modifier" 
+                               value="{{system.characteristics.heightRange.female.modifier}}"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Age Range</label>
+                <div class="age-range">
+                    <label>Base Age</label>
+                    <input type="number" name="system.characteristics.ageRange.base" 
+                           value="{{system.characteristics.ageRange.base}}"/>
+                    <label>Age Modifier</label>
+                    <input type="text" name="system.characteristics.ageRange.modifier" 
+                           value="{{system.characteristics.ageRange.modifier}}"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</form> 

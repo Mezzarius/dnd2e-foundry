@@ -168,4 +168,39 @@ export const AttributeTables = {
     int: IntelligenceTable,
     wis: WisdomTable,
     cha: CharismaTable
-}; 
+};
+
+export function retrieveAttributeModifiers(attributeName, value) {
+    // Handle exceptional strength notation (e.g., "18/76")
+    if (attributeName.toLowerCase() === 'str' && String(value).includes('/')) {
+        const [baseStr, exceptionalStr] = String(value).split('/');
+        if (parseInt(baseStr) !== 18) {
+            throw new Error('Exceptional strength is only valid for strength 18');
+        }
+        const row = StrengthTable.exceptional.find(row => 
+            parseInt(exceptionalStr) >= row.min && 
+            parseInt(exceptionalStr) <= row.max
+        );
+        if (!row) throw new Error(`Invalid exceptional strength value: ${exceptionalStr}`);
+        const { min, max, ...metadata } = row;
+        return metadata;
+    }
+
+    // Handle explicit exceptional strength request
+    if (attributeName.toLowerCase() === 'exceptional') {
+        const row = StrengthTable.exceptional.find(row => value >= row.min && value <= row.max);
+        if (!row) throw new Error(`Invalid exceptional strength value: ${value}`);
+        const { min, max, ...metadata } = row;
+        return metadata;
+    }
+
+    // Handle normal attributes
+    const table = AttributeTables[attributeName.toLowerCase()];
+    if (!table) throw new Error(`Invalid attribute name: ${attributeName}`);
+
+    const row = table.modifiers.find(row => value >= row.min && value <= row.max);
+    if (!row) throw new Error(`Invalid ${attributeName} value: ${value}`);
+
+    const { min, max, ...metadata } = row;
+    return metadata;
+} 

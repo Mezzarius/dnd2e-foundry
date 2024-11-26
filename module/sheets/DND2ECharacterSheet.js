@@ -1,6 +1,18 @@
 import { AttributeTables } from "../tables/attributeTables.js";
 import { SavingThrowTables } from "../tables/savingThrowTables.js";
 import { ClassHitDice } from "../tables/classHitDice.js";
+import { ExperienceTables } from "../tables/experienceTables.js";
+import { WARRIOR_CLASSES, validateExceptionalStrength } from '../helpers/constants.js';
+import { retrieveAttributeModifiers } from '../tables/attributeTables.js';
+
+// Add this before the class definition
+Handlebars.registerHelper('isWarriorClass', function(className) {
+    return WARRIOR_CLASSES.includes(className.toLowerCase());
+});
+
+Handlebars.registerHelper('and', function(v1, v2) {
+    return v1 && v2;
+});
 
 export default class DND2ECharacterSheet extends ActorSheet {
     static get defaultOptions() {
@@ -102,6 +114,14 @@ export default class DND2ECharacterSheet extends ActorSheet {
         // Add hit die based on class
         const characterClass = this.actor.system.class.toLowerCase();
         context.system.hp.hitDie = ClassHitDice[characterClass] || "d6"; // d6 as fallback
+
+        // Calculate level and next XP based on current XP
+        const xpValue = context.system.xp.value || 0;
+        const { level, next } = this._calculateLevelAndXP(xpValue, characterClass);
+        
+        // Update the values
+        context.system.level = level;
+        context.system.xp.next = next;
 
         return context;
     }
@@ -219,7 +239,7 @@ export default class DND2ECharacterSheet extends ActorSheet {
         html.find('.view-sheet').click(this._onViewSheet.bind(this));
 
         // Listen for attribute changes
-        html.find('input[name^="system.attributes"]').change(async (event) => {
+        html.find('input[name^="system.attributes"][name$=".value"]').change(async (event) => {
             const input = event.currentTarget;
             const value = input.value;
             const attributePath = input.name;
@@ -227,17 +247,43 @@ export default class DND2ECharacterSheet extends ActorSheet {
             await this._onAttributeChange(attributePath, value);
         });
 
-        // Add this listener for exceptional strength
+        // Update exceptional strength handler
         html.find('input[name="system.attributes.str.exceptional"]').change(async (event) => {
-            const strValue = this.actor.system.attributes.str.value;
-            if (strValue === 18) {
-                const exceptionalValue = event.target.value;
-                await this._onAttributeChange('system.attributes.str.value', strValue, exceptionalValue);
+            const newValue = parseInt(event.target.value);
+            console.log('Exceptional Strength Changed to:', newValue);
+            
+            // Validate the value is in range
+            if (newValue < 1 || newValue > 100 || isNaN(newValue)) {
+                console.log('Invalid exceptional strength value');
+                return;
             }
+
+            // Update the exceptional strength value and recalculate modifiers in one update
+            await this._onExceptionalStrengthChange(event);
         });
 
         // Add hit die roll listener
         html.find('.roll-hit-die').click(this._onRollHitDie.bind(this));
+
+        // Add XP change listener
+        html.find('input[name="system.xp.value"]').change(async (event) => {
+            const xpValue = parseInt(event.target.value) || 0;
+            const characterClass = this.actor.system.class.toLowerCase();
+            const { level, next } = this._calculateLevelAndXP(xpValue, characterClass);
+            
+            await this.actor.update({
+                "system.level": level,
+                "system.xp.next": next
+            });
+        });
+
+        // Add specific listener for exceptional strength changes
+        html.find('input[name="system.attributes.str.exceptional"]').change(event => {
+            this._onExceptionalStrengthChange(event);
+        });
+
+        // Add saving throw roll listeners
+        html.find('.roll-save').click(this._onRollSave.bind(this));
     }
 
     async _onItemCreate(event) {
@@ -402,155 +448,116 @@ export default class DND2ECharacterSheet extends ActorSheet {
     }
 
     async _onAttributeChange(attributePath, value) {
-        // Extract attribute key (str, dex, etc.) from the path
-        const attrMatch = attributePath.match(/system\.attributes\.(\w+)\./);
+        const attrMatch = attributePath.match(/system\.attributes\.(\w+)\.(\w+)/);
         if (!attrMatch) return;
 
         const attrKey = attrMatch[1];
-        const table = AttributeTables[attrKey];
-        if (!table) return;
-
-        // Get current attribute data
-        const attribute = this.actor.system.attributes[attrKey];
+        const propertyKey = attrMatch[2];
         const numValue = parseInt(value);
 
-        // Find matching row in table
-        let modifiers = {};
-        
-        if (attrKey === 'str' && numValue === 18 && attribute.exceptional) {
-            // Handle exceptional strength
-            const baseRow = table.modifiers.find(r => r.min <= numValue && r.max >= numValue);
-            const excepRow = table.exceptional.find(r => 
-                r.min <= attribute.exceptional && r.max >= attribute.exceptional
-            );
-            
-            if (baseRow && excepRow) {
-                modifiers = { ...baseRow, ...excepRow };
+        try {
+            // Check if this is exceptional strength
+            if (propertyKey === 'exceptional') {
+                if (isNaN(numValue) || numValue < 1 || numValue > 100) {
+                    throw new Error(`Exceptional strength must be between 1 and 100`);
+                }
+            } else {
+                if (isNaN(numValue) || numValue < 1 || numValue > 25) {
+                    throw new Error(`Value must be between 1 and 25`);
+                }
             }
-        } else {
-            // Handle normal attributes
-            const row = table.modifiers.find(r => r.min <= numValue && r.max >= numValue);
-            if (row) {
-                modifiers = row;
+
+            // Handle strength 18 exceptional case
+            let lookupValue = numValue;
+            if (attrKey === 'str' && numValue === 18) {
+                const exceptionalStr = this.actor.system.attributes.str.exceptional;
+                if (exceptionalStr) {
+                    // Validate exceptional strength
+                    const exceptionalNum = parseInt(exceptionalStr);
+                    if (isNaN(exceptionalNum) || exceptionalNum < 1 || exceptionalNum > 100) {
+                        throw new Error(`Exceptional strength must be between 1 and 100`);
+                    }
+                    lookupValue = `18/${exceptionalStr}`;
+                }
             }
+
+            // Get modifiers using the new function
+            const modifiers = retrieveAttributeModifiers(attrKey, lookupValue);
+
+            // Map table properties to system properties
+            const mappings = {
+                // Strength
+                hit: 'hitMod',
+                dmg: 'dmgMod',
+                weight: 'weight',
+                press: 'press',
+                doors: 'doors',
+                bblg: 'bblg',
+                
+                // Dexterity
+                reaction: 'reaction',
+                missile: 'missile',
+                defense: 'defense',
+                
+                // Constitution
+                hp: 'hpAdj',
+                shock: 'shock',
+                resurrection: 'resurrect',
+                poison: 'poison',
+                regen: 'regen',
+                
+                // Intelligence
+                languages: 'languages',
+                maxSpellLevel: 'maxSpellLevel',
+                learn: 'learnSpell',
+                maxSpells: 'maxSpellsPerLevel',
+                
+                // Wisdom
+                magical: 'magicDefense',
+                bonus: 'bonusSpells',
+                failure: 'spellFail',
+                immunity: 'immunity',
+                
+                // Charisma
+                hench: 'henchmen',
+                loyalty: 'loyalty',
+                react: 'reaction'
+            };
+
+            // Prepare update data with mapped properties
+            const updateData = {};
+            for (const [tableKey, value] of Object.entries(modifiers)) {
+                const systemKey = mappings[tableKey] || tableKey;
+                updateData[`system.attributes.${attrKey}.${systemKey}`] = value;
+            }
+
+            // If strength is not 18, clear exceptional value
+            if (attrKey === 'str' && numValue !== 18) {
+                updateData[`system.attributes.str.exceptional`] = null;
+            }
+
+            // Update the actor
+            await this.actor.update(updateData);
+
+        } catch (error) {
+            console.error('Error calculating attribute modifiers:', error);
+            ui.notifications.error(`Error calculating ${attrKey} modifiers: ${error.message}`);
         }
-
-        // Remove min/max from modifiers
-        delete modifiers.min;
-        delete modifiers.max;
-
-        // Map table properties to system properties
-        const mappings = {
-            // Strength
-            hit: 'hitMod',
-            dmg: 'dmgMod',
-            weight: 'weight',
-            press: 'press',
-            doors: 'doors',
-            bblg: 'bblg',
-            
-            // Dexterity
-            reaction: 'reaction',
-            missile: 'missile',
-            defense: 'defense',
-            
-            // Constitution
-            hp: 'hpAdj',
-            shock: 'shock',
-            resurrection: 'resurrect',
-            poison: 'poison',
-            regen: 'regen',
-            
-            // Intelligence
-            languages: 'languages',
-            maxSpellLevel: 'maxSpellLevel',
-            learn: 'learnSpell',
-            maxSpells: 'maxSpellsPerLevel',
-            
-            // Wisdom
-            magical: 'magicDefense',
-            bonus: 'bonusSpells',
-            failure: 'spellFail',
-            immunity: 'immunity',
-            
-            // Charisma
-            hench: 'henchmen',
-            loyalty: 'loyalty',
-            react: 'reaction'
-        };
-
-        // Prepare update data with mapped properties
-        const updateData = {};
-        for (const [tableKey, value] of Object.entries(modifiers)) {
-            const systemKey = mappings[tableKey] || tableKey;
-            updateData[`system.attributes.${attrKey}.${systemKey}`] = value;
-        }
-
-        // Update the actor
-        await this.actor.update(updateData);
     }
 
-    async _calculateAttributeModifiers(attrKey, value, exceptional = null) {
-        const table = AttributeTables[attrKey];
-        if (!table) return;
-
-        const numValue = parseInt(value);
-        let modifiers = {};
-        
-        if (attrKey === 'str' && numValue === 18 && exceptional) {
-            // Handle exceptional strength
-            const baseRow = table.modifiers.find(r => r.min <= numValue && r.max >= numValue);
-            const excepRow = table.exceptional.find(r => 
-                r.min <= exceptional && r.max >= exceptional
-            );
-            
-            if (baseRow && excepRow) {
-                modifiers = { ...baseRow, ...excepRow };
+    _calculateAttributeModifiers(attrKey, value, exceptional = null) {
+        try {
+            // Handle strength 18 exceptional case
+            let lookupValue = value;
+            if (attrKey === 'str' && value === 18 && exceptional !== null) {
+                lookupValue = `18/${exceptional}`;
             }
-        } else {
-            // Handle normal attributes
-            const row = table.modifiers.find(r => r.min <= numValue && r.max >= numValue);
-            if (row) {
-                modifiers = row;
-            }
+
+            return retrieveAttributeModifiers(attrKey, lookupValue);
+        } catch (error) {
+            console.error('Error calculating attribute modifiers:', error);
+            return {};
         }
-
-        // Remove min/max from modifiers
-        delete modifiers.min;
-        delete modifiers.max;
-
-        // Map table properties to system properties
-        const mappings = {
-            hit: 'hitMod',
-            dmg: 'dmgMod',
-            weight: 'weight',
-            press: 'press',
-            doors: 'doors',
-            bblg: 'bblg',
-            reaction: 'reaction',
-            missile: 'missile',
-            defense: 'defense',
-            hp: 'hpAdj',
-            shock: 'shock',
-            resurrection: 'resurrect',
-            poison: 'poison',
-            regen: 'regen',
-            magical: 'magicDefense',
-            bonus: 'bonus',
-            failure: 'spellFail',
-            hench: 'henchmen',
-            loyalty: 'loyalty'
-        };
-
-        // Prepare update data with mapped properties
-        const updateData = {};
-        for (const [tableKey, value] of Object.entries(modifiers)) {
-            const systemKey = mappings[tableKey] || tableKey;
-            updateData[`system.attributes.${attrKey}.${systemKey}`] = value;
-        }
-
-        // Update the actor
-        await this.actor.update(updateData);
     }
 
     _onDragOver(event) {
@@ -629,7 +636,7 @@ export default class DND2ECharacterSheet extends ActorSheet {
         }
 
         // Calculate each save
-        const saves = ['paralyzation', 'rod', 'petrification', 'breath', 'spell'];
+        const saves = ['poison', 'rod', 'petrification', 'breath', 'spell'];
         saves.forEach(save => {
             // Get base value from class table
             const base = row[save];
@@ -649,7 +656,7 @@ export default class DND2ECharacterSheet extends ActorSheet {
 
             // Apply attribute modifiers based on save type
             let attrMod = 0;
-            if (save === 'paralyzation') {  // Poison/Death save
+            if (save === 'poison') {  // Poison/Death save
                 attrMod = -poisonMod;
             } else if (save === 'rod' || save === 'spell') {  // Magical saves
                 attrMod = -magicDefMod;
@@ -703,5 +710,74 @@ export default class DND2ECharacterSheet extends ActorSheet {
             content: content,
             type: CONST.CHAT_MESSAGE_TYPES.OTHER,
             roll: roll        });
+    }
+
+    _calculateLevelAndXP(xpValue, characterClass) {
+        const table = ExperienceTables[characterClass.toLowerCase()];
+        if (!table) return { level: 1, next: 2000 }; // Default values if no table found
+
+        const row = table.find(r => r.min <= xpValue && r.max >= xpValue);
+        return row ? { level: row.level, next: row.next } : { level: 1, next: 2000 };
+    }
+
+    // Add an explicit handler for exceptional strength changes
+    async _onExceptionalStrengthChange(event) {
+        const newValue = parseInt(event.target.value);
+        console.log('Exceptional Strength Changed to:', newValue);
+        
+        // Validate the value is in range
+        if (newValue < 1 || newValue > 100 || isNaN(newValue)) {
+            console.log('Invalid exceptional strength value');
+            return;
+        }
+
+        // Update the exceptional strength value
+        await this.actor.update({
+            "system.attributes.str.exceptional": newValue
+        });
+
+        // Force a complete recalculation
+        await this._onAttributeChange('system.attributes.str.value', 18);
+    }
+
+    async _onRollSave(event) {
+        event.preventDefault();
+        const button = event.currentTarget;
+        const saveType = button.dataset.save;
+        const save = this.actor.system.saves[saveType];
+        
+        // Roll the d20
+        const roll = await new Roll("1d20").evaluate({async: true});
+        
+        // Show the 3D dice if enabled
+        if (game.dice3d) {
+            await game.dice3d.showForRoll(roll);
+        }
+        
+        // Determine success/failure
+        const isSuccess = roll.total >= save.final;
+        
+        // Format save type for display
+        const saveTypeDisplay = saveType.charAt(0).toUpperCase() + saveType.slice(1);
+        
+        // Create chat message content
+        let content = `<div class="dnd2e chat-card">`;
+        content += `<h3>${saveTypeDisplay} Save</h3>`;
+        content += `<div class="roll-details">`;
+        content += `<div>Target Score: ${save.final}</div>`;
+        content += `<div>Roll: ${roll.total}</div>`;
+        content += `<hr>`;
+        content += `<div class="roll-total ${isSuccess ? 'success' : 'failure'}">`;
+        content += `Result: <strong>${isSuccess ? 'Success!' : 'Failure'}</strong>`;
+        content += `</div></div></div>`;
+        
+        // Create chat message
+        await ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: content,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            roll: roll
+        });
     }
 } 

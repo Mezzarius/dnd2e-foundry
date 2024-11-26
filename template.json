@@ -88,7 +88,7 @@
         "alignment": ""
       },
       "saves": {
-        "paralyzation": {
+        "poison": {
             "base": 16,
             "mod": 0,
             "attrMod": 0,
@@ -188,7 +188,7 @@
     }
   },
   "Item": {
-    "types": ["weapon", "armor", "equipment", "consumable","spell", "nonWeaponProf"],
+    "types": ["weapon", "armor", "equipment", "consumable","spell", "nonWeaponProf", "race", "feature"],
     "templates": {
       "base": {
         "description": "",
@@ -197,6 +197,58 @@
         "value": 0,
         "quality": "Common"
       }
+    },
+    "race": {
+      "templates": ["base"],
+      "attributeModifiers": {
+        "str": 0,
+        "dex": 0,
+        "con": 0,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "features": [], 
+      "languages": {
+        "bonus": [],
+        "automatic": []
+      },
+      "characteristics": {
+        "heightRange": {
+          "male": { "base": 60, "modifier": "2d10" },
+          "female": { "base": 58, "modifier": "2d10" }
+        },
+        "weightRange": {
+          "male": { "base": 130, "modifier": "6d10" },
+          "female": { "base": 100, "modifier": "6d10" }
+        },
+        "ageRange": {
+          "base": 20,
+          "modifier": "5d6"
+        }
+      },
+      "classRestrictions": {
+        "allowed": [],
+        "maxLevel": {}
+      }
+    },
+    "feature": {
+      "templates": ["base"],
+      "type": "racial",  
+      "activation": {
+        "type": "passive",  
+        "cost": 0
+      },
+      "duration": {
+        "value": 0,
+        "type": "permanent"  
+      },
+      "formula": "",  
+      "target": {
+        "value": 0,
+        "type": "self"
+      },
+      "properties": []  
     },
     "weapon": {
       "templates": ["base"],

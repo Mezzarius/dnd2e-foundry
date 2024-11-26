@@ -9,10 +9,21 @@
                         <label>Strength</label>
                         <input type="number" name="system.attributes.str.value" value="{{system.attributes.str.value}}"/>
                     </div>
-                    <div class="attribute-exceptional">
-                        <label>Exceptional</label>
-                        <input type="number" name="system.attributes.str.exceptional" value="{{system.attributes.str.exceptional}}" placeholder="00"/>
-                    </div>
+                    {{#if (and (eq system.attributes.str.value 18) (isWarriorClass system.class))}}
+                        <div class="attribute-exceptional">
+                            <label>Exc Str</label>
+                            <input 
+                                type="number" 
+                                name="system.attributes.str.exceptional" 
+                                value="{{system.attributes.str.exceptional}}" 
+                                min="1" 
+                                max="100"
+                                placeholder="01"
+                            />
+                        </div>
+                    {{else}}
+                        <div class="attribute-exceptional empty"></div>
+                    {{/if}}
                     <div class="attribute-modifiers">
                         <div class="modifier-field">
                             <label>Hit</label>
@@ -189,34 +200,38 @@
     </div>
 
     {{!-- Lower Section Grid --}}
-    <div class="lower-section grid grid-5col">
-        {{!-- Character Info --}}
-        <div class="basic-info">
+    <div class="lower-section grid grid-8col">
+        {{!-- Character Info (2 columns) --}}
+        <div class="basic-info span-2">
             <h2>Character Info</h2>
-            <div class="form-group">
-                <label>Class</label>
-                <input type="text" name="system.class" value="{{system.class}}"/>
-            </div>
             <div class="form-group">
                 <label>Race</label>
                 <input type="text" name="system.race" value="{{system.race}}"/>
             </div>
             <div class="form-group">
+                <label>Class</label>
+                <input type="text" name="system.class" value="{{system.class}}"/>
+            </div>
+            <div class="form-group">
+                <label>Kit</label>
+                <input type="text" name="system.kit" value="{{system.kit}}"/>
+            </div>
+            <div class="form-group">
                 <label>Level</label>
-                <input type="number" name="system.level" value="{{system.level}}"/>
+                <input type="number" name="system.level" value="{{system.level}}" disabled/>
             </div>
             <div class="form-group">
                 <label>Experience</label>
                 <input type="number" name="system.xp.value" value="{{system.xp.value}}"/>
             </div>
             <div class="form-group">
-                <label>Next Level</label>
-                <input type="number" name="system.xp.next" value="{{system.xp.next}}"/>
+                <label>Next Lvl</label>
+                <input type="number" name="system.xp.next" value="{{system.xp.next}}" disabled/>
             </div>
         </div>
 
-        {{!-- Physical Traits (spans 2 columns) --}}
-        <div class="traits span-2">
+        {{!-- Physical Traits (3 columns) --}}
+        <div class="traits span-3">
             <h2>Traits</h2>
             <div class="traits-grid">
                 {{!-- Left Column --}}
@@ -230,7 +245,7 @@
                         <input type="text" name="system.traits.faith" value="{{system.traits.faith}}"/>
                     </div>
                     <div class="form-group">
-                        <label>Alignment</label>
+                        <label>Align</label>
                         <input type="text" name="system.traits.alignment" value="{{system.traits.alignment}}"/>
                     </div>
                 </div>
@@ -261,48 +276,61 @@
             </div>
         </div>
 
-        {{!-- Saving Throws (spans 2 columns) --}}
-        <div class="saving-throws span-2">
+        {{!-- Saving Throws (3 columns) --}}
+        <div class="saving-throws span-3">
             <h2>Saving Throws</h2>
             <div class="saves-grid">
                 <div class="save-headers">
-                    <div class="save-type">Save Type</div>
+                    <div class="save-type">Save</div>
                     <div class="save-base">Base</div>
                     <div class="save-mod">Mod</div>
-                    <div class="save-attr">Attrib</div>
+                    <div class="save-attr">Attr</div>
                     <div class="save-final">Final</div>
+                    <div class="save-roll"></div>  {{!-- Empty header for roll column --}}
                 </div>
                 
                 <div class="save-row">
-                    <label>Poison/Death</label>
-                    <input type="number" name="system.saves.paralyzation.base" value="{{system.saves.paralyzation.base}}" disabled/>
-                    <input type="number" name="system.saves.paralyzation.mod" value="{{system.saves.paralyzation.mod}}"/>
-                    <span class="attr-mod">({{system.saves.paralyzation.attrMod}})</span>
-                    <input type="number" name="system.saves.paralyzation.final" value="{{system.saves.paralyzation.final}}" disabled/>
+                    <label>Poison</label>
+                    <input type="number" name="system.saves.poison.base" value="{{system.saves.poison.base}}" disabled/>
+                    <input type="number" name="system.saves.poison.mod" value="{{system.saves.poison.mod}}"/>
+                    <span class="attr-mod">({{system.saves.poison.attrMod}})</span>
+                    <input type="number" name="system.saves.poison.final" value="{{system.saves.poison.final}}" disabled/>
+                    <button type="button" class="roll-save" data-save="poison">
+                        <i class="fas fa-dice-d20"></i>
+                    </button>
                 </div>
                 
                 <div class="save-row">
-                    <label>Rod/Staff/Wand</label>
+                    <label>Device</label>
                     <input type="number" name="system.saves.rod.base" value="{{system.saves.rod.base}}" disabled/>
                     <input type="number" name="system.saves.rod.mod" value="{{system.saves.rod.mod}}"/>
                     <span class="attr-mod">({{system.saves.rod.attrMod}})</span>
                     <input type="number" name="system.saves.rod.final" value="{{system.saves.rod.final}}" disabled/>
+                    <button type="button" class="roll-save" data-save="rod">
+                        <i class="fas fa-dice-d20"></i>
+                    </button>
                 </div>
                 
                 <div class="save-row">
-                    <label>Petrify/Polymorph</label>
+                    <label>Polymorph</label>
                     <input type="number" name="system.saves.petrification.base" value="{{system.saves.petrification.base}}" disabled/>
                     <input type="number" name="system.saves.petrification.mod" value="{{system.saves.petrification.mod}}"/>
                     <span class="attr-mod">({{system.saves.petrification.attrMod}})</span>
                     <input type="number" name="system.saves.petrification.final" value="{{system.saves.petrification.final}}" disabled/>
+                    <button type="button" class="roll-save" data-save="petrification">
+                        <i class="fas fa-dice-d20"></i>
+                    </button>
                 </div>
                 
                 <div class="save-row">
-                    <label>Breath Weapon</label>
+                    <label>Breath</label>
                     <input type="number" name="system.saves.breath.base" value="{{system.saves.breath.base}}" disabled/>
                     <input type="number" name="system.saves.breath.mod" value="{{system.saves.breath.mod}}"/>
                     <span class="attr-mod">({{system.saves.breath.attrMod}})</span>
                     <input type="number" name="system.saves.breath.final" value="{{system.saves.breath.final}}" disabled/>
+                    <button type="button" class="roll-save" data-save="breath">
+                        <i class="fas fa-dice-d20"></i>
+                    </button>
                 </div>
                 
                 <div class="save-row">
@@ -311,6 +339,9 @@
                     <input type="number" name="system.saves.spell.mod" value="{{system.saves.spell.mod}}"/>
                     <span class="attr-mod">({{system.saves.spell.attrMod}})</span>
                     <input type="number" name="system.saves.spell.final" value="{{system.saves.spell.final}}" disabled/>
+                    <button type="button" class="roll-save" data-save="spell">
+                        <i class="fas fa-dice-d20"></i>
+                    </button>
                 </div>
             </div>
         </div>

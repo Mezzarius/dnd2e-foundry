@@ -100,8 +100,32 @@
     margin: 10px 0;
 }
 
+.grid-8col {
+    grid-template-columns: repeat(8, 1fr);
+}
+
 .span-2 {
     grid-column: span 2;
+}
+
+.span-4 {
+    grid-column: span 4;
+}
+
+.span-1-5 {
+    grid-column: span 1.5;
+}
+
+.span-2-5 {
+    grid-column: span 2.5;
+}
+
+.span-1-25 {
+    grid-column: span 1.25;
+}
+
+.span-2-75 {
+    grid-column: span 2.75;
 }
 
 /* Character Tab */
@@ -243,24 +267,28 @@ h2 {
     gap: 4px;
 }
 
-.save-headers {
+.save-headers, .save-row {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-    gap: 4px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 4px;
-}
-
-.save-row {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 80px 45px 45px 45px 45px 30px;
     gap: 4px;
     align-items: center;
 }
 
+.save-headers {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.save-headers > div:not(.save-type) {
+    text-align: center;  /* Center all headers except 'Save' */
+}
+
+.save-headers .save-type {
+    text-align: right;   /* Right-align 'Save' header */
+}
+
 .save-row label {
-    font-weight: normal;
+    text-align: right;   /* Right-align save type labels */
 }
 
 .save-row input {
@@ -268,14 +296,15 @@ h2 {
     text-align: center;
 }
 
-.save-row input:disabled {
-    background-color: #f0f0f0;
-    color: #666;
+.save-row .attr-mod {
+    text-align: center;
 }
 
-.attr-mod {
-    text-align: center;
-    color: #666;
+.roll-save {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    line-height: 1;
 }
 
 /* Equipment Tab Styling */
@@ -978,26 +1007,41 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    padding: 0 5px;  /* Add slight padding to columns */
 }
 
 .traits-column .form-group {
     display: flex;
     align-items: center;
-    gap: 8px;
+    margin-bottom: 5px;
 }
 
 .traits-column .form-group label {
-    min-width: 70px;
+    flex: 0 0 60px;  /* Reduced from 70px */
+    padding-right: 8px;
     text-align: right;
     color: #444;
+    font-weight: bold;
 }
 
 .traits-column .form-group input {
     flex: 1;
+    min-width: 0;  /* Allows proper flex shrinking */
     height: 24px;
     border: 1px solid var(--color-border);
     border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
     padding: 0 5px;
+}
+
+/* Specific adjustments for left column traits */
+.traits-column:first-child .form-group label {
+    flex: 0 0 50px;  /* Even smaller for Origin/Faith/Alignment */
+}
+
+.traits-column:first-child .form-group input {
+    flex: 1;
+    min-width: 100px;  /* Ensures minimum readable width */
 }
 
 .equipment-section {
@@ -1302,3 +1346,294 @@ h2 {
     border-right: 2px solid rgba(0, 0, 0, 0.1);
     padding: 0 20px;
 } 
+
+.attribute-exceptional.empty {
+    display: none;
+}
+
+.items-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.items-list .item {
+    line-height: 30px;
+    padding: 3px 0;
+    border-bottom: 1px solid #BBB;
+}
+
+.items-list .item-name {
+    flex: 2;
+    margin: 0;
+    overflow: hidden;
+    font-size: 13px;
+    text-align: left;
+    align-items: center;
+}
+
+.items-list .items-header {
+    height: 28px;
+    margin: 2px 0;
+    padding: 0;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.05);
+    border: 2px groove #eeede0;
+    font-weight: bold;
+}
+
+.items-list .hint {
+    color: #666;
+    font-style: italic;
+}
+
+.items-list .item .item-image {
+    flex: 0 0 24px;
+    margin-right: 5px;
+}
+
+.items-list .item-controls {
+    flex: 0 0 86px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Features Tab Styling */
+.features-section {
+    height: 100%;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 2px dashed transparent;
+    transition: border-color 0.2s;
+}
+
+.features-section.drag-hover {
+    border-color: var(--color-border-highlight);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.features-section h3 {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.features-section .list-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border-bottom: 2px solid var(--color-border);
+    font-weight: bold;
+    margin-bottom: 5px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.features-section .header-name { flex: 2; }
+.features-section .header-type { flex: 1; text-align: center; }
+.features-section .header-activation { flex: 1; text-align: center; }
+.features-section .header-controls { 
+    flex: 0 0 100px;
+    text-align: center;
+}
+
+.features-section .inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 60px;
+    border: 2px dashed #ccc;
+    margin: 5px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+}
+
+.features-section .inventory-list.drag-hover {
+    border-color: #000;
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Make empty list more obvious as a drop zone */
+.features-section .inventory-list:empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.features-section .inventory-list:empty::after {
+    content: "Drop Features Here";
+    color: #666;
+    font-style: italic;
+    font-size: 1.1em;
+}
+
+/* Enhance visibility of draggable items */
+.features-section .item {
+    cursor: move;
+    transition: background 0.2s ease;
+}
+
+.features-section .item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Style for the roll buttons */
+.roll-save {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.roll-save:hover {
+    color: #000;
+    text-shadow: 0 0 10px red;
+}
+
+/* Chat message styling */
+.dnd2e.chat-card .roll-total.success {
+    color: #18520b;
+}
+
+.dnd2e.chat-card .roll-total.failure {
+    color: #8b0000;
+}
+
+/* Update the save roll styling to match hit die */
+.save-roll-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.save-roll-group input {
+    margin-right: 0;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.save-roll-group .roll-save {
+    width: 26px;
+    height: 26px;
+    border: 1px solid #7a7971;
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+    background: rgba(0, 0, 0, 0.05);
+    color: #666;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.save-roll-group .roll-save:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+    text-shadow: none;
+}
+
+.lower-section {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+}
+
+.basic-info {
+    grid-column: span 2;
+    max-width: 100%;
+}
+
+.traits {
+    grid-column: span 3;
+    max-width: 100%;
+}
+
+.saving-throws {
+    grid-column: span 3;
+    max-width: 100%;
+}
+
+.basic-info .form-group {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.basic-info .form-group label {
+    flex: 0 0 80px;
+    padding-right: 8px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.basic-info .form-group input {
+    flex: 1;
+    height: 24px;
+    min-width: 140px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0 5px;
+}
+
+.basic-info {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    max-width: 280px;
+}
+
+.character-details .basic-info {
+    padding: 8px;  /* Restore normal padding */
+}
+
+.character-details .basic-info .form-group {
+    padding-left: 0;  /* Remove left padding specifically */
+    margin: 4px 8px;  /* Keep vertical spacing, adjust horizontal */
+    position: relative;
+    left: -8px;  /* Shift the form groups left */
+}
+
+/* Character Info Box Styles */
+.basic-info {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+}
+
+.basic-info .form-group {
+    display: grid;
+    grid-template-columns: 70px 1fr;  /* 70px for label, rest for input */
+    gap: 8px;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.basic-info .form-group label {
+    font-weight: bold;
+}
+
+.basic-info .form-group input {
+    width: 140px;  /* Fixed width for input fields */
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0 5px;
+}

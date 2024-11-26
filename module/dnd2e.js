@@ -14,7 +14,9 @@ Hooks.once('init', async function() {
         consumable: "Consumable",
         equipment: "Equipment",
         spell: "Spell",
-        nonWeaponProf: "Non-Weapon Proficiency"
+        nonWeaponProf: "Non-Weapon Proficiency",
+        race: "Race",
+        feature: "Feature"
       }
   };
 
@@ -53,6 +55,8 @@ Hooks.once('init', async function() {
   
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("dnd2e", DND2EItemSheet, { makeDefault: true });
+
+  Items.registerSheet("dnd2e", DND2ERaceSheet, { makeDefault: true });
 
   CONFIG.Item.documentClass = DND2EItem;
 }); 
