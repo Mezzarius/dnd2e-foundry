@@ -246,7 +246,17 @@
                     </div>
                     <div class="form-group">
                         <label>Align</label>
-                        <input type="text" name="system.traits.alignment" value="{{system.traits.alignment}}"/>
+                        <select name="system.traits.alignment">
+                            <option value="Lawful Good" {{#if (eq system.traits.alignment "Lawful Good")}}selected{{/if}}>L. Good</option>
+                            <option value="Neutral Good" {{#if (eq system.traits.alignment "Neutral Good")}}selected{{/if}}>N. Good</option>
+                            <option value="Chaotic Good" {{#if (eq system.traits.alignment "Chaotic Good")}}selected{{/if}}>C. Good</option>
+                            <option value="Lawful Neutral" {{#if (eq system.traits.alignment "Lawful Neutral")}}selected{{/if}}>L. Neutral</option>
+                            <option value="True Neutral" {{#if (eq system.traits.alignment "True Neutral")}}selected{{/if}}>Neutral</option>
+                            <option value="Chaotic Neutral" {{#if (eq system.traits.alignment "Chaotic Neutral")}}selected{{/if}}>C. Neutral</option>
+                            <option value="Lawful Evil" {{#if (eq system.traits.alignment "Lawful Evil")}}selected{{/if}}>L. Evil</option>
+                            <option value="Neutral Evil" {{#if (eq system.traits.alignment "Neutral Evil")}}selected{{/if}}>N. Evil</option>
+                            <option value="Chaotic Evil" {{#if (eq system.traits.alignment "Chaotic Evil")}}selected{{/if}}>C. Evil</option>
+                        </select>
                     </div>
                 </div>
                 

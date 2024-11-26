@@ -72,8 +72,13 @@
 }
 
 .dnd2e .sheet-body .tab {
+    display: none;
     height: 100%;
     overflow-y: auto;
+}
+
+.dnd2e .sheet-body .tab.active {
+    display: block;
 }
 
 /* Grid Layouts */
@@ -1637,3 +1642,292 @@ h2 {
     background: rgba(255, 255, 255, 0.8);
     padding: 0 5px;
 }
+
+/* Attribute Modifiers Grid */
+.attribute-mods-grid {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.attribute-mods-header {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    margin-bottom: 4px;
+}
+
+.attribute-mods-header .attribute-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #444;
+}
+
+.attribute-mods-values {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+}
+
+.attribute-mods-values input {
+    width: 100%;
+    text-align: center;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Characteristics Tab Styling */
+.characteristics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.gender-section, .age-section {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.age-section {
+    grid-column: 1 / -1;
+}
+
+.gender-section h3, .age-section h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #782e22;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.characteristics-grid .form-group {
+    margin: 0;
+    padding: 5px;
+}
+
+.characteristics-grid .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.characteristic-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.characteristic-row input[type="number"] {
+    width: 60px;
+    text-align: center;
+}
+
+.characteristic-row input[type="text"] {
+    width: 80px;
+    text-align: center;
+}
+
+.characteristic-row span {
+    color: #666;
+    font-weight: bold;
+}
+
+.characteristic-row button {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+    color: #666;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.characteristic-row button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+.characteristic-row input {
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0 5px;
+}
+
+.features-section .inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 60px;
+    border: 2px dashed #ccc;
+    margin: 5px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+}
+
+.features-section .inventory-list.drag-hover {
+    border-color: #000;
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.features-section .item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.features-section .item-name {
+    flex: 2;
+    display: flex;
+    align-items: center;
+}
+
+.features-section .item-type,
+.features-section .item-activation {
+    flex: 1;
+    text-align: center;
+}
+
+.features-section .item-controls {
+    flex: 0 0 100px;
+    text-align: right;
+}
+
+.features-section .item-image {
+    flex: 0 0 24px;
+    margin-right: 5px;
+}
+
+/* Race Sheet Specific Styling */
+.dnd2e.sheet.item.race .details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Attributes Section */
+.attributes-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.attributes-section h3 {
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    border-bottom: 2px solid var(--color-border);
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.attribute-header {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.attribute-values {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 5px;
+}
+
+.attribute-field input {
+    width: 100%;
+    text-align: center;
+    height: 28px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+/* Languages Section */
+.languages-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.languages-section h3 {
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    border-bottom: 2px solid var(--color-border);
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.languages-section .form-group {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.languages-section .form-group label {
+    flex: 0 0 120px;  /* Fixed width for labels */
+    margin-right: 10px;
+}
+
+.languages-section .form-group input {
+    flex: 1;          /* Input takes up remaining space */
+    min-width: 200px; /* Minimum width */
+    height: 28px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0 5px;
+}
+
+/* Description Section */
+.description-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.description-section h3 {
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    border-bottom: 2px solid var(--color-border);
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.description-section .editor {
+    flex: 1;
+    min-height: 200px;
+}
+
+.description-section .editor-content {
+    height: 100%;
+    min-height: 200px;
+}
+

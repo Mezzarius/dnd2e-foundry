@@ -1,14 +1,16 @@
+import DND2EItemSheet from "./DND2EItemSheet.js";
+
 export default class DND2ERaceSheet extends DND2EItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["dnd2e", "sheet", "item", "race"],
             template: "systems/dnd2e/templates/sheets/items/race-sheet.hbs",
             width: 520,
-            height: 480,
+            height: 580,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "description"
+                initial: "attributes"
             }],
             dragDrop: [{
                 dragSelector: ".item",
@@ -19,57 +21,76 @@ export default class DND2ERaceSheet extends DND2EItemSheet {
 
     getData() {
         const data = super.getData();
-        data.system = data.item.system;
-        data.features = this.item.items?.filter(i => i.type === "feature") || [];
+        
+        // Ensure features array exists
+        data.system.features = data.system.features || {};
+        data.system.features.contents = data.system.features.contents || [];
+        
         return data;
     }
 
     activateListeners(html) {
         super.activateListeners(html);
 
+        console.log("DND2ERaceSheet | Activating listeners");
+
         if (!this.isEditable) return;
 
-        // Item management
-        html.find('.item-edit').click(ev => {
-            const li = $(ev.currentTarget).parents(".item");
-            const feature = this.item.items.get(li.data("itemId"));
-            feature.sheet.render(true);
+        // Edit feature
+        html.find('.item-edit').click(async ev => {
+            const li = $(ev.currentTarget).closest(".item");
+            const featureId = li.data("itemId");
+            const feature = this.item.system.features.contents.find(f => f._id === featureId);
+            
+            if (!feature) return;
+
+            // Create a temporary Feature item
+            const tempFeature = await Item.create(
+                {
+                    ...feature,
+                    type: "feature"
+                }, 
+                { temporary: true }
+            );
+            
+            // Render the sheet
+            tempFeature.sheet.render(true);
+
+            // Listen for the sheet closing to capture any changes
+            tempFeature.sheet.options.closeCallback = async () => {
+                const updatedData = tempFeature.toObject();
+                const features = this.item.system.features.contents.map(f => 
+                    f._id === featureId ? updatedData : f
+                );
+                
+                await this.item.update({
+                    'system.features.contents': features
+                });
+            };
         });
 
-        html.find('.item-delete').click(ev => {
-            const li = $(ev.currentTarget).parents(".item");
-            const feature = this.item.items.get(li.data("itemId"));
-            feature.delete();
+        html.find('.item-delete').click(ev => this._onFeatureDelete(ev));
+
+        // Roll buttons
+        html.find('.roll-height').click(ev => {
+            console.log("DND2ERaceSheet | Height roll clicked");
+            this._onRollHeight(ev);
         });
-
-        // Set up drag/drop listeners
-        const dropZone = html.find('.inventory-list')[0];
-        if (dropZone) {
-            dropZone.addEventListener('dragenter', this._onDragEnter.bind(this));
-            dropZone.addEventListener('dragleave', this._onDragLeave.bind(this));
-            dropZone.addEventListener('dragover', this._onDragOver.bind(this));
-            dropZone.addEventListener('drop', this._onDrop.bind(this));
-        }
-    }
-
-    _onDragEnter(event) {
-        event.preventDefault();
-        event.currentTarget.classList.add('drag-hover');
-    }
-
-    _onDragLeave(event) {
-        event.preventDefault();
-        if (event.currentTarget.contains(event.relatedTarget)) return;
-        event.currentTarget.classList.remove('drag-hover');
-    }
-
-    _onDragOver(event) {
-        event.preventDefault();
-        event.dataTransfer.dropEffect = 'copy';
+        html.find('.roll-age').click(ev => {
+            console.log("DND2ERaceSheet | Age roll clicked");
+            this._onRollAge(ev);
+        });
+        html.find('.roll-weight').click(ev => {
+            console.log("DND2ERaceSheet | Weight roll clicked");
+            this._onRollWeight(ev);
+        });
     }
 
     async _onDrop(event) {
+        // Stop event propagation to prevent multiple triggers
         event.preventDefault();
+        event.stopPropagation();
+        
         event.currentTarget.classList.remove('drag-hover');
 
         let data;
@@ -88,7 +109,141 @@ export default class DND2ERaceSheet extends DND2EItemSheet {
             return false;
         }
 
-        const itemData = item.toObject();
-        return this.item.createEmbeddedDocuments("Item", [itemData]);
+        // Get current features
+        const features = this.item.system.features.contents || [];
+        
+        // Add new feature with a unique ID
+        const newFeature = {
+            ...item.toObject(),
+            _id: foundry.utils.randomID()  // Add a unique ID
+        };
+        
+        features.push(newFeature);
+
+        // Update the race item with the new features array
+        await this.item.update({
+            'system.features.contents': features
+        });
+
+        return true;
+    }
+
+    async _onRollHeight(event) {
+        const gender = event.currentTarget.dataset.gender;
+        const base = parseInt(this.item.system.characteristics.heightRange[gender].base) || 0;
+        const formula = this.item.system.characteristics.heightRange[gender].modifier;
+        
+        if (!formula) return;
+
+        const roll = await new Roll(formula).evaluate({async: true});
+        const total = base + roll.total;
+
+        // Show the 3D dice if enabled
+        if (game.dice3d) {
+            await game.dice3d.showForRoll(roll);
+        }
+
+        let content = `<div class="dnd2e chat-card">`;
+        content += `<h3>${this.item.name} Height Roll (${gender})</h3>`;
+        content += `<div class="roll-details">`;
+        content += `<div>Base Height: ${base}"</div>`;
+        content += `<div>Roll (${formula}): ${roll.total}"</div>`;
+        content += `<hr>`;
+        content += `<div class="roll-total">Final Height: ${total}"</div>`;
+        content += `</div></div>`;
+
+        await ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: content,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            roll: roll
+        });
+    }
+
+    async _onRollAge(event) {
+        const base = parseInt(this.item.system.characteristics.ageRange.base) || 0;
+        const formula = this.item.system.characteristics.ageRange.modifier;
+        
+        if (!formula) return;
+
+        const roll = await new Roll(formula).evaluate({async: true});
+        const total = base + roll.total;
+
+        // Show the 3D dice if enabled
+        if (game.dice3d) {
+            await game.dice3d.showForRoll(roll);
+        }
+
+        let content = `<div class="dnd2e chat-card">`;
+        content += `<h3>${this.item.name} Starting Age Roll</h3>`;
+        content += `<div class="roll-details">`;
+        content += `<div>Base Age: ${base} years</div>`;
+        content += `<div>Roll (${formula}): ${roll.total} years</div>`;
+        content += `<hr>`;
+        content += `<div class="roll-total">Final Age: ${total} years</div>`;
+        content += `</div></div>`;
+
+        await ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: content,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            roll: roll
+        });
+    }
+
+    async _onRollWeight(event) {
+        const gender = event.currentTarget.dataset.gender;
+        const base = parseInt(this.item.system.characteristics.weightRange[gender].base) || 0;
+        const formula = this.item.system.characteristics.weightRange[gender].modifier;
+        
+        if (!formula) return;
+
+        const roll = await new Roll(formula).evaluate({async: true});
+        const total = base + roll.total;
+
+        // Show the 3D dice if enabled
+        if (game.dice3d) {
+            await game.dice3d.showForRoll(roll);
+        }
+
+        let content = `<div class="dnd2e chat-card">`;
+        content += `<h3>${this.item.name} Weight Roll (${gender})</h3>`;
+        content += `<div class="roll-details">`;
+        content += `<div>Base Weight: ${base} lbs</div>`;
+        content += `<div>Roll (${formula}): ${roll.total} lbs</div>`;
+        content += `<hr>`;
+        content += `<div class="roll-total">Final Weight: ${total} lbs</div>`;
+        content += `</div></div>`;
+
+        await ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: content,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            roll: roll
+        });
+    }
+
+    /**
+     * Handle deleting a feature
+     * @param {Event} event   The originating click event
+     * @private
+     */
+    async _onFeatureDelete(event) {
+        event.preventDefault();
+        
+        // Get the feature ID from the list item
+        const li = event.currentTarget.closest('.item');
+        const featureId = li.dataset.itemId;
+        
+        // Get current features and remove only the one with matching ID
+        const features = this.item.system.features.contents.filter(f => f._id !== featureId);
+        
+        // Update the race item
+        await this.item.update({
+            'system.features.contents': features
+        });
     }
 } 

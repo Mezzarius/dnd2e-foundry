@@ -48,6 +48,36 @@ export default class DND2EItemSheet extends ItemSheet {
         if (this.item.type === 'consumable') {
             html.find('.use-charge').click(this._onUseCharge.bind(this));
         }
+
+        // Add property input handler for features
+        if (this.item.type === 'feature') {
+            html.find('.property-input').on('keydown', async (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    const input = event.currentTarget;
+                    const newProperty = input.value.trim();
+                    
+                    if (newProperty) {
+                        const properties = this.item.system.properties || [];
+                        if (!properties.includes(newProperty)) {
+                            await this.item.update({
+                                'system.properties': [...properties, newProperty]
+                            });
+                            input.value = '';
+                        }
+                    }
+                }
+            });
+
+            // Optional: Add click handler to remove properties
+            html.find('.tag').click(async (event) => {
+                const property = event.currentTarget.textContent;
+                const properties = this.item.system.properties.filter(p => p !== property);
+                await this.item.update({
+                    'system.properties': properties
+                });
+            });
+        }
     }
 
     async _onUseCharge(event) {

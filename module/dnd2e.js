@@ -1,6 +1,8 @@
 // Import character sheet
 import DND2ECharacterSheet from "./sheets/DND2ECharacterSheet.js";
 import DND2EItemSheet from "./sheets/DND2EItemSheet.js";
+import DND2ERaceSheet from "./sheets/DND2ERaceSheet.js";
+
 import { DND2EItem } from "./documents/item.js";
 
 Hooks.once('init', async function() {
@@ -56,7 +58,10 @@ Hooks.once('init', async function() {
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("dnd2e", DND2EItemSheet, { makeDefault: true });
 
-  Items.registerSheet("dnd2e", DND2ERaceSheet, { makeDefault: true });
+  Items.registerSheet("dnd2e", DND2ERaceSheet, {
+    types: ["race"],
+    makeDefault: true
+  });
 
   CONFIG.Item.documentClass = DND2EItem;
 }); 

@@ -9,49 +9,46 @@
     </header>
 
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item active" data-tab="description">Description</a>
-        <a class="item" data-tab="attributes">Attributes</a>
+        <a class="item active" data-tab="attributes">Attributes</a>
         <a class="item" data-tab="features">Features</a>
         <a class="item" data-tab="characteristics">Characteristics</a>
+        <a class="item" data-tab="description">Description</a>
     </nav>
 
     <section class="sheet-body">
-        {{!-- Description Tab --}}
-        <div class="tab description active" data-group="primary" data-tab="description">
-            {{editor system.description target="system.description" button=true owner=owner editable=editable}}
-        </div>
-
-        {{!-- Attributes Tab --}}
-        <div class="tab attributes" data-group="primary" data-tab="attributes">
-            <div class="form-group">
-                <label>Attribute Modifiers</label>
-                <div class="attributes-grid">
+        <div class="tab attributes-section" data-group="primary" data-tab="attributes">
+            {{!-- Attributes Section --}}
+            <div class="attributes-section">
+                <h3>Racial Adjustments</h3>
+                <div class="list-header attribute-header">
                     {{#each system.attributeModifiers as |mod attr|}}
-                    <div class="attribute-mod">
-                        <label>{{attr}}</label>
+                    <div class="attribute-label">{{attr}}</div>
+                    {{/each}}
+                </div>
+                <div class="attribute-values">
+                    {{#each system.attributeModifiers as |mod attr|}}
+                    <div class="attribute-field">
                         <input type="number" name="system.attributeModifiers.{{attr}}" value="{{mod}}"/>
                     </div>
                     {{/each}}
                 </div>
             </div>
-            
-            <div class="form-group">
-                <label>Languages</label>
-                <div class="languages-section">
-                    <div>
-                        <label>Automatic</label>
-                        <input type="text" name="system.languages.automatic" value="{{system.languages.automatic}}" placeholder="Common, Elvish, etc."/>
-                    </div>
-                    <div>
-                        <label>Bonus Languages</label>
-                        <input type="text" name="system.languages.bonus" value="{{system.languages.bonus}}" placeholder="Orc, Goblin, etc."/>
-                    </div>
+
+            {{!-- Languages Section --}}
+            <div class="languages-section">
+                <h3>Languages</h3>
+                <div class="form-group">
+                    <label>Languages</label>
+                    <input type="text" name="system.languages.automatic" value="{{system.languages.automatic}}" placeholder="Common, Elvish, etc."/>
+                </div>
+                <div class="form-group">
+                    <label>Bonus Languages</label>
+                    <input type="text" name="system.languages.bonus" value="{{system.languages.bonus}}" placeholder="Orc, Goblin, etc."/>
                 </div>
             </div>
         </div>
 
-        {{!-- Features Tab --}}
-        <div class="tab features" data-group="primary" data-tab="features">
+        <div class="tab features-section" data-group="primary" data-tab="features">
             {{!-- Features Section --}}
             <div class="features-section">
                 <h3>Racial Features</h3>
@@ -59,13 +56,12 @@
                     <div class="header-name">Name</div>
                     <div class="header-type">Type</div>
                     <div class="header-activation">Activation</div>
-                    <div class="header-controls">
-                        <span class="hint">Drag Features Here</span>
-                    </div>
+                    <div class="header-controls">Controls</div>
                 </div>
+                
                 <ol class="inventory-list">
-                    {{#each features as |feature id|}}
-                    <li class="item flexrow" data-item-id="{{feature._id}}">
+                    {{#each system.features.contents as |feature|}}
+                    <li class="item" data-item-id="{{feature._id}}">
                         <div class="item-name flexrow">
                             <div class="item-image">
                                 <img src="{{feature.img}}" title="{{feature.name}}" width="24" height="24"/>
@@ -84,41 +80,105 @@
             </div>
         </div>
 
-        {{!-- Characteristics Tab --}}
-        <div class="tab characteristics" data-group="primary" data-tab="characteristics">
-            <div class="form-group">
-                <label>Height Ranges</label>
-                <div class="height-ranges">
-                    <div>
-                        <label>Male Base Height (inches)</label>
-                        <input type="number" name="system.characteristics.heightRange.male.base" 
-                               value="{{system.characteristics.heightRange.male.base}}"/>
-                        <label>Height Modifier</label>
-                        <input type="text" name="system.characteristics.heightRange.male.modifier" 
-                               value="{{system.characteristics.heightRange.male.modifier}}"/>
+        <div class="tab characteristics-section" data-group="primary" data-tab="characteristics">
+            <div class="characteristics-grid">
+                {{!-- Male Characteristics --}}
+                <div class="gender-section">
+                    <h3>Male</h3>
+                    <div class="form-group">
+                        <label>Height</label>
+                        <div class="characteristic-row">
+                            <input type="number" name="system.characteristics.heightRange.male.base" 
+                                   value="{{system.characteristics.heightRange.male.base}}"
+                                   placeholder="Base"/>
+                            <span>+</span>
+                            <input type="text" name="system.characteristics.heightRange.male.modifier" 
+                                   value="{{system.characteristics.heightRange.male.modifier}}"
+                                   placeholder="2d6"/>
+                            <button type="button" class="roll-height" data-gender="male">
+                                <i class="fas fa-dice-d20"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div>
-                        <label>Female Base Height (inches)</label>
-                        <input type="number" name="system.characteristics.heightRange.female.base" 
-                               value="{{system.characteristics.heightRange.female.base}}"/>
-                        <label>Height Modifier</label>
-                        <input type="text" name="system.characteristics.heightRange.female.modifier" 
-                               value="{{system.characteristics.heightRange.female.modifier}}"/>
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <label>Age Range</label>
-                <div class="age-range">
-                    <label>Base Age</label>
-                    <input type="number" name="system.characteristics.ageRange.base" 
-                           value="{{system.characteristics.ageRange.base}}"/>
-                    <label>Age Modifier</label>
-                    <input type="text" name="system.characteristics.ageRange.modifier" 
-                           value="{{system.characteristics.ageRange.modifier}}"/>
+                    <div class="form-group">
+                        <label>Weight</label>
+                        <div class="characteristic-row">
+                            <input type="number" name="system.characteristics.weightRange.male.base" 
+                                   value="{{system.characteristics.weightRange.male.base}}"
+                                   placeholder="Base"/>
+                            <span>+</span>
+                            <input type="text" name="system.characteristics.weightRange.male.modifier" 
+                                   value="{{system.characteristics.weightRange.male.modifier}}"
+                                   placeholder="2d6"/>
+                            <button type="button" class="roll-weight" data-gender="male">
+                                <i class="fas fa-dice-d20"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {{!-- Female Characteristics --}}
+                <div class="gender-section">
+                    <h3>Female</h3>
+                    <div class="form-group">
+                        <label>Height</label>
+                        <div class="characteristic-row">
+                            <input type="number" name="system.characteristics.heightRange.female.base" 
+                                   value="{{system.characteristics.heightRange.female.base}}"
+                                   placeholder="Base"/>
+                            <span>+</span>
+                            <input type="text" name="system.characteristics.heightRange.female.modifier" 
+                                   value="{{system.characteristics.heightRange.female.modifier}}"
+                                   placeholder="2d6"/>
+                            <button type="button" class="roll-height" data-gender="female">
+                                <i class="fas fa-dice-d20"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Weight</label>
+                        <div class="characteristic-row">
+                            <input type="number" name="system.characteristics.weightRange.female.base" 
+                                   value="{{system.characteristics.weightRange.female.base}}"
+                                   placeholder="Base"/>
+                            <span>+</span>
+                            <input type="text" name="system.characteristics.weightRange.female.modifier" 
+                                   value="{{system.characteristics.weightRange.female.modifier}}"
+                                   placeholder="2d6"/>
+                            <button type="button" class="roll-weight" data-gender="female">
+                                <i class="fas fa-dice-d20"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {{!-- Age Section --}}
+                <div class="age-section">
+                    <h3>Age</h3>
+                    <div class="form-group">
+                        <label>Starting Age</label>
+                        <div class="characteristic-row">
+                            <input type="number" name="system.characteristics.ageRange.base" 
+                                   value="{{system.characteristics.ageRange.base}}"
+                                   placeholder="Base"/>
+                            <span>+</span>
+                            <input type="text" name="system.characteristics.ageRange.modifier" 
+                                   value="{{system.characteristics.ageRange.modifier}}"
+                                   placeholder="1d6"/>
+                            <button type="button" class="roll-age">
+                                <i class="fas fa-dice-d20"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <div class="tab description-section" data-group="primary" data-tab="description">
+            <h3>Description</h3>
+            {{editor system.description target="system.description" button=true owner=owner editable=editable}}
         </div>
     </section>
 </form> 

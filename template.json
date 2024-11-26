@@ -208,7 +208,9 @@
         "wis": 0,
         "cha": 0
       },
-      "features": [], 
+      "features": {
+        "contents": []
+      }, 
       "languages": {
         "bonus": [],
         "automatic": []
