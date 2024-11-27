@@ -1928,6 +1928,269 @@ h2 {
 
 .description-section .editor-content {
     height: 100%;
-    min-height: 200px;
+    min-height: 100px;
 }
 
+.effects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.effect-entry {
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.effect-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr auto;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.effect-conditions {
+    margin-top: 4px;
+}
+
+.effect-weapons {
+    width: 100%;
+    padding: 4px;
+}
+
+.delete-effect {
+    color: #800;
+    padding: 4px 8px;
+}
+
+.add-effect {
+    margin-top: 8px;
+    background: #4a4;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+/* Feature Sheet Effects Styling */
+.effects-container {
+    padding: 8px;
+}
+
+.effects-container h2 {
+    border-bottom: 2px solid #782e22;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    color: #782e22;
+    font-family: "Baskerville Old Face","Modesto Condensed", "Palatino Linotype", serif;
+    font-variant: small-caps;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.effects-list {
+    margin-top: 8px;
+}
+
+.effect-headers {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid #999;
+    border-radius: 4px 4px 0 0;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.effect-headers .header {
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+    color: #444;
+}
+
+.effect-entry {
+    background: rgba(0, 0, 0, 0.025);
+    border: 1px solid #999;
+    margin-bottom: 4px;
+    padding: 4px;
+    align-items: center;
+}
+
+.effect-entry select,
+.effect-entry input {
+    height: 24px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.effect-entry .effect-type,
+.effect-entry .effect-target {
+    padding: 0 4px;
+}
+
+.effect-entry .effect-value input {
+    width: 60px;
+    text-align: center;
+}
+
+.effect-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.effect-conditions {
+    margin-top: 4px;
+    padding: 4px;
+}
+
+.effect-conditions input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.effects-footer {
+    margin-top: 8px;
+    padding: 4px;
+    text-align: center;
+}
+
+.add-effect {
+    background: #782e22;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.add-effect:hover {
+    background: #8f382a;
+}
+
+.delete-effect {
+    color: #782e22;
+    background: none;
+    border: none;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+
+.delete-effect:hover {
+    color: #8f382a;
+}
+
+/* Feature Sheet Main Tab Styling */
+.feature-main-container,
+.feature-rolls-container {
+    padding: 8px;
+}
+
+.feature-main-container h2,
+.feature-rolls-container h2 {
+    border-bottom: 2px solid #782e22;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    color: #782e22;
+    font-family: "Modesto Condensed", "Palatino Linotype", serif;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.feature-details {
+    margin-top: 8px;
+    gap: 8px;
+}
+
+.feature-details .form-group {
+    margin: 0;
+}
+
+.feature-details label {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+.feature-details select,
+.feature-details input[type="text"] {
+    height: 24px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+}
+
+.feature-details .editor {
+    height: 150px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.feature-details .editor-content {
+    min-height: 150px;
+    height: 100%;
+}
+
+.feature-details .editor .editor-content {
+    min-height: 150px !important;
+    height: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+/* Feature Sheet Rolls Tab Styling */
+.roll-settings {
+    margin-top: 8px;
+}
+
+.roll-toggle {
+    margin-bottom: 12px;
+}
+
+.roll-toggle label {
+    font-weight: bold;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rollable-fields {
+    background: rgba(0, 0, 0, 0.025);
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 8px;
+    gap: 8px;
+}
+
+.rollable-fields .form-group {
+    margin: 0;
+}
+
+.rollable-fields label {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+.rollable-fields input,
+.rollable-fields select {
+    height: 24px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+}
+
+/* Grid System Extensions */
+.grid-2col {
+    grid-template-columns: 1fr 1fr;
+}
+
+.grid-span-2 {
+    grid-column: span 2 / span 2;
+}

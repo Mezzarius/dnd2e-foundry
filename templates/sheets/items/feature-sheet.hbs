@@ -8,45 +8,148 @@
         </div>
     </header>
 
-    <div class="form-group">
-        <label>Feature Type</label>
-        <select name="system.type">
-            {{#select system.type}}
-            <option value="racial">Racial</option>
-            <option value="class">Class</option>
-            <option value="background">Background</option>
-            {{/select}}
-        </select>
-    </div>
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item active" data-tab="main">Main</a>
+        <a class="item" data-tab="effects">Effects</a>
+        <a class="item" data-tab="rolls">Rolls</a>
+    </nav>
 
-    <div class="form-group">
-        <label>Description</label>
-        {{editor system.description target="system.description" button=true owner=owner editable=editable}}
-    </div>
+    <section class="sheet-body">
+        <div class="tab active" data-tab="main">
+            <div class="feature-main-container">
+                <h2>Feature Details</h2>
+                <div class="feature-details grid grid-2col">
+                    <div class="form-group">
+                        <label>Feature Type</label>
+                        <select name="system.type">
+                            {{#select item.system.type}}
+                            <option value="racial">Racial</option>
+                            <option value="class">Class</option>
+                            <option value="magical">Magical</option>
+                            {{/select}}
+                        </select>
+                    </div>
 
-    <div class="form-group">
-        <label>Properties</label>
-        <div class="properties-tags">
-            {{#each system.properties}}
-            <span class="tag">{{this}}</span>
-            {{/each}}
-            <input type="text" class="property-input" placeholder="Add property..."/>
+                    <div class="form-group">
+                        <label>Activation Type</label>
+                        <select name="system.activation.type">
+                            {{#select item.system.activation.type}}
+                            <option value="passive">Passive</option>
+                            <option value="action">Action</option>
+                            <option value="reaction">Reaction</option>
+                            <option value="special">Special</option>
+                            {{/select}}
+                        </select>
+                    </div>
+
+                    <div class="form-group grid-span-2">
+                        <label>Activation Condition</label>
+                        <input type="text" name="system.activation.condition" value="{{item.system.activation.condition}}"/>
+                    </div>
+
+                    <div class="form-group grid-span-2">
+                        <label>Description</label>
+                        {{editor item.system.description target="system.description" button=true owner=owner editable=editable}}
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label>Activation</label>
-        <select name="system.activation.type">
-            {{#select system.activation.type}}
-            <option value="passive">Passive</option>
-            <option value="action">Action</option>
-            <option value="reaction">Reaction</option>
-            {{/select}}
-        </select>
-    </div>
+        <div class="tab" data-tab="effects">
+            <div class="effects-container">
+                <h2>Effects</h2>
+                <div class="effects-list">
+                    <div class="effect-headers grid grid-4col">
+                        <div class="header">Type</div>
+                        <div class="header">Target</div>
+                        <div class="header">Value</div>
+                        <div class="header">Actions</div>
+                    </div>
+                    {{#each item.system.effects as |effect i|}}
+                    <div class="effect-entry grid grid-4col" data-index="{{i}}">
+                        <div class="effect-type">
+                            <select name="system.effects.{{i}}.type">
+                                {{#select effect.type}}
+                                {{#each ../effectTypes as |label key|}}
+                                <option value="{{key}}">{{label}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
 
-    <div class="form-group">
-        <label>Formula</label>
-        <input type="text" name="system.formula" value="{{system.formula}}" placeholder="e.g., @abilities.str.mod + @level"/>
-    </div>
-</form> 
+                        <div class="effect-target">
+                            <select name="system.effects.{{i}}.target">
+                                {{#select effect.target}}
+                                {{#each ../effectTargets as |label key|}}
+                                <option value="{{key}}">{{label}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+
+                        <div class="effect-value">
+                            <input type="number" name="system.effects.{{i}}.value" value="{{effect.value}}"/>
+                        </div>
+                        
+                        <div class="effect-actions">
+                            <button type="button" class="delete-effect">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+
+                        <div class="effect-conditions grid-span-4">
+                            <input type="text" class="effect-weapons" 
+                                name="system.effects.{{i}}.conditions.weapons" 
+                                value="{{effect.conditions.weapons}}" 
+                                placeholder="Applicable weapons (comma-separated)"/>
+                        </div>
+                    </div>
+                    {{/each}}
+                    <div class="effects-footer grid-span-4">
+                        <button type="button" class="add-effect">
+                            <i class="fas fa-plus"></i> Add Effect
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab" data-tab="rolls">
+            <div class="feature-rolls-container">
+                <h2>Roll Settings</h2>
+                <div class="roll-settings">
+                    <div class="form-group roll-toggle">
+                        <label>
+                            <input type="checkbox" name="system.rollable.enabled" {{checked item.system.rollable.enabled}}/>
+                            Enable Rolling
+                        </label>
+                    </div>
+
+                    {{#if item.system.rollable.enabled}}
+                    <div class="rollable-fields grid grid-2col">
+                        <div class="form-group">
+                            <label>Roll Formula</label>
+                            <input type="text" name="system.rollable.formula" value="{{item.system.rollable.formula}}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Target Number</label>
+                            <input type="number" name="system.rollable.target" value="{{item.system.rollable.target}}"/>
+                        </div>
+
+                        <div class="form-group grid-span-2">
+                            <label>Success Condition</label>
+                            <select name="system.rollable.successCondition">
+                                {{#select item.system.rollable.successCondition}}
+                                <option value="lte">Less than or equal</option>
+                                <option value="gte">Greater than or equal</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </section>
+</form>

@@ -236,21 +236,31 @@
     },
     "feature": {
       "templates": ["base"],
-      "type": "racial",  
+      "type": "racial", 
       "activation": {
-        "type": "passive",  
-        "cost": 0
+        "type": "passive", 
+        "cost": 0,
+        "condition": "" 
+      },
+      "effects": [{
+        "type": "bonus", 
+        "target": "attack", 
+        "value": 1,
+        "conditions": {
+          "weapons": ["bow", "shortsword", "longsword"],
+          "situations": []
+        }
+      }],
+      "rollable": {
+        "enabled": false,
+        "formula": "1d6",
+        "target": 2,  
+        "successCondition": "<=" 
       },
       "duration": {
         "value": 0,
-        "type": "permanent"  
-      },
-      "formula": "",  
-      "target": {
-        "value": 0,
-        "type": "self"
-      },
-      "properties": []  
+        "type": "permanent" 
+      }
     },
     "weapon": {
       "templates": ["base"],
