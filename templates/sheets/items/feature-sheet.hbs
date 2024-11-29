@@ -146,6 +146,12 @@
                                 {{/select}}
                             </select>
                         </div>
+
+                        <div class="form-group grid-span-2">
+                            <button type="button" class="roll-feature" {{#unless item.system.rollable.formula}}disabled{{/unless}}>
+                                <i class="fas fa-dice-d20"></i> Roll Feature
+                            </button>
+                        </div>
                     </div>
                     {{/if}}
                 </div>

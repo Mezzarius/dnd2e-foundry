@@ -194,6 +194,48 @@ h2 {
     border-radius: 4px;
 }
 
+.combat-stats .thac0-block {
+    padding: 5px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.combat-stats .thac0-block h2 {
+    margin: 0 0 5px 0;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.combat-stats .thac0-block .form-group {
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.combat-stats .thac0-block .form-group label {
+    flex: 2;
+    margin-right: 5px;
+    font-weight: normal;
+}
+
+.combat-stats .thac0-block .form-group input {
+    flex: 1;
+    text-align: center;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.combat-stats .thac0-block .form-group input:disabled {
+    background: rgba(255, 255, 255, 0.5);
+    color: #666;
+}
+
 /* Notes Tab */
 .notes-container {
     height: 100%;
@@ -2193,4 +2235,101 @@ h2 {
 
 .grid-span-2 {
     grid-column: span 2 / span 2;
+}
+
+/* Feature Roll Button Styling */
+.roll-feature {
+    width: 100%;
+    height: 32px;
+    background: #4b4a44;
+    color: white;
+    border: 1px solid #2a2a2a;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.roll-feature:hover:not(:disabled) {
+    background: #6b6a64;
+}
+
+.roll-feature:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    border-color: #999;
+}
+
+.roll-feature i {
+    font-size: 14px;
+}
+
+/* Feature Roll Chat Card Styling */
+.dnd2e.chat-card .roll-details {
+    padding: 8px;
+}
+
+.dnd2e.chat-card .roll-formula {
+    font-family: monospace;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.dnd2e.chat-card .roll-result {
+    text-align: center;
+    padding: 8px 0;
+}
+
+.dnd2e.chat-card .roll-total {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 4px;
+    border-radius: 3px;
+}
+
+.dnd2e.chat-card .roll-total.success {
+    color: #2a9d3a;
+    background: rgba(42, 157, 58, 0.1);
+}
+
+.dnd2e.chat-card .roll-total.failure {
+    color: #9d2a2a;
+    background: rgba(157, 42, 42, 0.1);
+}
+
+/* Race Drop Zone Styles */
+.race-drop-zone {
+    position: relative;
+    border: 1px dashed #999;
+    border-radius: 3px;
+    padding: 2px;
+    min-height: 24px;
+    transition: all 0.2s ease;
+}
+
+.race-drop-zone.dragover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: #000;
+}
+
+.race-drop-zone input[type="text"] {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+}
+
+.race-link {
+    cursor: pointer;
+}
+
+.race-link:hover {
+    text-shadow: 0 0 8px var(--color-shadow-primary);
 }

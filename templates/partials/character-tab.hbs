@@ -204,9 +204,12 @@
         {{!-- Character Info (2 columns) --}}
         <div class="basic-info span-2">
             <h2>Character Info</h2>
-            <div class="form-group">
+            <div class="form-group race-field" data-item-type="race">
                 <label>Race</label>
-                <input type="text" name="system.race" value="{{system.race}}"/>
+                <div class="race-drop-zone">
+                    <input type="text" name="system.race" value="{{system.race}}" readonly class="race-link" data-race-id="{{system.raceId}}"/>
+                    <input type="hidden" name="system.raceId" value="{{system.raceId}}"/>
+                </div>
             </div>
             <div class="form-group">
                 <label>Class</label>

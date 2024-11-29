@@ -1,0 +1,18 @@
+<div class="dnd2e chat-card">
+    <h3>{{item.name}} Roll</h3>
+    <div class="roll-details">
+        <div class="roll-formula">
+            <strong>Formula:</strong> {{roll.formula}}
+        </div>
+        <hr>
+        <div class="roll-result">
+            <strong>Result:</strong> {{total}}
+            <br>
+            <strong>Target:</strong> {{successCondition}} {{target}}
+        </div>
+        <hr>
+        <div class="roll-total {{#if isSuccess}}success{{else}}failure{{/if}}">
+            {{#if isSuccess}}Success!{{else}}Failure{{/if}}
+        </div>
+    </div>
+</div>

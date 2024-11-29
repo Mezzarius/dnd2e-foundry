@@ -30,7 +30,10 @@ export default class DND2ECharacterSheet extends ActorSheet {
                 contentSelector: ".notes-container",
                 initial: "background"
             }],
-            dragDrop: [{dragSelector: ".item", dropSelector: ".equipment-container"}]
+            dragDrop: [{
+                dragSelector: ".item",
+                dropSelector: [".equipment-container", ".race-drop-zone"]
+            }]
         });
     }
 
@@ -122,6 +125,22 @@ export default class DND2ECharacterSheet extends ActorSheet {
         // Update the values
         context.system.level = level;
         context.system.xp.next = next;
+
+
+        // Calculate THAC0 values
+        const { THAC0Tables } = game.dnd2e.tables;
+        const baseTHAC0 = THAC0Tables.getBaseTHAC0(characterClass, level);
+        const strHitMod = this.actor.system.attributes.str?.hitMod || 0;
+        const dexMissileMod = this.actor.system.attributes.dex?.missile || 0;
+
+        // Set THAC0 values in context
+        context.system.thac0 = {
+            base: baseTHAC0,
+            meleeModifier: strHitMod,
+            rangedModifier: dexMissileMod,
+            melee: baseTHAC0 - strHitMod,
+            ranged: baseTHAC0 - dexMissileMod
+        };
 
         return context;
     }
@@ -265,6 +284,26 @@ export default class DND2ECharacterSheet extends ActorSheet {
         // Add hit die roll listener
         html.find('.roll-hit-die').click(this._onRollHitDie.bind(this));
 
+        // Add name change listener
+        html.find('input[name="name"]').change(async (event) => {
+            await this.actor.update({name: event.target.value});
+        });
+
+        // Add image change handler
+        const imgBtn = html.find('img[data-edit="img"]');
+        imgBtn.click(ev => {
+            const fp = new FilePicker({
+                type: "image",
+                current: this.actor.img,
+                callback: path => {
+                    this.actor.update({img: path});
+                },
+                top: this.position.top + 40,
+                left: this.position.left + 10
+            });
+            fp.browse();
+        });
+
         // Add XP change listener
         html.find('input[name="system.xp.value"]').change(async (event) => {
             const xpValue = parseInt(event.target.value) || 0;
@@ -284,6 +323,15 @@ export default class DND2ECharacterSheet extends ActorSheet {
 
         // Add saving throw roll listeners
         html.find('.roll-save').click(this._onRollSave.bind(this));
+
+        // Add drag/drop handling for race
+        html.find('.race-drop-zone')
+            .on('dragover', this._onDragOver.bind(this))
+            .on('dragleave', this._onDragLeave.bind(this))
+            .on('drop', this._onDrop.bind(this));
+
+        // Add race sheet click handler
+        html.find('.race-link').click(this._onRaceClick.bind(this));
     }
 
     async _onItemCreate(event) {
@@ -562,14 +610,19 @@ export default class DND2ECharacterSheet extends ActorSheet {
 
     _onDragOver(event) {
         event.preventDefault();
-        return false;
+        event.currentTarget.classList.add('dragover');
     }
 
-    _onDrop(event) {
-        // ... keep any existing _onDrop code if it exists ...
-        
+    _onDragLeave(event) {
         event.preventDefault();
-        
+        event.currentTarget.classList.remove('dragover');
+    }
+
+    async _onDrop(event) {
+        event.preventDefault();
+        event.currentTarget.classList.remove('dragover');
+
+        // Try to extract the data
         let data;
         try {
             data = JSON.parse(event.dataTransfer.getData('text/plain'));
@@ -577,30 +630,24 @@ export default class DND2ECharacterSheet extends ActorSheet {
             return false;
         }
 
-        if (data.type === "Item") {
-            return this._onDropItem(event, data);
-        }
-    }
+        // Handle race item drops
+        if (event.currentTarget.closest('.race-drop-zone')) {
+            const item = await Item.fromDropData(data);
+            if (item.type !== 'race') {
+                ui.notifications.warn("Only Race items can be dropped here!");
+                return false;
+            }
 
-    async _onDropItem(event, data) {
-        if (!this.actor.isOwner) return false;
-        
-        const item = await Item.fromDropData(data);
-        // Check if item type is valid for equipment
-        const validTypes = ["weapon", "armor", "consumable", "equipment"];
-        if (!validTypes.includes(item.type)) {
-            ui.notifications.warn(`Cannot add items of type ${item.type} to equipment.`);
+            // Update the character's race
+            await this.actor.update({
+                'system.race': item.name,
+                'system.raceId': item.id
+            });
             return false;
         }
 
-        const itemData = item.toObject();
-
-        // Set default quantity to 1 if not present
-        if (!itemData.system.quantity) {
-            itemData.system.quantity = 1;
-        }
-
-        return this.actor.createEmbeddedDocuments("Item", [itemData]);
+        // Handle other drops normally
+        return super._onDrop(event);
     }
 
     async _onSavingThrowModChange(event) {
@@ -779,5 +826,17 @@ export default class DND2ECharacterSheet extends ActorSheet {
             type: CONST.CHAT_MESSAGE_TYPES.OTHER,
             roll: roll
         });
+    }
+
+    async _onRaceClick(event) {
+        event.preventDefault();
+        const raceId = event.currentTarget.dataset.raceId;
+        if (!raceId) return;
+
+        // Get the race item from the world items collection
+        const race = game.items.get(raceId);
+        if (race) {
+            race.sheet.render(true);
+        }
     }
 } 

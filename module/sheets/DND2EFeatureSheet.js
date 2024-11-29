@@ -38,6 +38,9 @@ export class DND2EFeatureSheet extends ItemSheet {
                 "system.rollable.enabled": ev.target.checked
             });
         });
+
+        // Feature roll button
+        html.find('.roll-feature').click(this._onFeatureRoll.bind(this));
     }
 
     async _onAddEffect(event) {
@@ -70,6 +73,51 @@ export class DND2EFeatureSheet extends ItemSheet {
         } catch (error) {
             console.error("Error deleting effect:", error);
             ui.notifications.error("Failed to delete effect");
+        }
+    }
+
+    async _onFeatureRoll(event) {
+        event.preventDefault();
+
+        const rollData = this.item.system.rollable;
+        if (!rollData.enabled || !rollData.formula) return;
+
+        try {
+            // Create the roll and evaluate it
+            const roll = await new Roll(rollData.formula).evaluate({async: true});
+
+            // Determine success/failure
+            const total = roll.total;
+            const target = rollData.target;
+            const isSuccess = rollData.successCondition === "lte" ? 
+                total <= target : 
+                total >= target;
+
+            // Create chat message content
+            const messageContent = await renderTemplate("systems/dnd2e/templates/chat/feature-roll.hbs", {
+                item: this.item,
+                roll: roll,
+                total: total,
+                target: target,
+                isSuccess: isSuccess,
+                successCondition: rollData.successCondition === "lte" ? "<=" : ">="
+            });
+
+            // Create chat data
+            const chatData = {
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this.item.parent }),
+                content: messageContent,
+                sound: CONFIG.sounds.dice,
+                type: CONST.CHAT_MESSAGE_TYPES.ROLL
+            };
+
+            // Show the roll in chat (this will trigger 3D dice)
+            await roll.toMessage(chatData, {rollMode: game.settings.get("core", "rollMode")});
+
+        } catch (error) {
+            console.error("Error rolling feature:", error);
+            ui.notifications.error(`Error rolling feature: ${error.message}`);
         }
     }
 

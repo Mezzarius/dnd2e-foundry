@@ -84,6 +84,9 @@ export default class DND2ERaceSheet extends DND2EItemSheet {
             console.log("DND2ERaceSheet | Weight roll clicked");
             this._onRollWeight(ev);
         });
+
+        // Feature roll
+        html.find('.feature-roll').click(this._onFeatureRoll.bind(this));
     }
 
     async _onDrop(event) {
@@ -246,4 +249,51 @@ export default class DND2ERaceSheet extends DND2EItemSheet {
             'system.features.contents': features
         });
     }
-} 
+
+    async _onFeatureRoll(event) {
+        event.preventDefault();
+        
+        const featureId = event.currentTarget.dataset.featureId;
+        const feature = this.item.system.features.contents.find(f => f._id === featureId);
+        
+        if (!feature || !feature.system.rollable.enabled || !feature.system.rollable.formula) return;
+
+        try {
+            // Create the roll and evaluate it
+            const roll = await new Roll(feature.system.rollable.formula).evaluate({async: true});
+
+            // Determine success/failure
+            const total = roll.total;
+            const target = feature.system.rollable.target;
+            const isSuccess = feature.system.rollable.successCondition === "lte" ? 
+                total <= target : 
+                total >= target;
+
+            // Create chat message content
+            const messageContent = await renderTemplate("systems/dnd2e/templates/chat/feature-roll.hbs", {
+                item: feature,
+                roll: roll,
+                total: total,
+                target: target,
+                isSuccess: isSuccess,
+                successCondition: feature.system.rollable.successCondition === "lte" ? "<=" : ">="
+            });
+
+            // Create chat data
+            const chatData = {
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this.item.parent }),
+                content: messageContent,
+                sound: CONFIG.sounds.dice,
+                type: CONST.CHAT_MESSAGE_TYPES.ROLL
+            };
+
+            // Show the roll in chat (this will trigger 3D dice)
+            await roll.toMessage(chatData, {rollMode: game.settings.get("core", "rollMode")});
+
+        } catch (error) {
+            console.error("Error rolling feature:", error);
+            ui.notifications.error(`Error rolling feature: ${error.message}`);
+        }
+    }
+}

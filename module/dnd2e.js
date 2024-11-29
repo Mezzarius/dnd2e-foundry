@@ -5,9 +5,17 @@ import DND2ERaceSheet from "./sheets/DND2ERaceSheet.js";
 import { DND2EFeatureSheet } from "./sheets/DND2EFeatureSheet.js";
 
 import { DND2EItem } from "./documents/item.js";
+import { THAC0Tables } from "./tables/thac0Tables.js";
 
 Hooks.once('init', async function() {
   console.log('DND2E | Initializing Advanced Dungeons & Dragons 2E System');
+
+  // Register game tables
+  game.dnd2e = {
+    tables: {
+      THAC0Tables
+    }
+  };
 
   CONFIG.DND2E = {
       // Add item types configuration

@@ -55,15 +55,23 @@
             <h2>THAC0</h2>
             <div class="form-group">
                 <label>Base THAC0</label>
-                <input type="number" name="system.thac0.base" value="{{system.thac0.base}}"/>
+                <input type="number" name="system.thac0.base" value="{{system.thac0.base}}" disabled/>
             </div>
             <div class="form-group">
-                <label>Str Modifier</label>
-                <input type="number" name="system.thac0.strMod" value="{{system.thac0.strMod}}"/>
+                <label>Melee Mod</label>
+                <input type="number" name="system.thac0.meleeModifier" value="{{system.thac0.meleeModifier}}" disabled/>
             </div>
-            <div class="form-group total-thac0">
-                <label>Total THAC0</label>
-                <input type="number" name="system.thac0.value" value="{{system.thac0.value}}" disabled/>
+            <div class="form-group">
+                <label>Ranged Mod</label>
+                <input type="number" name="system.thac0.rangedModifier" value="{{system.thac0.rangedModifier}}" disabled/>
+            </div>
+            <div class="form-group">
+                <label>Melee THAC0</label>
+                <input type="number" name="system.thac0.melee" value="{{system.thac0.melee}}" disabled/>
+            </div>
+            <div class="form-group">
+                <label>Ranged THAC0</label>
+                <input type="number" name="system.thac0.ranged" value="{{system.thac0.ranged}}" disabled/>
             </div>
         </div>
 
