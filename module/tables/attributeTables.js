@@ -67,13 +67,13 @@ export const ConstitutionTable = {
         { min: 15, max: 15, hp: 1, shock: 90, resurrection: 94, poison: 0, regen: 0 },
         { min: 16, max: 16, hp: 2, shock: 95, resurrection: 96, poison: 0, regen: 0 },
         { min: 17, max: 17, hp: 3, shock: 91, resurrection: 98, poison: 0, regen: 0 },
-        { min: 18, max: 18, hp: 4, shock: 99, resurrection: 35, poison: 0, regen: 0 },
-        { min: 19, max: 19, hp: 5, shock: 99, resurrection: 30, poison: 1, regen: 0 },
-        { min: 20, max: 20, hp: 5, shock: 99, resurrection: 60, poison: 1, regen: 6 },
+        { min: 18, max: 18, hp: 4, shock: 99, resurrection: 100, poison: 0, regen: 0 },
+        { min: 19, max: 19, hp: 5, shock: 99, resurrection: 100, poison: 1, regen: 0 },
+        { min: 20, max: 20, hp: 5, shock: 99, resurrection: 100, poison: 1, regen: 6 },
         { min: 21, max: 21, hp: 6, shock: 99, resurrection: 100, poison: 2, regen: 5 },
-        { min: 22, max: 22, hp: 6, shock: 99, resurrection: 150, poison: 2, regen: 4 },
-        { min: 23, max: 23, hp: 6, shock: 99, resurrection: 200, poison: 3, regen: 3 },
-        { min: 24, max: 24, hp: 7, shock: 99, resurrection: 250, poison: 3, regen: 2 },
+        { min: 22, max: 22, hp: 6, shock: 99, resurrection: 100, poison: 2, regen: 4 },
+        { min: 23, max: 23, hp: 6, shock: 99, resurrection: 100, poison: 3, regen: 3 },
+        { min: 24, max: 24, hp: 7, shock: 99, resurrection: 100, poison: 3, regen: 2 },
         { min: 24, max: 25, hp: 7, shock: 99, resurrection: 100, poison: 4, regen: 1 }
     ]
 };

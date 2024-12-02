@@ -982,9 +982,11 @@ h2 {
 }
 
 .modifier-field {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
+    margin-right: 8px;
 }
 
 .modifier-field label {
@@ -998,21 +1000,18 @@ h2 {
     width: 45px;
     height: 24px;
     text-align: center;
-    background: #e0e0e0;
+    background: rgba(255, 255, 255, 0.8);
     border: 1px solid var(--color-border);
     border-radius: 3px;
 }
 
-.modifier-field {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.modifier-field.immunity-field {
+    margin-right: 0;
 }
 
-.modifier-field input {
-    width: 100%;
-    text-align: center;
+.modifier-field.immunity-field input {
+    width: auto;
+    min-width: 45px;
 }
 
 .roll-attribute {
@@ -1021,7 +1020,7 @@ h2 {
     padding: 2px;
     line-height: 1;
     background: rgba(255, 255, 255, 0.8);
-    border: 1px solid var(--color-border);
+    border: 0px solid var(--color-border);
     border-radius: 3px;
     cursor: pointer;
 }
@@ -1053,7 +1052,7 @@ h2 {
 .dnd2e.sheet.actor .window-content {
     height: 100%;
     padding: 5px;
-    overflow-y: hidden; /* Prevent double scrollbars */
+    overflow-y: hidden;
 }
 
 .dnd2e.sheet.actor form {
@@ -1063,7 +1062,7 @@ h2 {
 
 /* Ensure the sheet body takes up remaining space */
 .sheet-body {
-    height: calc(100% - 60px); /* Adjust based on your header height */
+    height: calc(100% - 60px);
     overflow-y: auto;
 }
 
@@ -1085,7 +1084,7 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    padding: 0 5px;  /* Add slight padding to columns */
+    padding: 0 5px;
 }
 
 .traits-column .form-group {
@@ -1095,7 +1094,7 @@ h2 {
 }
 
 .traits-column .form-group label {
-    flex: 0 0 60px;  /* Reduced from 70px */
+    flex: 0 0 60px;
     padding-right: 8px;
     text-align: right;
     color: #444;
@@ -1104,7 +1103,7 @@ h2 {
 
 .traits-column .form-group input {
     flex: 1;
-    min-width: 0;  /* Allows proper flex shrinking */
+    min-width: 0;
     height: 24px;
     border: 1px solid var(--color-border);
     border-radius: 3px;
@@ -1114,12 +1113,12 @@ h2 {
 
 /* Specific adjustments for left column traits */
 .traits-column:first-child .form-group label {
-    flex: 0 0 50px;  /* Even smaller for Origin/Faith/Alignment */
+    flex: 0 0 50px;
 }
 
 .traits-column:first-child .form-group input {
     flex: 1;
-    min-width: 100px;  /* Ensures minimum readable width */
+    min-width: 100px;
 }
 
 .equipment-section {
@@ -1332,18 +1331,18 @@ h2 {
 }
 
 .hp-block label {
-    flex: 0 0 100px; /* Fixed width for labels */
+    flex: 0 0 100px;
     margin-right: 10px;
 }
 
 .hp-block input {
-    flex: 0 0 80px; /* Fixed width for inputs */
-    height: 24px; /* Fixed height */
+    flex: 0 0 80px;
+    height: 24px;
 }
 
 /* Container for input or input+button group */
 .hp-block .input-container {
-    flex: 0 0 110px; /* Width to accommodate input + button */
+    flex: 0 0 110px;
     display: flex;
     gap: 5px;
 }
@@ -1354,7 +1353,7 @@ h2 {
 }
 
 .hp-block .hit-die-group input {
-    width: 80px; /* Match other inputs */
+    width: 80px;
 }
 
 .hp-block .hit-die-group button {
@@ -1676,14 +1675,14 @@ h2 {
 }
 
 .character-details .basic-info {
-    padding: 8px;  /* Restore normal padding */
+    padding: 8px;
 }
 
 .character-details .basic-info .form-group {
-    padding-left: 0;  /* Remove left padding specifically */
-    margin: 4px 8px;  /* Keep vertical spacing, adjust horizontal */
+    padding-left: 0;
+    margin: 4px 8px;
     position: relative;
-    left: -8px;  /* Shift the form groups left */
+    left: -8px;
 }
 
 /* Character Info Box Styles */
@@ -1697,7 +1696,7 @@ h2 {
 
 .basic-info .form-group {
     display: grid;
-    grid-template-columns: 70px 1fr;  /* 70px for label, rest for input */
+    grid-template-columns: 70px 1fr;
     gap: 8px;
     margin-bottom: 5px;
     align-items: center;
@@ -1708,7 +1707,7 @@ h2 {
 }
 
 .basic-info .form-group input {
-    width: 140px;  /* Fixed width for input fields */
+    width: 140px;
     height: 24px;
     border: 1px solid var(--color-border);
     border-radius: 3px;
@@ -1961,13 +1960,13 @@ h2 {
 }
 
 .languages-section .form-group label {
-    flex: 0 0 120px;  /* Fixed width for labels */
+    flex: 0 0 120px;
     margin-right: 10px;
 }
 
 .languages-section .form-group input {
-    flex: 1;          /* Input takes up remaining space */
-    min-width: 200px; /* Minimum width */
+    flex: 1;
+    min-width: 200px;
     height: 28px;
     border: 1px solid var(--color-border);
     border-radius: 3px;
