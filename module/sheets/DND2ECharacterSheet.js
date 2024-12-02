@@ -324,6 +324,9 @@ export default class DND2ECharacterSheet extends ActorSheet {
         // Add saving throw roll listeners
         html.find('.roll-save').click(this._onRollSave.bind(this));
 
+        // Add attribute roll listeners
+        html.find('.roll-attribute').click(this._onAttributeRoll.bind(this));
+
         // Add drag/drop handling for race
         html.find('.race-drop-zone')
             .on('dragover', this._onDragOver.bind(this))
@@ -332,6 +335,9 @@ export default class DND2ECharacterSheet extends ActorSheet {
 
         // Add race sheet click handler
         html.find('.race-link').click(this._onRaceClick.bind(this));
+
+        // Add click handler for rollable attribute checks
+        html.find('.rollable-check').click(this._onAttributeRoll.bind(this));
     }
 
     async _onItemCreate(event) {
@@ -662,63 +668,6 @@ export default class DND2ECharacterSheet extends ActorSheet {
         });
     }
 
-    _calculateSavingThrows(context) {
-        const characterClass = context.system.class.toLowerCase();
-        const level = context.system.level;
-
-        // Get base saves for class and level
-        const classTable = SavingThrowTables[characterClass];
-        if (!classTable) return;
-
-        const row = classTable.modifiers.find(r => r.min <= level && r.max >= level);
-        if (!row) return;
-
-        // Get existing attribute modifiers
-        const poisonMod = context.system.attributes.con?.poison || 0;
-        const magicDefMod = context.system.attributes.wis?.magicDefense || 0;
-
-        // Ensure saves object exists
-        if (!context.system.saves) {
-            context.system.saves = {};
-        }
-
-        // Calculate each save
-        const saves = ['poison', 'rod', 'petrification', 'breath', 'spell'];
-        saves.forEach(save => {
-            // Get base value from class table
-            const base = row[save];
-            
-            // Ensure save object exists
-            if (!context.system.saves[save]) {
-                context.system.saves[save] = {
-                    base: base,
-                    mod: 0,
-                    attrMod: 0,
-                    final: base
-                };
-            }
-
-            // Get manual modifier
-            const mod = context.system.saves[save]?.mod || 0;
-
-            // Apply attribute modifiers based on save type
-            let attrMod = 0;
-            if (save === 'poison') {  // Poison/Death save
-                attrMod = -poisonMod;
-            } else if (save === 'rod' || save === 'spell') {  // Magical saves
-                attrMod = -magicDefMod;
-            }
-            
-            // Update save values
-            context.system.saves[save] = {
-                base: base,
-                mod: mod,
-                attrMod: attrMod,
-                final: base + mod + attrMod
-            };
-        });
-    }
-
     async _onRollHitDie(event) {
         event.preventDefault();
         const hitDie = this.actor.system.hp.hitDie;
@@ -828,6 +777,79 @@ export default class DND2ECharacterSheet extends ActorSheet {
         });
     }
 
+    async _onAttributeRoll(event) {
+        event.preventDefault();
+        const button = event.currentTarget;
+        const rollType = button.dataset.rollType;
+        const target = parseInt(button.dataset.target);
+
+        if (isNaN(target)) return;
+
+        let formula, label;
+        const isPercentile = rollType !== 'doors';
+        
+        if (isPercentile) {
+            formula = '1d100';
+        } else {
+            formula = '1d20';
+        }
+
+        switch(rollType) {
+            case 'doors':
+                label = 'Open Doors Check';
+                break;
+            case 'bblg':
+                label = 'Bend Bars/Lift Gates Check';
+                break;
+            case 'shock':
+                label = 'System Shock Check';
+                break;
+            case 'res':
+                label = 'Resurrection Survival Check';
+                break;
+            case 'learn':
+                label = 'Learn Spell Check';
+                break;
+            case 'fail':
+                label = 'Spell Failure Check';
+                break;
+            default:
+                return;
+        }
+
+        // Create the roll
+        const roll = await Roll.create(formula);
+        await roll.evaluate({async: true});
+
+        // Show the 3D dice if enabled
+        if (game.dice3d) {
+            await game.dice3d.showForRoll(roll);
+        }
+
+        // Determine success/failure (success is when roll is LESS than or equal to target)
+        const isSuccess = roll.total <= target;
+
+        // Create chat message content
+        let content = `<div class="dnd2e chat-card">`;
+        content += `<h3>${label}</h3>`;
+        content += `<div class="roll-details">`;
+        content += `<div>Target Score: ${target}</div>`;
+        content += `<div>Roll: ${roll.total}</div>`;
+        content += `<hr>`;
+        content += `<div class="roll-total ${isSuccess ? 'success' : 'failure'}">`;
+        content += `Result: <strong>${isSuccess ? 'Success!' : 'Failure'}</strong>`;
+        content += `</div></div></div>`;
+
+        // Create chat message
+        await ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: content,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            roll: roll
+        });
+    }
+
     async _onRaceClick(event) {
         event.preventDefault();
         const raceId = event.currentTarget.dataset.raceId;
@@ -838,5 +860,62 @@ export default class DND2ECharacterSheet extends ActorSheet {
         if (race) {
             race.sheet.render(true);
         }
+    }
+
+    _calculateSavingThrows(context) {
+        const characterClass = context.system.class.toLowerCase();
+        const level = context.system.level;
+
+        // Get base saves for class and level
+        const classTable = SavingThrowTables[characterClass];
+        if (!classTable) return;
+
+        const row = classTable.modifiers.find(r => r.min <= level && r.max >= level);
+        if (!row) return;
+
+        // Get existing attribute modifiers
+        const poisonMod = context.system.attributes.con?.poison || 0;
+        const magicDefMod = context.system.attributes.wis?.magicDefense || 0;
+
+        // Ensure saves object exists
+        if (!context.system.saves) {
+            context.system.saves = {};
+        }
+
+        // Calculate each save
+        const saves = ['poison', 'rod', 'petrification', 'breath', 'spell'];
+        saves.forEach(save => {
+            // Get base value from class table
+            const base = row[save];
+            
+            // Ensure save object exists
+            if (!context.system.saves[save]) {
+                context.system.saves[save] = {
+                    base: base,
+                    mod: 0,
+                    attrMod: 0,
+                    final: base
+                };
+            }
+
+            // Get manual modifier
+            const mod = context.system.saves[save]?.mod || 0;
+
+            // Apply attribute modifiers based on save type
+            let attrMod = 0;
+            if (save === 'poison') {  // Poison/Death save
+                attrMod = -poisonMod;
+            } else if (save === 'rod' || save === 'spell') {  // Magical saves
+                attrMod = -magicDefMod;
+            }
+            
+            // Update save values
+            context.system.saves[save] = {
+                base: base,
+                mod: mod,
+                attrMod: attrMod,
+                final: base + mod + attrMod
+            };
+        });
     }
 } 
