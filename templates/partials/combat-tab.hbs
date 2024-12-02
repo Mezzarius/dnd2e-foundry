@@ -80,15 +80,24 @@
             <h2>Initiative</h2>
             <div class="form-group">
                 <label>Base</label>
-                <input type="number" name="system.initiative.base" value="{{system.initiative.base}}"/>
+                <div class="input-container">
+                    <input type="number" name="system.initiative.base" value="{{system.initiative.base}}"/>
+                </div>
+                <button type="button" class="roll-initiative">
+                    <i class="fas fa-dice-d20"></i>
+                </button>
             </div>
             <div class="form-group">
                 <label>Dex Modifier</label>
-                <input type="number" name="system.initiative.dexMod" value="{{system.initiative.dexMod}}"/>
+                <div class="input-container">
+                    <input type="number" name="system.initiative.dexMod" value="{{system.initiative.dexMod}}" disabled/>
+                </div>
             </div>
             <div class="form-group total-init">
                 <label>Total</label>
-                <input type="number" name="system.initiative.value" value="{{system.initiative.value}}" disabled/>
+                <div class="input-container">
+                    <input type="number" name="system.initiative.value" value="{{system.initiative.value}}" disabled/>
+                </div>
             </div>
         </div>
     </div>

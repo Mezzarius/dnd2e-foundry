@@ -1277,17 +1277,16 @@ h2 {
 .roll-hit-die {
     width: 24px;
     height: 24px;
+    padding: 2px;
+    line-height: 1;
+    background: rgba(255, 255, 255, 0.8);
     border: 1px solid var(--color-border);
     border-radius: 3px;
-    background: #4b4a44;
-    color: white;
-    padding: 0;
-    line-height: 24px;
-    text-align: center;
+    cursor: pointer;
 }
 
 .roll-hit-die:hover {
-    background: #6b6a64;
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .dnd2e.chat-card {
@@ -1325,26 +1324,25 @@ h2 {
 }
 
 .hp-block .form-group {
-    display: flex;
+    display: grid;
+    grid-template-columns: 100px 110px 30px;
+    gap: 10px;
     align-items: center;
     margin-bottom: 5px;
 }
 
 .hp-block label {
-    flex: 0 0 100px;
-    margin-right: 10px;
+    text-align: right;
+    padding-right: 5px;
 }
 
 .hp-block input {
-    flex: 0 0 80px;
+    width: 100%;
     height: 24px;
 }
 
-/* Container for input or input+button group */
 .hp-block .input-container {
-    flex: 0 0 110px;
-    display: flex;
-    gap: 5px;
+    width: 100%;
 }
 
 .hp-block .hit-die-group {
@@ -1360,6 +1358,58 @@ h2 {
     flex: 0 0 24px;
     height: 24px;
 } 
+
+/* Initiative Block Styling */
+.initiative-block {
+    padding: 10px;
+}
+
+.initiative-block .form-group {
+    display: grid;
+    grid-template-columns: 100px 110px;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.initiative-block .form-group:first-of-type {
+    grid-template-columns: 100px 110px 30px;
+}
+
+.initiative-block label {
+    text-align: right;
+    padding-right: 5px;
+}
+
+.initiative-block input {
+    width: 100%;
+    height: 24px;
+}
+
+.initiative-block .input-container {
+    width: 100%;
+}
+
+.initiative-block .roll-initiative {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    line-height: 1;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.initiative-block .roll-initiative:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.initiative-block .total-init {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+}
 
 /* Armor Sheet Specific Styles */
 .item-properties .properties-grid.three-column {
@@ -2362,4 +2412,28 @@ h2 {
 
 .race-link:hover {
     text-shadow: 0 0 8px var(--color-shadow-primary);
+}
+
+/* Initiative Styling */
+.initiative-block .input-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.initiative-block .roll-initiative {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0;
+}
+
+.initiative-block .roll-initiative:hover {
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }

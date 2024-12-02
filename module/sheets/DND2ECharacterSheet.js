@@ -338,6 +338,9 @@ export default class DND2ECharacterSheet extends ActorSheet {
 
         // Add click handler for rollable attribute checks
         html.find('.rollable-check').click(this._onAttributeRoll.bind(this));
+
+        // Add initiative roll button listener
+        html.find('.roll-initiative').click(this._onRollInitiative.bind(this));
     }
 
     async _onItemCreate(event) {
@@ -734,6 +737,49 @@ export default class DND2ECharacterSheet extends ActorSheet {
 
         // Force a complete recalculation
         await this._onAttributeChange('system.attributes.str.value', 18);
+    }
+
+    async _onRollInitiative(event) {
+        event.preventDefault();
+        
+        // Roll 1d10 for initiative
+        const roll = await new Roll("1d10").evaluate({async: true});
+        
+        // Show the 3D dice if enabled
+        if (game.dice3d) {
+            await game.dice3d.showForRoll(roll);
+        }
+        
+        // Get the dexterity reaction adjustment
+        const dexMod = this.actor.system.attributes.dex?.reaction || 0;
+        
+        // Calculate total (roll - dex modifier)
+        const total = roll.total - dexMod;
+        
+        // Update the initiative values
+        await this.actor.update({
+            "system.initiative.base": roll.total,
+            "system.initiative.dexMod": dexMod,
+            "system.initiative.value": total
+        });
+        
+        // Create chat message
+        let content = `<div class="dnd2e chat-card">`;
+        content += `<h3>Initiative Roll</h3>`;
+        content += `<div class="roll-details">`;
+        content += `<div>Base Roll (1d10): ${roll.total}</div>`;
+        content += `<div>Dex/React Modifier: ${dexMod}</div>`;
+        content += `<hr>`;
+        content += `<div class="roll-total">Total Initiative: ${total}</div>`;
+        content += `</div></div>`;
+        
+        await ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: content,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            roll: roll
+        });
     }
 
     async _onRollSave(event) {
