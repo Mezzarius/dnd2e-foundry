@@ -12,6 +12,7 @@
         <span title="Damage vs L">{{item.system.ldamage}}</span>
     </div>
     <div class="item-speed">{{item.system.speed}}</div>
+    <div class="item-init">{{#if (not (eq item.system.totalInit null))}}{{item.system.totalInit}}{{else}}--{{/if}}</div>
     <div class="item-quality">{{item.system.quality}}</div>
     <div class="item-equipped">
         <input type="checkbox" name="system.equipped" {{checked item.system.equipped}}/>

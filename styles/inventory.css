@@ -1,0 +1,65 @@
+/* Inventory and Items Styles */
+
+.inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.inventory-list .item {
+    padding: 5px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.inventory-list .item:last-child {
+    border-bottom: none;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.item-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.item-controls a {
+    flex: 0 0 22px;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Equipment Specific */
+.equipment-slot {
+    border: 1px solid var(--color-border);
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: var(--border-radius);
+}
+
+.equipment-slot .slot-header {
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+/* Currency and Wealth */
+.currency-block {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    margin: var(--padding-standard) 0;
+}
+
+.currency-item {
+    text-align: center;
+}
+
+.currency-item input {
+    width: 60px;
+    text-align: center;
+}

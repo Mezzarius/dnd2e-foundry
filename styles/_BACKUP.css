@@ -1,0 +1,2462 @@
+.dnd2e {
+    /* Base styles */
+    --color-border: #999;
+    --color-bg-sheet: #f0f0f0;
+    --color-tab-active: #fff;
+    --color-tab-inactive: #ddd;
+}
+
+.dnd2e .window-content {
+    background: var(--color-bg-sheet);
+    padding: 5px;
+    font-size: 14px;
+}
+
+/* Header Styles */
+.dnd2e .sheet-header {
+    flex: 0 0 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.dnd2e .profile-img {
+    flex: 0 0 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.dnd2e .header-fields {
+    flex: 1;
+}
+
+.dnd2e .charname {
+    height: 50px;
+    padding: 0;
+    margin: 0;
+}
+
+.dnd2e .charname input {
+    width: 100%;
+    height: 100%;
+    font-size: 1.5em;
+}
+
+/* Navigation Tabs */
+.dnd2e .sheet-tabs {
+    flex: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.dnd2e .sheet-tabs .item {
+    padding: 5px;
+    margin: 0 5px;
+    border-radius: 4px 4px 0 0;
+    background: var(--color-tab-inactive);
+    border: 1px solid var(--color-border);
+    border-bottom: none;
+}
+
+.dnd2e .sheet-tabs .item.active {
+    background: var(--color-tab-active);
+    text-shadow: none;
+}
+
+/* Sheet Body */
+.dnd2e .sheet-body {
+    overflow: hidden;
+}
+
+.dnd2e .sheet-body .tab {
+    display: none;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.dnd2e .sheet-body .tab.active {
+    display: block;
+}
+
+/* Grid Layouts */
+.grid {
+    display: grid;
+    gap: 10px;
+    margin: 10px 0;
+    padding: 0;
+}
+
+.grid-2col {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3col {
+    grid-template-columns: 200px 1fr 200px;
+    gap: 10px;
+}
+
+.grid-5col {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.grid-8col {
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.span-2 {
+    grid-column: span 2;
+}
+
+.span-4 {
+    grid-column: span 4;
+}
+
+.span-1-5 {
+    grid-column: span 1.5;
+}
+
+.span-2-5 {
+    grid-column: span 2.5;
+}
+
+.span-1-25 {
+    grid-column: span 1.25;
+}
+
+.span-2-75 {
+    grid-column: span 2.75;
+}
+
+/* Character Tab */
+.attributes, .basic-info, .physical-traits {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.form-group {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.form-group label {
+    flex: 0 0 100px;
+    padding-right: 10px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.form-group input {
+    flex: 1;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.attribute-values {
+    display: flex;
+    gap: 5px;
+}
+
+.attribute-values input {
+    width: 50px;
+}
+
+h2 {
+    color: #444;
+    border-bottom: 2px solid var(--color-border);
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Combat Tab */
+.combat-stats input {
+    width: 60px;
+    text-align: center;
+}
+
+.combat-basic {
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+.combat-stats .thac0-block {
+    padding: 5px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.combat-stats .thac0-block h2 {
+    margin: 0 0 5px 0;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.combat-stats .thac0-block .form-group {
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.combat-stats .thac0-block .form-group label {
+    flex: 2;
+    margin-right: 5px;
+    font-weight: normal;
+}
+
+.combat-stats .thac0-block .form-group input {
+    flex: 1;
+    text-align: center;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.combat-stats .thac0-block .form-group input:disabled {
+    background: rgba(255, 255, 255, 0.5);
+    color: #da0000;
+}
+
+/* Notes Tab */
+.notes-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.background-section,
+.adventure-notes {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.background-fields {
+    margin-bottom: 10px;
+}
+
+.background-fields .form-group {
+    margin-bottom: 5px;
+}
+
+.background-story,
+.adventure-notes {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.background-story label,
+.adventure-notes label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.editor {
+    min-height: 200px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.adventure-notes .editor {
+    min-height: 300px;
+}
+
+/* Common Elements */
+input {
+    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 3px;
+    padding: 2px 4px;
+}
+
+h2 {
+    border-bottom: 2px solid var(--color-border);
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Saving Throws Styling */
+.saving-throws {
+    margin-top: 0px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.saves-grid {
+    display: grid;
+    gap: 4px;
+}
+
+.save-headers, .save-row {
+    display: grid;
+    grid-template-columns: 80px 45px 45px 45px 45px 30px;
+    gap: 4px;
+    align-items: center;
+}
+
+.save-headers {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.save-headers > div:not(.save-type) {
+    text-align: center;  /* Center all headers except 'Save' */
+}
+
+.save-headers .save-type {
+    text-align: right;   /* Right-align 'Save' header */
+}
+
+.save-row label {
+    text-align: right;   /* Right-align save type labels */
+}
+
+.save-row input {
+    width: 100%;
+    text-align: center;
+}
+
+.save-row .attr-mod {
+    text-align: center;
+}
+
+.roll-save {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    line-height: 1;
+}
+
+/* Equipment Tab Styling */
+.equipment-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inventory-header {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 5px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.inventory-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.inventory-filter {
+    flex: 1;
+    height: 24px;
+    border-radius: 3px;
+}
+
+.encumbrance {
+    flex: 0 0 150px;
+    text-align: right;
+}
+
+.inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.inventory-list .item {
+    padding: 5px;
+    border-bottom: 1px solid var(--color-border);
+    align-items: center;
+    gap: 10px;
+}
+
+.inventory-list .item:nth-child(even) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.item-name {
+    flex: 2;
+    gap: 5px;
+}
+
+.item-type {
+    flex: 1;
+    text-align: center;
+}
+
+.item-damage {
+    flex: 1;
+    text-align: center;
+}
+
+.item-damage span {
+    display: block;
+    font-size: 0.9em;
+}
+
+.item-speed {
+    flex: 0 0 50px;
+    text-align: center;
+}
+
+.item-quality {
+    flex: 1;
+    text-align: center;
+}
+
+.item-value {
+    flex: 0 0 80px;
+    text-align: right;
+}
+
+.item-ac {
+    flex: 0 0 60px;
+    text-align: center;
+}
+
+.item-equipped {
+    flex: 0 0 40px;
+    text-align: center;
+}
+
+.item-quantity {
+    flex: 0 0 60px;
+    text-align: center;
+}
+
+.item-quantity input {
+    width: 40px;
+    text-align: center;
+}
+
+.item-controls {
+    flex: 0 0 60px;
+    text-align: right;
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+}
+
+.item-create {
+    flex: 1;
+    min-width: 120px;
+    height: 28px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 26px;
+    padding: 0 5px;
+}
+
+.item-create:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.inventory-footer {
+    margin-top: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.flexrow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Combat Tab Styling */
+.combat-sheet {
+    height: 100%;
+    padding: 5px;
+}
+
+.combat-stats {
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.grid-4col {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-6col {
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.ac-block, .hp-block, .thac0-block, .initiative-block {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.total-ac, .total-thac0, .total-init {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+}
+
+.total-ac input, .total-thac0 input, .total-init input {
+    background: #e0e0e0;
+}
+
+/* Weapon Proficiencies */
+.weapon-proficiencies {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.prof-headers {
+    font-weight: bold;
+    padding: 5px 0;
+    margin-bottom: 5px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.prof-entry {
+    padding: 3px 0;
+    align-items: center;
+}
+
+.prof-entry input, .prof-entry select {
+    height: 24px;
+    margin: 0 2px;
+}
+
+.prof-controls {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+}
+
+.add-proficiency {
+    background: #4b4a44;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+}
+
+.add-proficiency:hover {
+    background: #6b6a64;
+}
+
+/* Skills Tab Styling */
+.skills-container {
+    height: 100%;
+    padding: 5px;
+}
+
+.nwp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nwp-slots {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nwp-slots input {
+    width: 40px;
+    text-align: center;
+}
+
+.nwp-list {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+}
+
+.nwp-header-row, .nwp-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 80px;
+    gap: 5px;
+    padding: 5px;
+    align-items: center;
+}
+
+.nwp-header-row {
+    background: rgba(0, 0, 0, 0.05);
+    font-weight: bold;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nwp-item {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nwp-item:last-child {
+    border-bottom: none;
+}
+
+.nwp-controls {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+}
+
+.item-control {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    line-height: 24px;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.item-control:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.nwp-item input, .nwp-item select {
+    width: 100%;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.nwp-item input[type="number"] {
+    text-align: center;
+}
+
+/* Magic Tab Styling */
+.magic-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spell-slots-container {
+    display: flex;
+    gap: 20px;
+}
+
+.spell-type {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.spell-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.spell-level {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slot-values {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.slot-values input {
+    width: 40px;
+    text-align: center;
+}
+
+.memorized-spells {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.spells-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.spell-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.memorize-spell {
+    background: #4b4a44;
+    color: white;
+    border: 1px solid #2a2a2a;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.memorize-spell:hover {
+    background: #5e5d57;
+}
+
+.spell-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.spell-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.spell-name {
+    flex: 1;
+}
+
+.spell-name h3 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.spell-info {
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.spell-control {
+    cursor: pointer;
+    padding: 3px;
+}
+
+.spell-control:hover {
+    color: #000;
+}
+
+/* Followers Tab Styling */
+.followers-container {
+    height: 100%;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.follower-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.follower-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.follower-count {
+    font-size: 0.8em;
+    color: #666;
+    margin-left: auto;
+}
+
+.henchman-entry, .follower-group, .familiar-entry {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.henchman-entry img, .follower-group img, .familiar-entry img {
+    border: none;
+    margin-right: 10px;
+}
+
+.henchman-details, .follower-details {
+    flex: 1;
+}
+
+.follower-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.follower-controls a {
+    padding: 5px;
+    color: #666;
+}
+
+.follower-controls a:hover {
+    color: #000;
+}
+
+.henchman-drop-zone, .follower-drop-zone, .familiar-drop-zone {
+    height: 60px;
+    border: 2px dashed var(--color-border);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    margin: 10px 0;
+}
+
+.henchman-drop-zone.dragover, .follower-drop-zone.dragover, .familiar-drop-zone.dragover {
+    background: rgba(0, 255, 0, 0.1);
+    border-color: #0a0;
+}
+
+.familiar-details {
+    margin-top: 10px;
+}
+
+.familiar-details .form-group {
+    margin-bottom: 10px;
+}
+
+.familiar-details textarea {
+    height: 60px;
+    resize: vertical;
+}
+
+/* Rich Text Editor Styling */
+.editor-content {
+    min-height: 200px;
+    height: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.adventure-notes .editor-content {
+    min-height: 500px;
+}
+
+.editor-content:focus {
+    outline: 1px solid #111;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.editor-content p {
+    margin: 0 0 0.5em 0;
+}
+
+.editor-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Add these new styles */
+.character-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+.attributes-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.attributes-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.attribute-block {
+    padding: 4px 5px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.attribute-block:last-child {
+    border-bottom: none;
+}
+
+.attribute-fields {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.attribute-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 180px;
+}
+
+.attribute-main label {
+    font-weight: bold;
+    font-size: 1.1em;
+    min-width: 100px;
+    color: #444;
+}
+
+.attribute-main input {
+    width: 60px;
+    height: 28px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.attribute-exceptional {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.attribute-exceptional label {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.attribute-exceptional input {
+    width: 50px;
+    text-align: center;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.attribute-modifiers {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.modifier-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-right: 8px;
+}
+
+.modifier-field label {
+    font-size: 0.8em;
+    color: #666;
+    min-width: 42px;
+    text-align: right;
+}
+
+.modifier-field input {
+    width: 45px;
+    height: 24px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.modifier-field.immunity-field {
+    margin-right: 0;
+}
+
+.modifier-field.immunity-field input {
+    width: auto;
+    min-width: 45px;
+}
+
+.roll-attribute {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    line-height: 1;
+    background: rgba(255, 255, 255, 0.8);
+    border: 0px solid var(--color-border);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.roll-attribute:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.roll-attribute i {
+    color: #782e22;
+}
+
+/* Add these CSS variables if they don't exist in your system */
+:root {
+    --color-border-light: rgba(0, 0, 0, 0.1);
+}
+
+/* Add or update the sheet dimensions */
+.dnd2e.sheet.actor {
+    min-width: 1000px;
+    min-height: 775px;
+    max-width: 1000px;
+    max-height: 800px;
+    height: 775px;
+    width: 1000px;
+}
+
+/* Ensure the sheet content fills the available space */
+.dnd2e.sheet.actor .window-content {
+    height: 100%;
+    padding: 5px;
+    overflow-y: hidden;
+}
+
+.dnd2e.sheet.actor form {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Ensure the sheet body takes up remaining space */
+.sheet-body {
+    height: calc(100% - 60px);
+    overflow-y: auto;
+}
+
+/* Update/add these styles */
+.traits {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.traits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.traits-column {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 5px;
+}
+
+.traits-column .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.traits-column .form-group label {
+    flex: 0 0 60px;
+    padding-right: 8px;
+    text-align: right;
+    color: #444;
+    font-weight: bold;
+}
+
+.traits-column .form-group input {
+    flex: 1;
+    min-width: 0;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0 5px;
+}
+
+/* Specific adjustments for left column traits */
+.traits-column:first-child .form-group label {
+    flex: 0 0 50px;
+}
+
+.traits-column:first-child .form-group input {
+    flex: 1;
+    min-width: 100px;
+}
+
+.equipment-section {
+    margin-bottom: 1em;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 0.5em;
+}
+
+.equipment-section h3 {
+    margin: 0 0 0.5em 0;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--color-border-light);
+    font-size: 1.2em;
+}
+
+.inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.inventory-list .item {
+    padding: 0.3em;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.inventory-list .item:last-child {
+    border-bottom: none;
+}
+
+/* Consumable Item Sheet Styling */
+.item-properties {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.item-properties .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item-properties label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.item-properties input,
+.item-properties select,
+.item-properties textarea {
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 2px 4px;
+}
+
+.item-properties textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.sheet-header {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.profile-img {
+    flex: 0 0 100px;
+    height: 100px;
+    border: 1px solid var(--color-border);
+}
+
+.header-fields {
+    flex: 1;
+}
+
+.header-fields input {
+    height: 28px;
+    font-size: 20px;
+    margin: 0;
+}
+
+.list-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border-bottom: 2px solid var(--color-border);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.header-name { flex: 2; }
+.header-type { flex: 1; text-align: center; }
+.header-damage { flex: 1; text-align: center; }
+.header-speed { flex: 0 0 50px; text-align: center; }
+.header-quality { flex: 1; text-align: center; }
+.header-value { flex: 0 0 80px; text-align: right; }
+.header-ac { flex: 0 0 60px; text-align: center; }
+.header-equipped { flex: 0 0 40px; text-align: center; }
+.header-quantity { flex: 0 0 60px; text-align: center; }
+.header-controls { flex: 0 0 60px; }
+
+.header-init {
+    flex: 0 0 50px;
+    text-align: center;
+}
+
+.item-init {
+    flex: 0 0 50px;
+    text-align: center;
+    padding: 3px;
+    color: #191813;
+    font-family: "Roboto", sans-serif;
+}
+
+/* Add this to your existing CSS file */
+.range-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.range-inputs input {
+    width: 60px;
+    text-align: center;
+}
+
+.item-properties .form-group {
+    margin-bottom: 8px;
+}
+
+.item-properties label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.item-properties input,
+.item-properties select,
+.item-properties textarea {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.item-properties textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.hit-die-group {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.hit-die-group input {
+    flex: 1;
+}
+
+.roll-hit-die {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    color: #4b4a44;
+    padding: 0;
+    line-height: 24px;
+    text-align: center;
+}
+
+.roll-hit-die:hover {
+    color: #000;
+    border-color: #000;
+    box-shadow: 0 0 10px red;
+}
+
+.dnd2e.chat-card {
+    font-family: var(--font-primary);
+    padding: 5px;
+    border: 2px solid #4b4a44;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.dnd2e.chat-card h3 {
+    text-align: center;
+    border-bottom: 1px solid #4b4a44;
+    margin: 0 0 5px 0;
+    padding: 0 0 5px 0;
+}
+
+.dnd2e.chat-card .roll-details {
+    padding: 5px;
+}
+
+.dnd2e.chat-card .roll-details hr {
+    margin: 5px 0;
+    border-color: #4b4a44;
+}
+
+.dnd2e.chat-card .roll-total {
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Hit Points Block Styling */
+.hp-block {
+    padding: 10px;
+}
+
+.hp-block .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.hp-block label {
+    flex: 0 0 100px;
+    margin-right: 10px;
+}
+
+.hp-block input {
+    flex: 0 0 80px;
+    height: 24px;
+}
+
+/* Container for input or input+button group */
+.hp-block .input-container {
+    flex: 0 0 110px;
+    display: flex;
+    gap: 5px;
+}
+
+.hp-block .hit-die-group {
+    display: flex;
+    gap: 5px;
+}
+
+.hp-block .hit-die-group input {
+    width: 80px;
+}
+
+.hp-block .hit-die-group button {
+    flex: 0 0 24px;
+    height: 24px;
+} 
+
+/* Armor Sheet Specific Styles */
+.item-properties .properties-grid.three-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    margin-bottom: -10px;
+}
+
+.item-properties .property-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-properties .description {
+    margin-top: 10px;
+}
+
+.item-properties textarea {
+    min-height: 100px;
+    margin-bottom: 10px;
+}
+
+.item-properties select {
+    height: 28px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.item-properties input[disabled] {
+    background-color: #e0e0e0;
+    color: #666;
+}
+
+.item-properties .form-group label {
+    color: #444;
+    font-weight: bold;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.item-properties input[type="number"] {
+    width: 100%;
+    text-align: center;
+    height: 28px;
+}
+
+.sheet-content {
+    height: calc(100% - 85px);
+    overflow-y: auto;
+    padding: 0 5px;
+}
+
+/* Emphasize the AC column */
+.item-properties .property-column:nth-child(2) {
+    border-left: 2px solid rgba(0, 0, 0, 0.1);
+    border-right: 2px solid rgba(0, 0, 0, 0.1);
+    padding: 0 20px;
+} 
+
+.attribute-exceptional.empty {
+    display: none;
+}
+
+.items-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.items-list .item {
+    line-height: 30px;
+    padding: 3px 0;
+    border-bottom: 1px solid #BBB;
+}
+
+.items-list .item-name {
+    flex: 2;
+    margin: 0;
+    overflow: hidden;
+    font-size: 13px;
+    text-align: left;
+    align-items: center;
+}
+
+.items-list .items-header {
+    height: 28px;
+    margin: 2px 0;
+    padding: 0;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.05);
+    border: 2px groove #eeede0;
+    font-weight: bold;
+}
+
+.items-list .hint {
+    color: #666;
+    font-style: italic;
+}
+
+.items-list .item .item-image {
+    flex: 0 0 24px;
+    margin-right: 5px;
+}
+
+.items-list .item-controls {
+    flex: 0 0 86px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Features Tab Styling */
+.features-section {
+    height: 100%;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 2px dashed transparent;
+    transition: border-color 0.2s;
+}
+
+.features-section.drag-hover {
+    border-color: var(--color-border-highlight);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.features-section h3 {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.features-section .list-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border-bottom: 2px solid var(--color-border);
+    font-weight: bold;
+    margin-bottom: 5px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.features-section .header-name { flex: 2; }
+.features-section .header-type { flex: 1; text-align: center; }
+.features-section .header-activation { flex: 1; text-align: center; }
+.features-section .header-controls { 
+    flex: 0 0 100px;
+    text-align: center;
+}
+
+.features-section .inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 60px;
+    border: 2px dashed #ccc;
+    margin: 5px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+}
+
+.features-section .inventory-list.drag-hover {
+    border-color: #000;
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Make empty list more obvious as a drop zone */
+.features-section .inventory-list:empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.features-section .inventory-list:empty::after {
+    content: "Drop Features Here";
+    color: #666;
+    font-style: italic;
+    font-size: 1.1em;
+}
+
+/* Enhance visibility of draggable items */
+.features-section .item {
+    cursor: move;
+    transition: background 0.2s ease;
+}
+
+.features-section .item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Style for the roll buttons */
+.roll-save {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.roll-save:hover {
+    color: #000;
+    text-shadow: 0 0 10px red;
+}
+
+/* Chat message styling */
+.dnd2e.chat-card .roll-total.success {
+    color: #18520b;
+}
+
+.dnd2e.chat-card .roll-total.failure {
+    color: #8b0000;
+}
+
+/* Update the save roll styling to match hit die */
+.save-roll-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.save-roll-group input {
+    margin-right: 0;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.save-roll-group .roll-save {
+    width: 26px;
+    height: 26px;
+    border: 1px solid #7a7971;
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+    background: rgba(0, 0, 0, 0.05);
+    color: #666;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.save-roll-group .roll-save:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+    text-shadow: none;
+}
+
+.lower-section {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+}
+
+.basic-info {
+    grid-column: span 2;
+    max-width: 100%;
+}
+
+.traits {
+    grid-column: span 3;
+    max-width: 100%;
+}
+
+.saving-throws {
+    grid-column: span 3;
+    max-width: 100%;
+}
+
+.basic-info .form-group {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.basic-info .form-group label {
+    flex: 0 0 80px;
+    padding-right: 8px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.basic-info .form-group input {
+    flex: 1;
+    height: 24px;
+    min-width: 140px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0 5px;
+}
+
+.basic-info {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    max-width: 280px;
+}
+
+.character-details .basic-info {
+    padding: 8px;
+}
+
+.character-details .basic-info .form-group {
+    padding-left: 0;
+    margin: 4px 8px;
+    position: relative;
+    left: -8px;
+}
+
+/* Character Info Box Styles */
+.basic-info {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.basic-info .form-group {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 8px;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.basic-info .form-group label {
+    font-weight: bold;
+}
+
+.basic-info .form-group input {
+    width: 140px;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0 5px;
+}
+
+/* Attribute Modifiers Grid */
+.attribute-mods-grid {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.attribute-mods-header {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    margin-bottom: 4px;
+}
+
+.attribute-mods-header .attribute-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #444;
+}
+
+.attribute-mods-values {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+}
+
+.attribute-mods-values input {
+    width: 100%;
+    text-align: center;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Characteristics Tab Styling */
+.characteristics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.gender-section, .age-section {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.age-section {
+    grid-column: 1 / -1;
+}
+
+.gender-section h3, .age-section h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #782e22;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.characteristics-grid .form-group {
+    margin: 0;
+    padding: 5px;
+}
+
+.characteristics-grid .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.characteristic-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.characteristic-row input[type="number"] {
+    width: 60px;
+    text-align: center;
+}
+
+.characteristic-row input[type="text"] {
+    width: 80px;
+    text-align: center;
+}
+
+.characteristic-row span {
+    color: #666;
+    font-weight: bold;
+}
+
+.characteristic-row button {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+    color: #666;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.characteristic-row button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+.characteristic-row input {
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0 5px;
+}
+
+.features-section .inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 60px;
+    border: 2px dashed #ccc;
+    margin: 5px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+}
+
+.features-section .inventory-list.drag-hover {
+    border-color: #000;
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.features-section .item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.features-section .item-name {
+    flex: 2;
+    display: flex;
+    align-items: center;
+}
+
+.features-section .item-type,
+.features-section .item-activation {
+    flex: 1;
+    text-align: center;
+}
+
+.features-section .item-controls {
+    flex: 0 0 100px;
+    text-align: right;
+}
+
+.features-section .item-image {
+    flex: 0 0 24px;
+    margin-right: 5px;
+}
+
+/* Race Sheet Specific Styling */
+.dnd2e.sheet.item.race .details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Attributes Section */
+.attributes-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.attributes-section h3 {
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    border-bottom: 2px solid var(--color-border);
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.attribute-header {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.attribute-values {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 5px;
+}
+
+.attribute-field input {
+    width: 100%;
+    text-align: center;
+    height: 28px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+/* Languages Section */
+.languages-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.languages-section h3 {
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    border-bottom: 2px solid var(--color-border);
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.languages-section .form-group {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.languages-section .form-group label {
+    flex: 0 0 120px;
+    margin-right: 10px;
+}
+
+.languages-section .form-group input {
+    flex: 1;
+    min-width: 200px;
+    height: 28px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0 5px;
+}
+
+/* Description Section */
+.description-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.description-section h3 {
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    border-bottom: 2px solid var(--color-border);
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.description-section .editor {
+    flex: 1;
+    min-height: 200px;
+}
+
+.description-section .editor-content {
+    height: 100%;
+    min-height: 100px;
+}
+
+.effects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.effect-entry {
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.effect-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr auto;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.effect-conditions {
+    margin-top: 4px;
+}
+
+.effect-weapons {
+    width: 100%;
+    padding: 4px;
+}
+
+.delete-effect {
+    color: #800;
+    padding: 4px 8px;
+}
+
+.add-effect {
+    margin-top: 8px;
+    background: #4a4;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+/* Feature Sheet Effects Styling */
+.effects-container {
+    padding: 8px;
+}
+
+.effects-container h2 {
+    border-bottom: 2px solid #782e22;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    color: #782e22;
+    font-family: "Baskerville Old Face","Modesto Condensed", "Palatino Linotype", serif;
+    font-variant: small-caps;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.effects-list {
+    margin-top: 8px;
+}
+
+.effect-headers {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid #999;
+    border-radius: 4px 4px 0 0;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.effect-headers .header {
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+    color: #444;
+}
+
+.effect-entry {
+    background: rgba(0, 0, 0, 0.025);
+    border: 1px solid #999;
+    margin-bottom: 4px;
+    padding: 4px;
+    align-items: center;
+}
+
+.effect-entry select,
+.effect-entry input {
+    height: 24px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.effect-entry .effect-type,
+.effect-entry .effect-target {
+    padding: 0 4px;
+}
+
+.effect-entry .effect-value input {
+    width: 60px;
+    text-align: center;
+}
+
+.effect-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.effect-conditions {
+    margin-top: 4px;
+    padding: 4px;
+}
+
+.effect-conditions input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.effects-footer {
+    margin-top: 8px;
+    padding: 4px;
+    text-align: center;
+}
+
+.add-effect {
+    background: #782e22;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.add-effect:hover {
+    background: #8f382a;
+}
+
+.delete-effect {
+    color: #782e22;
+    background: none;
+    border: none;
+    padding: 2px 6px;
+    cursor: pointer;
+}
+
+.delete-effect:hover {
+    color: #8f382a;
+}
+
+/* Feature Sheet Main Tab Styling */
+.feature-main-container,
+.feature-rolls-container {
+    padding: 8px;
+}
+
+.feature-main-container h2,
+.feature-rolls-container h2 {
+    border-bottom: 2px solid #782e22;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    color: #782e22;
+    font-family: "Modesto Condensed", "Palatino Linotype", serif;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.feature-details {
+    margin-top: 8px;
+    gap: 8px;
+}
+
+.feature-details .form-group {
+    margin: 0;
+}
+
+.feature-details label {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+.feature-details select,
+.feature-details input[type="text"] {
+    height: 24px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+}
+
+.feature-details .editor {
+    height: 150px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.feature-details .editor-content {
+    min-height: 150px;
+    height: 100%;
+}
+
+.feature-details .editor .editor-content {
+    min-height: 150px !important;
+    height: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+/* Feature Sheet Rolls Tab Styling */
+.roll-settings {
+    margin-top: 8px;
+}
+
+.roll-toggle {
+    margin-bottom: 12px;
+}
+
+.roll-toggle label {
+    font-weight: bold;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rollable-fields {
+    background: rgba(0, 0, 0, 0.025);
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 8px;
+    gap: 8px;
+}
+
+.rollable-fields .form-group {
+    margin: 0;
+}
+
+.rollable-fields label {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+.rollable-fields input,
+.rollable-fields select {
+    height: 24px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+}
+
+/* Grid System Extensions */
+.grid-2col {
+    grid-template-columns: 1fr 1fr;
+}
+
+.grid-span-2 {
+    grid-column: span 2 / span 2;
+}
+
+/* Feature Roll Button Styling */
+.roll-feature {
+    width: 100%;
+    height: 32px;
+    background: #4b4a44;
+    color: white;
+    border: 1px solid #2a2a2a;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.roll-feature:hover:not(:disabled) {
+    background: #6b6a64;
+}
+
+.roll-feature:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    border-color: #999;
+}
+
+.roll-feature i {
+    font-size: 14px;
+}
+
+/* Feature Roll Chat Card Styling */
+.dnd2e.chat-card .roll-details {
+    padding: 8px;
+}
+
+.dnd2e.chat-card .roll-formula {
+    font-family: monospace;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.dnd2e.chat-card .roll-result {
+    text-align: center;
+    padding: 8px 0;
+}
+
+.dnd2e.chat-card .roll-total {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 4px;
+    border-radius: 3px;
+}
+
+.dnd2e.chat-card .roll-total.success {
+    color: #2a9d3a;
+    background: rgba(42, 157, 58, 0.1);
+}
+
+.dnd2e.chat-card .roll-total.failure {
+    color: #9d2a2a;
+    background: rgba(157, 42, 42, 0.1);
+}
+
+/* Race Drop Zone Styles */
+.race-drop-zone {
+    position: relative;
+    border: 1px dashed #999;
+    border-radius: 3px;
+    padding: 2px;
+    min-height: 24px;
+    transition: all 0.2s ease;
+}
+
+.race-drop-zone.dragover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: #000;
+}
+
+.race-drop-zone input[type="text"] {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+}
+
+.race-link {
+    cursor: pointer;
+}
+
+.race-link:hover {
+    text-shadow: 0 0 8px var(--color-shadow-primary);
+}
+
+.initiative-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.initiative-group input {
+    flex: 1;
+}
+
+.initiative-group button {
+    flex: 0 0 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    padding: 0;
+    color: #7a7971;
+    border: 1px solid #7a7971;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.initiative-group button:hover {
+    color: #000;
+    border-color: #000;
+    box-shadow: 0 0 10px red;
+}
+
+.initiative-block .form-group {
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.initiative-block .form-group label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.initiative-block .form-group input {
+    text-align: center;
+    width: 100%;
+}
+
+.initiative-block .form-group:first-child {
+    grid-template-columns: 1fr auto;
+}
+
+.initiative-block .form-group:first-child .input-container {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.initiative-block .form-group:first-child input {
+    width: 80px;
+}
+
+.initiative-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.initiative-group button {
+    flex: 0 0 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    padding: 0;
+    color: #7a7971;
+    border: 1px solid #7a7971;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.initiative-group button:hover {
+    color: #000;
+    border-color: #000;
+    box-shadow: 0 0 10px red;
+}

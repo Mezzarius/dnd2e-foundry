@@ -1,0 +1,299 @@
+/* Character Sheet Specific Styles */
+
+/* Sheet Body and Tabs */
+.dnd2e .sheet-body {
+    overflow: hidden;
+}
+
+.dnd2e .sheet-body .tab {
+    display: none;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.dnd2e .sheet-body .tab.active {
+    display: block;
+}
+
+/* Character Header */
+.dnd2e .charname {
+    height: 50px;
+    padding: 0;
+    margin: 0;
+}
+
+.dnd2e .charname input {
+    width: 100%;
+    height: 100%;
+    font-size: 1.5em;
+}
+
+/* Attributes Section */
+.dnd2e .attributes-section {
+    margin-bottom: 5px;
+}
+
+.dnd2e .attributes-grid {
+    display: grid;
+    gap: 7px;
+    grid-template-columns: 1fr;
+}
+
+.dnd2e .attribute-block {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+.dnd2e .attribute-fields {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dnd2e .attribute-main {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 180px;
+}
+
+.dnd2e .attribute-main label {
+    flex: 1;
+    font-weight: bold;
+    min-width: 100px;
+}
+
+.dnd2e .attribute-main input {
+    width: 50px;
+    text-align: center;
+}
+
+.dnd2e .attribute-exceptional {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin: 0 3px;
+}
+
+.dnd2e .attribute-exceptional.empty {
+    display: none;
+}
+
+.dnd2e .attribute-exceptional input {
+    width: 50px;
+    text-align: center;
+}
+
+.dnd2e .attribute-modifiers {
+    display: flex;
+    gap: 2px;
+    flex: 1;
+}
+
+.dnd2e .modifier-field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 90px;
+}
+
+.dnd2e .modifier-field label {
+    font-size: 0.9em;
+    color: #666;
+    min-width: 42px;
+}
+
+.dnd2e .modifier-field input {
+    width: 40px;
+    text-align: center;
+}
+
+.dnd2e .modifier-field .roll-attribute {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    padding: 0;
+    margin-left: 2px;
+    line-height: 24px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    color: #782e22;
+}
+
+.dnd2e .modifier-field .roll-attribute:hover {
+    color: #000;
+    text-shadow: 0 0 8px var(--color-shadow);
+}
+
+.dnd2e .modifier-field:not(:has(.roll-attribute))::after {
+    content: '';
+    width: 26px;
+    display: inline-block;
+}
+
+/* Basic Info Section */
+.dnd2e .basic-info {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    max-width: 250px;
+    width: 250px;
+}
+
+.dnd2e .basic-info h2 {
+    margin: 0 0 8px 0;
+    padding: 0 0 4px 0;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.dnd2e .basic-info .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    gap: 8px;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.dnd2e .basic-info .form-group label {
+    font-weight: bold;
+    min-width: 70px;
+    flex: 0 0 70px;
+}
+
+.dnd2e .basic-info .form-group input {
+    height: 24px;
+    width: 80px;
+    flex: 0 0 80px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 2px 4px;
+}
+
+/* Physical Traits */
+.dnd2e .traits {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+.dnd2e .traits h2 {
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.dnd2e .traits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.dnd2e .traits-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dnd2e .trait-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dnd2e .trait-field label {
+    font-weight: bold;
+}
+
+.dnd2e .trait-field input {
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 2px 4px;
+}
+
+/* Form group styles */
+.dnd2e .traits .form-group {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.dnd2e .traits .form-group label {
+    flex: 0 0 60px;
+    font-weight: bold;
+    color: #444;
+}
+
+.dnd2e .traits .form-group select,
+.dnd2e .traits .form-group input {
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 2px 4px;
+    flex: 1;
+}
+
+.dnd2e .traits .form-group:has(select[name="system.traits.alignment"]) {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+/* Shorter width for specific traits */
+.dnd2e .traits input[type="number"],
+.dnd2e .traits input[name*="hair"],
+.dnd2e .traits input[name*="eyes"] {
+    width: 80px;
+}
+
+/* Lower Section Grid */
+.dnd2e .lower-section.grid {
+    margin: 5px 0;
+    gap: 10px;
+}
+
+/* Sheet Dimensions */
+.dnd2e.sheet.actor {
+    min-width: 1100px;
+    min-height: 850px;
+    max-width: 1100px;
+    max-height: 850px;
+    height: 850px;
+    width: 1100px;
+}
+
+/* Ensure the sheet content fills the available space */
+.dnd2e.sheet.actor .window-content {
+    height: 100%;
+    padding: var(--space-s);
+    overflow-y: hidden;
+}
+
+.dnd2e.sheet.actor form {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Editor Sections */
+.editor-content {
+    min-height: 200px;
+    height: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+}
+
+.feature-details .editor {
+    height: 150px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: rgba(255, 255, 255, 0.8);
+}

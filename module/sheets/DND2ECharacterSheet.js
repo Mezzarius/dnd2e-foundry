@@ -101,8 +101,27 @@ export default class DND2ECharacterSheet extends ActorSheet {
         context.enrichedBackgroundStory = TextEditor.enrichHTML(this.actor.system.background?.story || "", {async: false});
         context.enrichedAdventureNotes = TextEditor.enrichHTML(this.actor.system.notes?.adventure || "", {async: false});
         
-        // Organize items by category
-        context.weapons = context.items.filter(i => i.type === "weapon");
+        // Get total initiative (already includes dex modifier)
+        const totalInit = this.actor.system.initiative?.total || 0;
+        const dexReact = this.actor.system.attributes.dex?.reaction || 0;
+
+        // Update initiative values in context
+        if (!context.system.initiative) {
+            context.system.initiative = {};
+        }
+        context.system.initiative = {
+            ...context.system.initiative,
+            reaction: dexReact
+        };
+
+        // Organize items by category and calculate initiative for weapons
+        context.weapons = context.items.filter(i => i.type === "weapon").map(weapon => {
+            const weaponSpeed = weapon.system.speed || 0;
+            // Total initiative is the modified roll (including dex) plus weapon speed
+            weapon.system.totalInit = totalInit + weaponSpeed;
+            return weapon;
+        });
+
         context.armor = context.items.filter(i => i.type === "armor");
         context.consumables = context.items.filter(i => i.type === "consumable");
         context.equipment = context.items.filter(i => i.type === "equipment");
@@ -125,7 +144,6 @@ export default class DND2ECharacterSheet extends ActorSheet {
         // Update the values
         context.system.level = level;
         context.system.xp.next = next;
-
 
         // Calculate THAC0 values
         const { THAC0Tables } = game.dnd2e.tables;
@@ -176,11 +194,15 @@ export default class DND2ECharacterSheet extends ActorSheet {
         html.find('input[name^="system.saves"][name$=".mod"]').change(this._onSavingThrowModChange.bind(this));
 
         // Equipment Tab Listeners
-            // Add these lines near the top of the existing method
+        // Add these lines near the top of the existing method
         if (this.actor.isOwner) {
             html.find('.equipment-container').on('dragover', this._onDragOver.bind(this));
             html.find('.equipment-container').on('drop', this._onDrop.bind(this));
         }
+
+        // Add initiative roll listener
+        html.find('.roll-initiative').click(this._onRollInitiative.bind(this));
+
         html.find('.item-create').click(this._onItemCreate.bind(this));
         html.find('.item-edit').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
@@ -285,40 +307,9 @@ export default class DND2ECharacterSheet extends ActorSheet {
         html.find('.roll-hit-die').click(this._onRollHitDie.bind(this));
 
         // Add name change listener
-        html.find('input[name="name"]').change(async (event) => {
-            await this.actor.update({name: event.target.value});
-        });
-
-        // Add image change handler
-        const imgBtn = html.find('img[data-edit="img"]');
-        imgBtn.click(ev => {
-            const fp = new FilePicker({
-                type: "image",
-                current: this.actor.img,
-                callback: path => {
-                    this.actor.update({img: path});
-                },
-                top: this.position.top + 40,
-                left: this.position.left + 10
-            });
-            fp.browse();
-        });
-
-        // Add XP change listener
-        html.find('input[name="system.xp.value"]').change(async (event) => {
-            const xpValue = parseInt(event.target.value) || 0;
-            const characterClass = this.actor.system.class.toLowerCase();
-            const { level, next } = this._calculateLevelAndXP(xpValue, characterClass);
-            
-            await this.actor.update({
-                "system.level": level,
-                "system.xp.next": next
-            });
-        });
-
-        // Add specific listener for exceptional strength changes
-        html.find('input[name="system.attributes.str.exceptional"]').change(event => {
-            this._onExceptionalStrengthChange(event);
+        html.find('input[name="name"]').change(async (ev) => {
+            ev.preventDefault();
+            await this._onCharNameChange(ev);
         });
 
         // Add saving throw roll listeners
@@ -338,9 +329,6 @@ export default class DND2ECharacterSheet extends ActorSheet {
 
         // Add click handler for rollable attribute checks
         html.find('.rollable-check').click(this._onAttributeRoll.bind(this));
-
-        // Add initiative roll button listener
-        html.find('.roll-initiative').click(this._onRollInitiative.bind(this));
     }
 
     async _onItemCreate(event) {
@@ -711,38 +699,10 @@ export default class DND2ECharacterSheet extends ActorSheet {
             roll: roll        });
     }
 
-    _calculateLevelAndXP(xpValue, characterClass) {
-        const table = ExperienceTables[characterClass.toLowerCase()];
-        if (!table) return { level: 1, next: 2000 }; // Default values if no table found
-
-        const row = table.find(r => r.min <= xpValue && r.max >= xpValue);
-        return row ? { level: row.level, next: row.next } : { level: 1, next: 2000 };
-    }
-
-    // Add an explicit handler for exceptional strength changes
-    async _onExceptionalStrengthChange(event) {
-        const newValue = parseInt(event.target.value);
-        console.log('Exceptional Strength Changed to:', newValue);
-        
-        // Validate the value is in range
-        if (newValue < 1 || newValue > 100 || isNaN(newValue)) {
-            console.log('Invalid exceptional strength value');
-            return;
-        }
-
-        // Update the exceptional strength value
-        await this.actor.update({
-            "system.attributes.str.exceptional": newValue
-        });
-
-        // Force a complete recalculation
-        await this._onAttributeChange('system.attributes.str.value', 18);
-    }
-
     async _onRollInitiative(event) {
         event.preventDefault();
         
-        // Roll 1d10 for initiative
+        // Roll 1d10
         const roll = await new Roll("1d10").evaluate({async: true});
         
         // Show the 3D dice if enabled
@@ -753,24 +713,24 @@ export default class DND2ECharacterSheet extends ActorSheet {
         // Get the dexterity reaction adjustment
         const dexMod = this.actor.system.attributes.dex?.reaction || 0;
         
-        // Calculate total (roll - dex modifier)
+        // Calculate total initiative (roll - dex modifier)
         const total = roll.total - dexMod;
         
         // Update the initiative values
         await this.actor.update({
             "system.initiative.base": roll.total,
-            "system.initiative.dexMod": dexMod,
-            "system.initiative.value": total
+            "system.initiative.reaction": dexMod,
+            "system.initiative.total": total
         });
         
         // Create chat message
         let content = `<div class="dnd2e chat-card">`;
         content += `<h3>Initiative Roll</h3>`;
         content += `<div class="roll-details">`;
-        content += `<div>Base Roll (1d10): ${roll.total}</div>`;
-        content += `<div>Dex/React Modifier: ${dexMod}</div>`;
+        content += `<div>Roll: ${roll.total}</div>`;
+        content += `<div>Dex Modifier: ${dexMod}</div>`;
         content += `<hr>`;
-        content += `<div class="roll-total">Total Initiative: ${total}</div>`;
+        content += `<div class="roll-total">Total: <strong>${total}</strong></div>`;
         content += `</div></div>`;
         
         await ChatMessage.create({
@@ -964,4 +924,74 @@ export default class DND2ECharacterSheet extends ActorSheet {
             };
         });
     }
-} 
+
+    async _onRollInitiative(event) {
+        event.preventDefault();
+        
+        // Roll 1d10
+        const roll = await new Roll("1d10").evaluate({async: true});
+        
+        // Show the 3D dice if enabled
+        if (game.dice3d) {
+            await game.dice3d.showForRoll(roll);
+        }
+        
+        // Get the dexterity reaction adjustment
+        const dexMod = this.actor.system.attributes.dex?.reaction || 0;
+        
+        // Calculate total initiative (roll - dex modifier)
+        const total = roll.total - dexMod;
+        
+        // Update the initiative values
+        await this.actor.update({
+            "system.initiative.base": roll.total,
+            "system.initiative.reaction": dexMod,
+            "system.initiative.total": total
+        });
+        
+        // Create chat message
+        let content = `<div class="dnd2e chat-card">`;
+        content += `<h3>Initiative Roll</h3>`;
+        content += `<div class="roll-details">`;
+        content += `<div>Roll: ${roll.total}</div>`;
+        content += `<div>Dex Modifier: ${dexMod}</div>`;
+        content += `<hr>`;
+        content += `<div class="roll-total">Total: <strong>${total}</strong></div>`;
+        content += `</div></div>`;
+        
+        await ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: content,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            roll: roll
+        });
+    }
+
+    _calculateLevelAndXP(xpValue, characterClass) {
+        const table = ExperienceTables[characterClass.toLowerCase()];
+        if (!table) return { level: 1, next: 2000 }; // Default values if no table found
+
+        const row = table.find(r => r.min <= xpValue && r.max >= xpValue);
+        return row ? { level: row.level, next: row.next } : { level: 1, next: 2000 };
+    }
+
+    async _onExceptionalStrengthChange(event) {
+        const newValue = parseInt(event.target.value);
+        console.log('Exceptional Strength Changed to:', newValue);
+        
+        // Validate the value is in range
+        if (newValue < 1 || newValue > 100 || isNaN(newValue)) {
+            console.log('Invalid exceptional strength value');
+            return;
+        }
+
+        // Update the exceptional strength value
+        await this.actor.update({
+            "system.attributes.str.exceptional": newValue
+        });
+
+        // Force a complete recalculation
+        await this._onAttributeChange('system.attributes.str.value', 18);
+    }
+}

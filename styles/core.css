@@ -1,0 +1,228 @@
+/* Core Variables */
+:root {
+    /* Colors */
+    --color-border: #782e22;
+    --color-border-light: #999;
+    --color-border-highlight: #ff6400;
+    --color-shadow: rgba(0, 0, 0, 0.5);
+    --color-text: #4b4a44;
+    --color-input-bg: rgba(255, 255, 255, 0.8);
+
+    /* Spacing */
+    --space-xs: 2px;
+    --space-s: 5px;
+    --space-m: 10px;
+    --space-l: 15px;
+    --space-xl: 20px;
+
+    /* Border */
+    --border-radius: 3px;
+    --border-width: 1px;
+
+    /* Typography */
+    --font-primary: "Signika", sans-serif;
+    --font-title: "Baskerville Old Face", "Palatino Linotype", serif;
+    --font-size-small: 12px;
+    --font-size-normal: 14px;
+    --font-size-large: 26px;
+    --font-size-header: 42px;
+}
+
+/* Base Window Styles */
+.dnd2e {
+    font-family: var(--font-primary);
+}
+
+.dnd2e input[type="text"],
+.dnd2e input[type="number"],
+.dnd2e input[type="password"],
+.dnd2e input[type="date"],
+.dnd2e input[type="time"] {
+    background: none;
+    border: var(--border-width) solid var(--color-border);
+    padding: 1px 3px;
+    color: var(--color-text);
+    font-family: inherit;
+}
+
+.dnd2e input[type="text"]:hover,
+.dnd2e input[type="number"]:hover,
+.dnd2e input[type="password"]:hover,
+.dnd2e input[type="date"]:hover,
+.dnd2e input[type="time"]:hover {
+    border-color: var(--color-border-highlight);
+    box-shadow: 0 0 8px var(--color-shadow);
+}
+
+.dnd2e input[type="text"]:focus,
+.dnd2e input[type="number"]:focus,
+.dnd2e input[type="password"]:focus,
+.dnd2e input[type="date"]:focus,
+.dnd2e input[type="time"]:focus {
+    box-shadow: 0 0 8px var(--color-shadow);
+}
+
+/* Grid System */
+.grid {
+    display: grid;
+    gap: var(--space-m);
+    margin: var(--space-m) 0;
+    padding: 0;
+}
+
+.grid-2col { grid-template-columns: repeat(2, 1fr); }
+.grid-3col { grid-template-columns: 200px 1fr 200px; }
+.grid-4col { grid-template-columns: repeat(4, 1fr); }
+.grid-5col { grid-template-columns: repeat(5, 1fr); }
+.grid-6col { grid-template-columns: repeat(6, 1fr); }
+
+/* Common Form Elements */
+.dnd2e select {
+    height: 24px;
+    border: 1px solid var(--color-border);
+    background: none;
+    border-radius: 3px;
+    padding: var(--space-xs) var(--space-s);
+    font-size: var(--font-size-normal);
+}
+
+.dnd2e input[type="checkbox"] {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Reset all button styles first */
+.dnd2e button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+/* Style for standard buttons */
+.dnd2e .standard-button,
+.dnd2e button.item-create,
+.dnd2e button.add-proficiency {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: var(--space-xs) var(--space-m);
+}
+
+.dnd2e .standard-button:hover,
+.dnd2e button.item-create:hover,
+.dnd2e button.add-proficiency:hover {
+    box-shadow: 0 0 5px var(--color-shadow);
+}
+
+/* Roll Buttons */
+.dnd2e button.roll-save,
+.dnd2e button.roll-button {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    line-height: 1;
+    text-align: center;
+    color: var(--color-roll-button);
+}
+
+.dnd2e button.roll-save:hover,
+.dnd2e button.roll-button:hover {
+    color: #000;
+    text-shadow: 0 0 8px var(--color-shadow);
+}
+
+/* Sheet Layout */
+.dnd2e .sheet-header {
+    flex: 0 0 100px;
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: var(--space-m);
+}
+
+.dnd2e .sheet-tabs {
+    flex: 0 0 30px;
+    margin-bottom: var(--space-m);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.dnd2e .sheet-body {
+    overflow: hidden;
+}
+
+.dnd2e .sheet-body .tab {
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Typography */
+.dnd2e h1, 
+.dnd2e h2 {
+    font-family: var(--font-title);
+    font-weight: 700;
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-border);
+    margin: 0 0 var(--space-m) 0;
+    padding: 0 0 var(--space-xs) 0;
+    text-align: center;
+}
+
+.dnd2e .charname {
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-title);
+    font-weight: 700;
+}
+
+.dnd2e .charname input {
+    width: 100%;
+    height: 100%;
+    font-size: var(--font-size-header);
+    font-family: var(--font-title);
+    font-weight: 700;
+    color: var(--color-text);
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dnd2e h2 {
+    font-size: var(--font-size-large);
+}
+
+.dnd2e.sheet .window-title,
+.dnd2e .window-title {
+    font-size: var(--font-size-header) !important;
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Utility Classes */
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    justify-content: space-between;
+}
+
+.hidden {
+    display: none !important;
+}

@@ -13,7 +13,7 @@
                 <input type="number" value="{{system.ac.shield.value}}" disabled/>
             </div>
             <div class="form-group">
-                <label>Dex Modifier</label>
+                <label>Dex Mod</label>
                 <input type="number" name="system.ac.dexMod" value="{{system.ac.dexMod}}" disabled/>
             </div>
             <div class="form-group total-ac">
@@ -51,7 +51,7 @@
         </div>
 
         {{!-- THAC0 --}}
-        <div class="thac0-block">
+        <div class="ac-block">
             <h2>THAC0</h2>
             <div class="form-group">
                 <label>Base THAC0</label>
@@ -65,7 +65,7 @@
                 <label>Ranged Mod</label>
                 <input type="number" name="system.thac0.rangedModifier" value="{{system.thac0.rangedModifier}}" disabled/>
             </div>
-            <div class="form-group">
+            <div class="form-group total-ac">
                 <label>Melee THAC0</label>
                 <input type="number" name="system.thac0.melee" value="{{system.thac0.melee}}" disabled/>
             </div>
@@ -76,27 +76,29 @@
         </div>
 
         {{!-- Initiative --}}
-        <div class="initiative-block">
+        <div class="hp-block">
             <h2>Initiative</h2>
             <div class="form-group">
                 <label>Base</label>
                 <div class="input-container">
-                    <input type="number" name="system.initiative.base" value="{{system.initiative.base}}"/>
+                    <div class="hit-die-group">
+                        <input type="number" name="system.initiative.base" value="{{system.initiative.base}}" disabled/>
+                        <button type="button" class="roll-initiative">
+                            <i class="fas fa-dice-d20"></i>
+                        </button>
+                    </div>
                 </div>
-                <button type="button" class="roll-initiative">
-                    <i class="fas fa-dice-d20"></i>
-                </button>
             </div>
             <div class="form-group">
-                <label>Dex Modifier</label>
+                <label>Dex Mod</label>
                 <div class="input-container">
-                    <input type="number" name="system.initiative.dexMod" value="{{system.initiative.dexMod}}" disabled/>
+                    <input type="number" name="system.attributes.dex.reaction" value="{{system.attributes.dex.reaction}}" disabled/>
                 </div>
             </div>
-            <div class="form-group total-init">
+            <div class="form-group">
                 <label>Total</label>
                 <div class="input-container">
-                    <input type="number" name="system.initiative.value" value="{{system.initiative.value}}" disabled/>
+                    <input type="number" name="system.initiative.total" value="{{system.initiative.total}}" disabled/>
                 </div>
             </div>
         </div>

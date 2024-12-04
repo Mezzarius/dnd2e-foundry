@@ -1,0 +1,255 @@
+/* Combat Related Styles */
+
+/* Combat Sheet Layout */
+.combat-basic {
+    padding: var(--padding-standard);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+}
+
+/* Combat Stats */
+.combat-stats {
+    gap: var(--space-m);
+    margin-bottom: var(--space-xl);
+}
+
+.combat-stats input {
+    width: 60px;
+    text-align: center;
+}
+
+/* Common Block Styling */
+.ac-block,
+.hp-block,
+.thac0-block,
+.initiative-block {
+    background: var(--color-input-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: var(--space-m);
+}
+
+.ac-block h2,
+.hp-block h2,
+.thac0-block h2,
+.initiative-block h2 {
+    margin: 0 0 var(--space-s) 0;
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--color-border);
+    font-size: var(--font-size-large);
+    font-weight: bold;
+}
+
+.initiative-block .initiative-grid {
+    display: grid;
+    grid-template-columns: 1fr 32px;
+    gap: 12px;
+    margin-top: var(--space-s);
+}
+
+.initiative-block .initiative-fields {
+    padding-right: 8px;
+}
+
+.initiative-block .form-group {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 8px;
+    margin-bottom: 4px;
+    align-items: center;
+}
+
+.initiative-block label {
+    text-align: right;
+}
+
+.initiative-block input {
+    width: 80%;
+    min-width: 70px;
+}
+
+.initiative-block .initiative-roll {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    margin-top: 4px; /* Align with first input */
+}
+
+.initiative-block .roll-initiative {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    line-height: 24px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    color: #782e22;
+}
+
+.initiative-block .roll-initiative:hover {
+    color: #000;
+    text-shadow: 0 0 8px var(--color-shadow);
+}
+
+/* THAC0 Block */
+.thac0-block .form-group {
+    margin: var(--space-xs) 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.thac0-block .form-group label {
+    flex: 2;
+    margin-right: var(--space-s);
+    font-weight: normal;
+}
+
+.thac0-block .form-group input {
+    flex: 1;
+    text-align: center;
+    height: 24px;
+}
+
+/* Add separator before Melee THAC0 */
+.thac0-block .form-group:nth-child(5) {
+    margin-top: var(--space-m);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-border);
+}
+
+/* Total Values */
+.total-ac,
+.total-thac0,
+.total-init {
+    margin-top: var(--space-m);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-border);
+}
+
+.total-ac input,
+.total-thac0 input,
+.total-init input {
+    background: #e0e0e0;
+}
+
+/* Weapon Proficiencies */
+.weapon-proficiencies {
+    background: var(--color-input-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: var(--space-m);
+}
+
+.prof-headers {
+    font-weight: bold;
+    padding: var(--space-s) 0;
+    margin-bottom: var(--space-s);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.prof-entry {
+    padding: var(--space-xs) 0;
+    align-items: center;
+}
+
+.prof-entry input,
+.prof-entry select {
+    height: 24px;
+    margin: 0 var(--space-xs);
+}
+
+.prof-controls {
+    margin-top: var(--space-m);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-border);
+}
+
+/* Saving Throws */
+.saving-throws {
+    margin-top: 0;
+    background: var(--color-input-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: var(--space-m);
+}
+
+.saves-grid {
+    display: grid;
+    gap: var(--space-xs);
+}
+
+.save-headers,
+.save-row {
+    display: grid;
+    grid-template-columns: 80px 45px 45px 45px 45px 30px;
+    gap: var(--space-xs);
+    align-items: center;
+}
+
+.save-headers {
+    font-size: var(--font-size-small);
+    font-weight: bold;
+}
+
+.save-headers > div:not(.save-type) {
+    text-align: center;
+}
+
+.save-headers .save-type {
+    text-align: right;
+}
+
+.save-row label {
+    text-align: right;
+}
+
+.save-row input {
+    width: 100%;
+    text-align: center;
+}
+
+.save-row .attr-mod {
+    text-align: center;
+}
+
+/* Initiative and Combat Options */
+.initiative-block {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--padding-standard);
+}
+
+.initiative-block .form-group:has(.roll-initiative) {
+    display: flex;
+    justify-content: center;
+    margin: 4px 0;
+}
+
+.combat-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--padding-standard);
+    margin-top: var(--padding-standard);
+}
+
+/* Weapon Stats */
+.weapon-stats {
+    margin-top: var(--padding-standard);
+}
+
+.weapon-stats .header {
+    font-weight: bold;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.weapon-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 5px;
+    align-items: center;
+    padding: 3px 0;
+}

@@ -1,34 +1,37 @@
 # AD&D 2E Foundry System Development Plan
+Objective: to build a robust and engaging system for AD&D 2E that meets the needs of both players and GMs, supported by the Foundry Virtual Tabletop ecosystem, version 12.x
 
 ## Phase 1: Core Character Framework
+Create the core character sheet framework that supports the following features:
 
 ### Step 1: Character Sheet Development
-- Design and implement the basic character sheet layout
-- Implement core attribute handling (STR, DEX, CON, INT, WIS, CHA)
-- Add support for exceptional strength (unique to AD&D 2E)
-- Create saving throws system
-- Implement basic character information (race, class, level, alignment)
+- [x] Design and implement the basic character sheet layout
+- [x] Implement core attribute handling (STR, DEX, CON, INT, WIS, CHA)
+- [x] Add support for exceptional strength (unique to AD&D 2E)
+- [x] Create saving throws system
+- [x] Implement basic character information (race, class, level, alignment)
 
 ### Step 2: Combat Statistics
-- THAC0 calculation system
-- Armor Class implementation
-- Hit Points management
-- Initiative system
+- [x] THAC0 calculation system
+- [x] Armor Class implementation
+- [x] Hit Points management
+- [x] Initiative system
 
 ## Phase 2: Class & Race Systems
+Create class and race systems to support the following features:
 
 ### Step 1: Character Classes
-- Implementation of all core classes
-- Class-specific abilities and restrictions
-- Experience point tracking
-- Level progression tables
-- THAC0 progression by class
+- [ ] Implementation of all core classes
+- [ ] Class-specific abilities and restrictions
+- [x] Experience point tracking
+- [x] Level progression tables
+- [x] THAC0 progression by class
 
 ### Step 2: Race System
-- Race selection and restrictions
-- Racial abilities and modifiers
-- Level limits by race
-- Multi-class and dual-class systems
+- [ ] Race selection and restrictions
+- [ ] Racial abilities and modifiers
+- Level limits by race - Will Not Implement
+- Multi-class and dual-class systems - Will Not Implement
 
 ## Phase 3: Combat & Equipment
 
