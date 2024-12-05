@@ -973,7 +973,17 @@ export default class DND2ECharacterSheet extends ActorSheet {
         if (!table) return { level: 1, next: 2000 }; // Default values if no table found
 
         const row = table.find(r => r.min <= xpValue && r.max >= xpValue);
-        return row ? { level: row.level, next: row.next } : { level: 1, next: 2000 };
+        const result = row ? { level: row.level, next: row.next } : { level: 1, next: 2000 };
+
+        // If the level has changed, update the actor
+        if (this.actor.system.level !== result.level) {
+            this.actor.update({
+                "system.level": result.level,
+                "system.xp.next": result.next
+            });
+        }
+
+        return result;
     }
 
     async _onExceptionalStrengthChange(event) {

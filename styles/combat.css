@@ -14,7 +14,7 @@
 }
 
 .combat-stats input {
-    width: 60px;
+    width: 80px;
     text-align: center;
 }
 
@@ -64,8 +64,8 @@
 }
 
 .initiative-block input {
-    width: 80%;
-    min-width: 70px;
+    width: 80px;
+    min-width: 80px;
 }
 
 .initiative-block .initiative-roll {
@@ -131,6 +131,15 @@
 .total-thac0 input,
 .total-init input {
     background: #e0e0e0;
+}
+
+/* Common Block Label Styling */
+.ac-block .form-group label,
+.hp-block .form-group label,
+.thac0-block .form-group label,
+.initiative-block .form-group label {
+    text-align: right;
+    padding-right: 8px;
 }
 
 /* Weapon Proficiencies */
@@ -252,4 +261,77 @@
     gap: 5px;
     align-items: center;
     padding: 3px 0;
+}
+
+/* Hit Die Group */
+.hit-die-group {
+    display: flex;
+    align-items: center;
+}
+
+.hit-die-group input {
+    margin-right: 0;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.hit-die-group button {
+    width: 26px;
+    height: 26px;
+    border: none;
+    padding: 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hit-die-group button:hover {
+    color: #000;
+    text-shadow: 0 0 10px red;
+}
+
+/* Initiative Group */
+.initiative-group {
+    display: flex;
+    align-items: center;
+}
+
+.initiative-group input {
+    margin-right: 0;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.initiative-group button {
+    width: 26px;
+    height: 26px;
+    border: none;
+    padding: 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.initiative-group button:hover {
+    color: #000;
+    text-shadow: 0 0 10px red;
+}
+
+/* Input Container */
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Hit Points Block */
+.hp-block input[type="number"] {
+    width: 80px;
+}
+
+.hp-block input[type="text"] {
+    width: 100px;
 }

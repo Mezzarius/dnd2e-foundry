@@ -1,7 +1,7 @@
 /* Main DND2E System Stylesheet */
 
 /* Temporary: Keep backup while testing modular structure */
-@import url("./_BACKUP.css");
+/*@import url("./_BACKUP.css");*/
 
 /* Test individual modules by uncommenting: */
 
@@ -13,6 +13,9 @@
 
 /* Combat - Phase 2 Testing */
 @import url("./combat.css");
+
+/* Chat - Phase 2.5 Testing */
+@import url("./chat.css");
 
 /* Inventory - Phase 3 Testing */
 /*@import url("./inventory.css");*/

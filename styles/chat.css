@@ -1,0 +1,110 @@
+/* Chat Message Base Styling */
+.dnd2e.chat-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 8px;
+    margin: 4px 0;
+}
+
+/* Chat Card Header */
+.dnd2e.chat-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.dnd2e.chat-card .card-header img {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    border: none;
+}
+
+.dnd2e.chat-card .card-header h3 {
+    flex: 1;
+    margin: 0;
+    font-size: 1.2em;
+    color: #4b4a44;
+}
+
+/* Roll Details */
+.dnd2e.chat-card .roll-details {
+    margin: 8px 0;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.dnd2e.chat-card .roll-details .roll-label {
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+/* Roll Results */
+.dnd2e.chat-card .roll-total {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: center;
+    padding: 4px;
+    margin: 4px 0;
+    border-radius: 3px;
+}
+
+.dnd2e.chat-card .roll-total.success {
+    color: #18520b;
+    background: rgba(24, 82, 11, 0.1);
+}
+
+.dnd2e.chat-card .roll-total.failure {
+    color: #8b0000;
+    background: rgba(139, 0, 0, 0.1);
+}
+
+/* Roll Formula Display */
+.dnd2e.chat-card .roll-formula {
+    font-family: monospace;
+    color: #666;
+    font-size: 0.9em;
+    text-align: center;
+    padding: 2px;
+    margin: 2px 0;
+}
+
+/* Chat Card Content */
+.dnd2e.chat-card .card-content {
+    margin: 8px 0;
+}
+
+.dnd2e.chat-card .card-content p {
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+/* Chat Card Buttons */
+.dnd2e.chat-card .card-buttons {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: 8px;
+}
+
+.dnd2e.chat-card .card-buttons button {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 4px 8px;
+    color: #4b4a44;
+    cursor: pointer;
+}
+
+.dnd2e.chat-card .card-buttons button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: #782e22;
+}
