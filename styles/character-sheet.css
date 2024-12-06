@@ -318,3 +318,31 @@
     border-radius: var(--border-radius);
     background: rgba(255, 255, 255, 0.8);
 }
+
+.race-link {
+    cursor: pointer;
+}
+
+.race-drop-zone {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.race-drop-zone:hover {
+    background: rgba(var(--color-shadow-primary-rgb), 0.1);
+}
+
+.race-drop-zone:hover input {
+    color: var(--color-text-hyperlink);
+    padding-left: 24px;  /* Make room for the arrow */
+}
+
+.race-drop-zone:hover::after {
+    content: '↗';
+    position: absolute;
+    left: 65px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-hyperlink);
+    pointer-events: none;
+}

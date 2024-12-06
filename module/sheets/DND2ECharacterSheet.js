@@ -14,6 +14,13 @@ Handlebars.registerHelper('and', function(v1, v2) {
     return v1 && v2;
 });
 
+// Add new helper for formatting positive numbers
+Handlebars.registerHelper('formatWithPlus', function(value) {
+    const num = Number(value);
+    if (isNaN(num)) return value;
+    return num > 0 ? `+${num}` : num.toString();
+});
+
 export default class DND2ECharacterSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
