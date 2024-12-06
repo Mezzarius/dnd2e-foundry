@@ -76,7 +76,7 @@ Contributions are welcome! Please read our contributing guidelines before submit
 ## Acknowledgments
 
 - The Foundry VTT development team
-- Cursor and Claude, without whom this would have gone a LOT slower.
+- Cursor, Codium, and Claude, without whom this would have gone a LOT slower.
 
 ## Support
 
