@@ -1,4 +1,4 @@
-[![built with Codeium](https://codeium.com/badges/main)](https://codeium.com) ![Foundry VTT](https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fversion%3Fstyle%3Dflat%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fthelensrpg%2Fdnd2e-foundry%2Frefs%2Fheads%2Fmain%2Fsystem.json) 
+![Foundry VTT](https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fversion%3Fstyle%3Dflat%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fthelensrpg%2Fdnd2e-foundry%2Frefs%2Fheads%2Fmain%2Fsystem.json) [![built with Codeium](https://codeium.com/badges/main)](https://codeium.com) 
 
 # AD&D 2nd Edition System for Foundry VTT
 

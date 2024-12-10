@@ -144,67 +144,38 @@ The AD&D 2nd Edition system for Foundry VTT v12 aims to provide a comprehensive 
 
 ## Data Model Requirements
 
-### Base Schema Structure
-- Character Document
-  ```json
-  {
-    "attributes": {
-      "strength": { "base": Number, "exceptional": Number },
-      "dexterity": { "base": Number, "adjustments": [] },
-      // ... other attributes
-    },
-    "classes": [{
-      "identifier": String,
-      "level": Number,
-      "kit": String?,
-      "specialization": {}
-    }],
-    "proficiencies": {
-      "weapons": [],
-      "nonweapon": [],
-      "fighting_styles": []
-    }
-  }
-  ```
+### Schema Structure
+- Available in ./template.json 
 
 ### Flexible Systems Support
-- Modular design for optional rule systems
 - Configuration flags for variant rules
-- Extensible proficiency system supporting multiple progression tracks
 - Abstract magic system supporting both Vancian and Spell Slot approaches
 
 ### Data Relationships
 - Character-to-Item relationships
-- Class-to-Ability mappings
-- Race-to-Restriction connections
+- Class-to-Feature mappings
+- Race-to-Feature mappings
 - Kit-to-Class associations
+- Class-to-Feature associations
 
 ### Migration Considerations
-- Version tracking in data model
 - Upgrade paths for schema changes
 - Backwards compatibility requirements
 
 ## Technical Implementation Details
 
 ### File Structure
-- Document the purpose of each major directory
-- Specify file naming conventions
-- Define module organization
-
-### Database Schema
-- Actor data model
-- Item data model
-- Additional data structures
-
-### API Integration
-- Document any external API dependencies
-- Define internal API structure
-- Specify hooks and events
+- Document the purpose of each major directory in docs/FILE-STRUCTURE.md
+- Document the purpose of all variables in docs/DATA-SCHEMA.md
 
 ## Development Guidelines
 
 ### Code Style
-- JavaScript/CSS coding standards
+- JavaScript coding standards
+- Handlebars templates
+- CSS styling
+
+### Documentation Guidelines
 - Documentation requirements
 - Testing requirements
 - Version control practices

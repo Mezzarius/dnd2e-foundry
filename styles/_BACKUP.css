@@ -233,7 +233,7 @@ h2 {
 
 .combat-stats .thac0-block .form-group input:disabled {
     background: rgba(255, 255, 255, 0.5);
-    color: #da0000;
+    color: #666;
 }
 
 /* Notes Tab */
