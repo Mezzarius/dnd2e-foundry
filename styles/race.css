@@ -1,0 +1,205 @@
+/* Race Sheet Specific Styling */
+.dnd2e.sheet.item.race .details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.dnd2e .sheet-header {
+    flex: 0 0 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.attributes-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Attributes Section */
+.attributes-section {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.attributes-section h3 {
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+    border-bottom: 2px solid var(--color-border);
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.attribute-header {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.attribute-mods-header .attribute-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #444;
+}
+
+.attribute-values {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 5px;
+}
+
+.attribute-values input {
+    width: 50px;
+}
+
+.attribute-field input {
+    width: 100%;
+    text-align: center;
+    height: 28px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+}
+
+.form-group label {
+    flex: 0 0 100px;
+    padding-right: 10px;
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Features Tab Styling */
+.features-section {
+    height: 100%;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 2px dashed transparent;
+    transition: border-color 0.2s;
+}
+
+.features-section.drag-hover {
+    border-color: var(--color-border-highlight);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.features-section h3 {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.features-section .list-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border-bottom: 2px solid var(--color-border);
+    font-weight: bold;
+    margin-bottom: 5px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.features-section .header-name { flex: 2; }
+.features-section .header-type { flex: 1; text-align: center; }
+.features-section .header-activation { flex: 1; text-align: center; }
+.features-section .header-controls { 
+    flex: 0 0 100px;
+    text-align: center;
+}
+
+.features-section .inventory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 60px;
+    border: 2px dashed #ccc;
+    margin: 5px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+}
+
+.features-section .inventory-list.drag-hover {
+    border-color: #000;
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Make empty list more obvious as a drop zone */
+.features-section .inventory-list:empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.features-section .inventory-list:empty::after {
+    content: "Drop Features Here";
+    color: #666;
+    font-style: italic;
+    font-size: 1.1em;
+}
+
+.features-section .item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    cursor: move;
+    transition: background 0.2s ease;
+}
+
+.features-section .item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.features-section .item-name {
+    flex: 2;
+    display: flex;
+    align-items: center;
+}
+
+.items-list .item .item-image {
+    flex: 0 0 24px;
+    margin-right: 5px;
+}
+
+.features-section .item-type,
+.features-section .item-activation {
+    flex: 1;
+    text-align: center;
+}
+
+.features-section .item-controls {
+    flex: 0 0 100px;
+    text-align: right;
+}
+
+/* Race Sheet Specific Styling */
+.dnd2e.sheet.item.race .details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    overflow-y: auto;
+}
