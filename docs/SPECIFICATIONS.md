@@ -1,7 +1,7 @@
 # AD&D 2nd Edition System for Foundry VTT - Functional Specifications
 
 ## System Overview
-The AD&D 2nd Edition system for Foundry VTT v12 aims to provide a comprehensive implementation of the Advanced Dungeons & Dragons 2nd Edition ruleset within the Foundry Virtual Tabletop environment.
+This System for Foundry VTT v12 is a comprehensive implementation of the AD&D 2nd Edition rules.
 
 ## Technical Requirements
 
