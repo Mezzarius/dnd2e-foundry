@@ -2,7 +2,7 @@
   "id": "dnd2e",
   "title": "AD&D 2nd Edition",
   "description": "A system for playing AD&D 2E in Foundry VTT",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "compatibility": {
     "minimum": "12",
     "verified": "12",
