@@ -40,7 +40,7 @@
   "background": "systems/dnd2e/assets/ui/dnd2e-background.webp",
   "packs": [],
   "socket": false,
-  "manifest": "https://github.com/thelensrpg/dnd2e-foundry/releases/latest/download/system.json",
-  "download": "https://github.com/thelensrpg/dnd2e-foundry/archive/refs/heads/main.zip",
+  "manifest": "https://github.com/Mezzarius/dnd2e-foundry/releases/latest/download/system.json",
+  "download": "https://github.com/Mezzarius/dnd2e-foundry/archive/refs/heads/main.zip",
   "license": "LICENSE.txt"
 } 
