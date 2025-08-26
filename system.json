@@ -6,13 +6,13 @@
   "compatibility": {
     "minimum": "12",
     "verified": "12",
-    "maximum": "12"
+    "maximum": "3"
   },
   "authors": [
     {
-      "name": "morduun",
-      "email": "finch@thelensrpg.io ",
-      "url": "https://thelensrpg.io"
+      "name": "mezzarius",
+      "email": "",
+      "url": ""
     }
   ],
   "scripts": [],
